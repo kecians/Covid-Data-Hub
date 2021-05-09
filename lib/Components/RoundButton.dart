@@ -10,15 +10,15 @@ final double width;
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: 5.0,
+      elevation: 15.0,
       color: color,
-      borderRadius: BorderRadius.circular(30.0),
+      borderRadius: BorderRadius.circular(10.0),
       child: MaterialButton(
         onPressed: onpress,
         minWidth: width,
         height: height,
         child: Text(
-            text
+            text , style: TextStyle(color: Colors.white),
         ),
       ),
     );

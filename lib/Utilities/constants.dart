@@ -11,12 +11,12 @@ const kInputDecorantion = InputDecoration(
   ),
   enabledBorder: OutlineInputBorder(
     borderSide:
-    BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+    BorderSide(color: Color(0XFFD5031A8D), width: 1.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
     borderSide:
-    BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+    BorderSide(color: Color(0XFFD5031A8D), width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );

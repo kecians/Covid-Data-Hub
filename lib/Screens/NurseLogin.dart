@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
-import 'package:patient_status_app/Screens/MedicationList.dart';
+import 'package:patient_status_app/Screens/PatientType.dart';
 import 'package:patient_status_app/Utilities/constants.dart';
-class PatientLogin extends StatefulWidget {
-  static const String id = 'PatientLogin';
+class NurseLogin extends StatefulWidget {
+  static const String id = 'NurseLogin';
   @override
-  _PatientLoginState createState() => _PatientLoginState();
+  _NurseLoginState createState() => _NurseLoginState();
 }
 
-class _PatientLoginState extends State<PatientLogin> {
+class _NurseLoginState extends State<NurseLogin> {
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class _PatientLoginState extends State<PatientLogin> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Login as a Patient',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w900,
+                Text('Login as Nurse',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w900,
                color: Colors.lightBlue[900],),),
               SizedBox(height: 80,),
                    Container(
@@ -27,7 +27,7 @@ class _PatientLoginState extends State<PatientLogin> {
                      child: TextField(
                        style: TextStyle(color: Colors.black),
                         onChanged: (value){},
-                       decoration: kInputDecorantion.copyWith(hintText: 'Enter your ICMR number'),
+                       decoration: kInputDecorantion.copyWith(hintText: 'Enter your Employ Id'),
 
                      ),
                    ),
@@ -44,7 +44,7 @@ class _PatientLoginState extends State<PatientLogin> {
                 SizedBox(height: 40,),
                 RoundButton(color: Colors.lightBlue,text: 'Login',onpress: (){
                   // TODO : Change when you add Authentication
-                  Navigator.pushNamed(context, MedicationList.id);
+                  Navigator.pushNamed(context, PatientType.id);
                 },height: 60, width: 260,)
               ],
             ),

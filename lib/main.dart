@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Screens/DoctorLogin.dart';
 import 'package:patient_status_app/Screens/Home.dart';
-import 'package:patient_status_app/Screens/MedicationList.dart';
-import 'package:patient_status_app/Screens/PatientLogin.dart';
+import 'package:patient_status_app/Screens/PatientType.dart';
+import 'package:patient_status_app/Screens/NurseLogin.dart';
 
 void main() {
   runApp(Main());
@@ -17,8 +17,8 @@ class Main extends StatelessWidget {
       routes: {
         Home.id : (context){return Home();},
         DoctorLogin.id  : (context){return DoctorLogin();},
-        PatientLogin.id : (context){return PatientLogin();},
-        MedicationList.id : (context){return MedicationList();},
+        NurseLogin.id : (context){return NurseLogin();},
+        PatientType.id : (context){return PatientType();},
       },
     );
   }

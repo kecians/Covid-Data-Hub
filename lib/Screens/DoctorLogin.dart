@@ -40,7 +40,8 @@ class _DoctorLoginState extends State<DoctorLogin> {
                 ),
               ),
               SizedBox(height: 40,),
-              RoundButton(color: Colors.lightGreen[700],text: 'Login',onpress: (){},height: 60, width: 260,)
+              RoundButton(color: Colors.lightGreen[700],text: 'Login',onpress: (){},height: 60, width: 260,),
+
             ],
           ),
         ),

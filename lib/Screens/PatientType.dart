@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Components/Drawer.dart';
 import 'package:patient_status_app/Components/MyContainer.dart';
-class MedicationList extends StatefulWidget {
-  static const String id = 'MedicationList';
+class PatientType extends StatefulWidget {
+  static const String id = 'PatientType';
   @override
-  _MedicationListState createState() => _MedicationListState();
+  _PatientTypeState createState() => _PatientTypeState();
 }
 
-class _MedicationListState extends State<MedicationList> {
+class _PatientTypeState extends State<PatientType> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
