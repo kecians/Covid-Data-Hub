@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 class MyDrawer extends StatelessWidget {
+  final String name,designation;
+  const MyDrawer({Key key, this.name, this.designation});
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
         // TODO : Change the section According to demand
         UserAccountsDrawerHeader(
-          accountName: Text("Shubham Tripathi",style: TextStyle(fontSize: 16),),
-          accountEmail: Text("7310659478",style: TextStyle(color: Colors.white70,fontSize: 12),),
+          accountName: Text(name,style: TextStyle(fontSize: 16),),
+          accountEmail: Text(designation,style: TextStyle(color: Colors.white70,fontSize: 12),),
           arrowColor: Colors.black54,
           currentAccountPicture: GestureDetector(
             child: CircleAvatar(

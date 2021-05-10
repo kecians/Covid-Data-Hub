@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 class MyContainer extends StatelessWidget {
   const MyContainer({this.height,this.color1,this.color2,this.widget,this.onPress,this.paddingBottom,this.paddingTop});
@@ -21,10 +20,15 @@ class MyContainer extends StatelessWidget {
         child: widget,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(colors: [
-            color1,color2])
+          gradient: LinearGradient(colors: [color1,color2]),
+          boxShadow: [
+          BoxShadow(
+          color: Colors.grey,
+          offset: Offset(0.0, 1.0), //(x,y)
+          blurRadius: 6.0,
         ),
-
+          ]
+        ),
       ),
     );
   }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 class RoundButton extends StatelessWidget {
-  const RoundButton({this.color,this.onpress,this.text,this.height,this.width});
+  const RoundButton({this.color,this.onpress,this.text,this.height,this.width,this.textColor});
 final Color color;
 final Function onpress;
 final String text;
 final double height;
 final double width;
+final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ final double width;
         minWidth: width,
         height: height,
         child: Text(
-            text , style: TextStyle(color: Colors.white),
+            text , style: TextStyle(color: textColor),
         ),
       ),
     );

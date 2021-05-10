@@ -26,7 +26,6 @@ class _DoctorLoginState extends State<DoctorLogin> {
                   style: TextStyle(color: Colors.black),
                   onChanged: (value){},
                   decoration: kInputDecorantion.copyWith(hintText: 'Enter your Employ Id'),
-
                 ),
               ),
               SizedBox(height: 20,),
@@ -36,12 +35,10 @@ class _DoctorLoginState extends State<DoctorLogin> {
                   style: TextStyle(color: Colors.black),
                   onChanged: (value){},
                   decoration: kInputDecorantion.copyWith(hintText: 'Enter your mobile number'),
-
                 ),
               ),
               SizedBox(height: 40,),
               RoundButton(color: Colors.lightGreen[700],text: 'Login',onpress: (){},height: 60, width: 260,),
-
             ],
           ),
         ),
