@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Components/Drawer.dart';
-import 'package:patient_status_app/Components/MyCard.dart';
+import 'package:patient_status_app/Components/PatientListCard.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Components/SearchBar.dart';
-import 'package:patient_status_app/Utilities/Brain.dart';
 
 enum Bed{
    OxygenBed,
@@ -32,15 +31,14 @@ class _NurseLoginState extends State<NurseLogin> {
 
           children: [
             SizedBox(height: 10,),
-             SearchBar(),
-            SizedBox(height: 10,),
+
             Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 RoundButton(text: "Normal Bed",onpress: (){
-                    setState(() {
-                      typeBed = Bed.NonOxyBed;
-                    });
+                  setState(() {
+                    typeBed = Bed.NonOxyBed;
+                  });
                 },
                   color: typeBed == Bed.NonOxyBed ? Color(0XFFD5031A8D):Colors.white,
                   textColor: typeBed == Bed.NonOxyBed ? Colors.white:Colors.black,
@@ -62,46 +60,26 @@ class _NurseLoginState extends State<NurseLogin> {
                 )
               ],
             ),
-            SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            SizedBox(height: 10,),
+            SearchBar(),
+            SizedBox(height: 10,),
+            Column(
               children: [
-                MyCard(height: 160,width: 330,headText: 'Total Beds',headerSize: 22,valueColor: Colors.grey[600],
-                  color: Colors.white,valueSize: 60,
-                  /// Realtime Value
-                  valueText: Brain.TotalBeds(typeBed),
-                  headerColor: Colors.grey,
-                ),
-              ],
-            ),
-            SizedBox(height: 20,),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  MyCard(height: 160,width: 160,headText: 'Occupied',headerSize: 22,valueColor: Colors.grey[600],
-                  color: Colors.white,valueSize: 60,
-                    /// Realtime Value
-                    valueText: Brain.OccupyedBeds(typeBed),
-                    headerColor: Colors.grey,
-                  ),
-                  MyCard(height: 160,width: 160,headText: 'Vacant',headerSize: 22,
-                    color: Colors.white,valueSize: 60,
-                    /// Realtime Value
-                    valueText: Brain.VacantBeds(typeBed),
-                    headerColor: Colors.grey,valueColor: Colors.grey[600],)
-                ],
-              ),
-            SizedBox(height: 40,),
-            Container(margin: EdgeInsets.only(left: 10,right: 10),
-              child: RoundButton(color: Color(0XFFD5031A8D),text: "Add a patient", textColor: Colors.white,
-                onpress: (){ Navigator.pushNamed(context, NurseLogin.id); },height: 60,width: 260,),
-            ),
+                 PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
+                PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
+                PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
+                PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
+                PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
+                PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
 
           ],
         ),
+        ]
       ),
+    )
     );
   }
 }
+
 
 

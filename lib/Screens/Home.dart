@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
+import 'package:patient_status_app/Screens/Register.dart';
 import 'package:patient_status_app/Utilities/constants.dart';
 import 'package:patient_status_app/Components/TitleHead.dart';
 
@@ -65,7 +66,7 @@ class _HomeState extends State<Home> {
                         Text('Or',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 16),),
                         SizedBox(height: 10,),
                         RoundButton(color: Color(0XFFD5031A8D),text: "Register", textColor: Colors.white,
-                          onpress: (){ Navigator.pushNamed(context, NurseLogin.id); },height: 50,width: 260,),
+                          onpress: (){ Navigator.pushNamed(context, Register.id); },height: 50,width: 260,),
 
                       ],
                     ),
