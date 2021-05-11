@@ -4,6 +4,7 @@ import 'package:patient_status_app/Components/Drawer.dart';
 import 'package:patient_status_app/Components/PatientListCard.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Components/SearchBar.dart';
+import 'package:patient_status_app/Screens/Patient/PatientForm.dart';
 
 enum Bed{
    OxygenBed,
@@ -65,7 +66,7 @@ class _NurseLoginState extends State<NurseLogin> {
             SizedBox(height: 10,),
             Column(
               children: [
-                 PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
+                 PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',onPress: (){Navigator.pushNamed(context, PatientForm.id);}),
                 PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
                 PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
                 PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),

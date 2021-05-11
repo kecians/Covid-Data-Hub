@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 class PatientListCard extends StatelessWidget {
   const PatientListCard({
-    this.patientName,this.bedNo
+    this.patientName,this.bedNo,this.onPress
   });
   final String patientName,bedNo;
-
+  final Function onPress;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-
+       onTap: onPress,
       child: Container(
         margin: EdgeInsets.only(top: 10),
         child: Row(

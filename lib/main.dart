@@ -5,6 +5,8 @@ import 'package:patient_status_app/Screens/Nurses/NurseLogin.dart';
 import 'package:patient_status_app/Screens/Register.dart';
 import 'package:patient_status_app/Screens/Status.dart';
 
+import 'Screens/Patient/PatientForm.dart';
+
 void main() {
   runApp(Main());
 }
@@ -20,7 +22,8 @@ class Main extends StatelessWidget {
         DoctorLogin.id  : (context){return DoctorLogin();},
         NurseLogin.id : (context){return NurseLogin();},
         Register.id : (context){return Register();},
-        Status.id : (context){return Status();}
+        Status.id : (context){return Status();},
+        PatientForm.id : (context){return PatientForm();}
       },
     );
   }
