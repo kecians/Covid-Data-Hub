@@ -30,6 +30,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   animated_text_kit: ^4.2.1
   flutter_svg: ^0.22.0
+  flutter_bloc: ^7.0.0
+  http: ^0.13.3
+  equatable: ^2.0.0
+  path_provider: ^2.0.1
 
 dev_dependencies:
   flutter_test:
