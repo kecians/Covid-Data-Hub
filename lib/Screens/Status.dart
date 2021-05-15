@@ -1,23 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:patient_status_app/Components/Drawer.dart';
+import 'package:patient_status_app/Components/DetailCard.dart';
 import 'package:patient_status_app/Components/MyCard.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
-import 'package:patient_status_app/Utilities/Brain.dart';
-
-import 'Nurses/NurseLogin.dart';
 class Status extends StatefulWidget {
   static final String id = 'Status';
+  final data;
+  Status({this.data});
   @override
   _StatusState createState() => _StatusState();
 }
 
 class _StatusState extends State<Status> {
-  Bed typeBed=Bed.NonOxyBed;
+  int ox,gen,ven,icu,availox,availgen,availicu,availven,total,alloted;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    update(widget.data);
+  }
+
+  void update(dynamic data)
+  {
+    gen = data['generalBeds'];
+    ven = data['ventilatorBeds'];
+    ox = data['oxygenBeds'];
+    icu = data['icuBeds'];
+    availgen =data['generalBeds'] - data['allotedGenBeds'];
+    availicu =data['icuBeds'] - data['allotedIcuBeds'];
+    availox =data['oxygenBeds'] - data['allotedOxyBeds'];
+    availven =data['ventilatorBeds'] - data['allotedVenBeds'];
+    total = data['totalBeds'];
+    alloted = data['allotedTotal'];
+
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: Drawer(child: MyDrawer(name: 'Shubham Tripathi',designation: 'Doctor   ; )',),),
         appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
         ),),
@@ -28,67 +48,31 @@ class _StatusState extends State<Status> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                RoundButton(text: "Normal Bed",onpress: (){
-                  setState(() {
-                    typeBed = Bed.NonOxyBed;
-                  });
-                },
-                  color: typeBed == Bed.NonOxyBed ? Color(0XFFD5031A8D):Colors.white,
-                  textColor: typeBed == Bed.NonOxyBed ? Colors.white:Colors.black,
+                MyCard(height: 120,width: 160,headText: 'Allotted Beds',headerSize: 17,valueColor: Colors.blueGrey[600],
+                  color: Colors.white,valueSize: 30,
+                  /// Realtime Value
+                  valueText: "$alloted",
+                  headerColor: Colors.blueGrey,
                 ),
-                RoundButton(text: "Oxygen Bed",onpress: (){
-                  setState(() {
-                    typeBed = Bed.OxygenBed;
-                  });
-                },
-                  textColor: typeBed == Bed.OxygenBed ? Colors.white:Colors.black,
-                  color: typeBed == Bed.OxygenBed ? Color(0XFFD5031A8D):Colors.white,
-                ),
-                RoundButton(text: "Ventilator",width: 110,onpress: (){
-                  setState(() {
-                    typeBed = Bed.VentilatorBed;
-                  });
-                },color: typeBed == Bed.VentilatorBed ? Color(0XFFD5031A8D):Colors.white,
-                  textColor: typeBed == Bed.VentilatorBed ? Colors.white:Colors.black,
+
+                MyCard(height: 120,width: 160,headText: 'Total Beds',headerSize: 17,valueColor: Colors.blueGrey[600],
+                  color: Colors.white,valueSize: 30,
+                  /// Realtime Value
+                  valueText: "$total",
+                  headerColor: Colors.blueGrey,
                 )
               ],
             ),
             SizedBox(height: 20,),
-            Column(
-              children: [
-                MyCard(height: 160,width: 330,headText: 'Total Patients',headerSize: 22,valueColor: Colors.grey[600],
-                  color: Colors.white,valueSize: 60,
-                  /// Realtime Value
-                  valueText: Brain.TotalPatients(typeBed),
-                  headerColor: Colors.grey,
-                ),
-                SizedBox(height: 20,),
-                MyCard(height: 160,width: 330,headText: 'Total Beds',headerSize: 22,valueColor: Colors.grey[600],
-                  color: Colors.white,valueSize: 60,
-                  /// Realtime Value
-                  valueText: Brain.TotalBeds(typeBed),
-                  headerColor: Colors.grey,
-                ),
-              ],
-            ),
-            SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MyCard(height: 160,width: 160,headText: 'Occupied',headerSize: 22,valueColor: Colors.grey[600],
-                  color: Colors.white,valueSize: 60,
-                  /// Realtime Value
-                  valueText: Brain.OccupyedBeds(typeBed),
-                  headerColor: Colors.grey,
-                ),
-                MyCard(height: 160,width: 160,headText: 'Vacant',headerSize: 22,
-                  color: Colors.white,valueSize: 60,
-                  /// Realtime Value
-                  valueText: Brain.VacantBeds(typeBed),
-                  headerColor: Colors.grey,valueColor: Colors.grey[600],)
-              ],
-            ),
 
+               DetailCard(valueGen: availgen,valueIcu: availicu,valueOxy: availox,valueVen: availven,TotalGen: gen,TotalIcu: icu,
+                 TotalOxy: ox,TotalVen: ven,height: 300,
+                 color: Colors.white,),
+            SizedBox(height: 60,),
+            Center(
+              child: RoundButton(color: Color(0XFFD5031A8D),text: "Add  Patient", textColor: Colors.white,
+                onpress: (){},height: 50,width: 260,),
+            ),
           ],
         ),
       ),

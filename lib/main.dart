@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Screens/Doctors/DoctorLogin.dart';
 import 'package:patient_status_app/Screens/Home.dart';
+import 'package:patient_status_app/Screens/LoadingScreen.dart';
 import 'package:patient_status_app/Screens/Nurses/NurseLogin.dart';
 import 'package:patient_status_app/Screens/Register.dart';
 import 'package:patient_status_app/Screens/Status.dart';

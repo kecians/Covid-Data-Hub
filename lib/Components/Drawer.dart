@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patient_status_app/Screens/LoadingScreen.dart';
 import 'package:patient_status_app/Screens/Nurses/NurseLogin.dart';
 import 'package:patient_status_app/Screens/Status.dart';
 class MyDrawer extends StatelessWidget {
@@ -27,7 +28,8 @@ class MyDrawer extends StatelessWidget {
         /// Components
 
         InkWell(
-          onTap: () {Navigator.pushNamed(context, Status.id);},
+          onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context){
+            return Loading_Screen();}));},
           child: ListTile(
             title: Text('Status'),
             leading: Icon(

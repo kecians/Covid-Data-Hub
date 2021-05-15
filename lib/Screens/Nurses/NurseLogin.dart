@@ -13,6 +13,8 @@ enum Bed{
 }
 
 class NurseLogin extends StatefulWidget {
+  final data;
+  NurseLogin({this.data});
   static const String id = 'NurseLogin';
   @override
   _NurseLoginState createState() => _NurseLoginState();
@@ -20,47 +22,30 @@ class NurseLogin extends StatefulWidget {
 
 class _NurseLoginState extends State<NurseLogin> {
   Bed typeBed=Bed.NonOxyBed;
+  String user,designation;
+  String _token;
+  void data(data){
+    user = data[2];
+    designation = "DEO";
+    _token = data[3];
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    data(widget.data);
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: Drawer(child: MyDrawer(name: 'Shubham Tripathi',designation: 'Doctor   ; )',),),
+        drawer: Drawer(child: MyDrawer(name: user,designation: designation)),
         appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
         ),),
         body: ListView(
 
           children: [
-            SizedBox(height: 10,),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                RoundButton(text: "Normal Bed",onpress: (){
-                  setState(() {
-                    typeBed = Bed.NonOxyBed;
-                  });
-                },
-                  color: typeBed == Bed.NonOxyBed ? Color(0XFFD5031A8D):Colors.white,
-                  textColor: typeBed == Bed.NonOxyBed ? Colors.white:Colors.black,
-                ),
-                RoundButton(text: "Oxygen Bed",onpress: (){
-                  setState(() {
-                    typeBed = Bed.OxygenBed;
-                  });
-                },
-                  textColor: typeBed == Bed.OxygenBed ? Colors.white:Colors.black,
-                  color: typeBed == Bed.OxygenBed ? Color(0XFFD5031A8D):Colors.white,
-                ),
-                RoundButton(text: "Ventilator",width: 110,onpress: (){
-                  setState(() {
-                    typeBed = Bed.VentilatorBed;
-                  });
-                },color: typeBed == Bed.VentilatorBed ? Color(0XFFD5031A8D):Colors.white,
-                  textColor: typeBed == Bed.VentilatorBed ? Colors.white:Colors.black,
-                )
-              ],
-            ),
             SizedBox(height: 10,),
             SearchBar(),
             SizedBox(height: 10,),
