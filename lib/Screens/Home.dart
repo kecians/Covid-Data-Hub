@@ -111,7 +111,7 @@ class _HomeState extends State<Home> {
                               Text('Or',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 16),),
                               SizedBox(height: 10,),
                               RoundButton(color: Color(0XFFD5031A8D),text: "Test Button", textColor: Colors.white,
-                                onpress: (){ Navigator.pushNamed(context, NurseLogin.id);},height: 50,width: 260,),
+                                onpress: (){},height: 50,width: 260,),
 
                             ],
                           ),

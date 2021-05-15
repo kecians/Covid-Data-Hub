@@ -4,7 +4,10 @@ import 'package:patient_status_app/Components/Drawer.dart';
 import 'package:patient_status_app/Components/PatientListCard.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Components/SearchBar.dart';
+import 'package:patient_status_app/Model/Networking.dart';
+import 'package:patient_status_app/Screens/Patient/PatientDetails.dart';
 import 'package:patient_status_app/Screens/Patient/PatientForm.dart';
+import 'package:patient_status_app/Utilities/constants.dart';
 
 enum Bed{
    OxygenBed,
@@ -34,6 +37,7 @@ class _NurseLoginState extends State<NurseLogin> {
     // TODO: implement initState
     super.initState();
     data(widget.data);
+    Networking().getPatientList(widget.data[3]);
   }
   @override
   Widget build(BuildContext context) {
@@ -43,23 +47,37 @@ class _NurseLoginState extends State<NurseLogin> {
         appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
         ),),
-        body: ListView(
-
+        body: Column(
           children: [
             SizedBox(height: 10,),
             SearchBar(),
             SizedBox(height: 10,),
-            Column(
+            Container(child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                 PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',onPress: (){Navigator.pushNamed(context, PatientForm.id);}),
-                PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
-                PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
-                PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
-                PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
-                PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',),
+                Text('Patient Name',style: kwhite),
+                Text('Bed Number',style: kwhite),
+                Text('Admitted On',style: kwhite)
+              ],
+            ),height: 50,width: double.infinity,
+              color: Colors.blueGrey[900],
+            ),
+            SizedBox(height: 10,),
+            Expanded(child: Padding(
+              padding: const EdgeInsets.only(left: 10,right: 10),
+              child: ListView(
+                children: [
+                  PatientListCard(patientName: 'Sunder Pichai',bedNo: 'B 21',admittedOn: "15 May 21",onPress: (){Navigator.push(context, MaterialPageRoute(builder:(context){return PatientDetails();}));}),
+                  PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',admittedOn: "15 May 21"),
+                  PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',admittedOn: "15 May 21"),
+                  PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',admittedOn: "15 May 21"),
+                  PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',admittedOn: "15 May 21"),
+                  PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',admittedOn: "15 May 21"),
 
-          ],
-        ),
+                ],
+              ),
+            ),
+            )
         ]
       ),
     )

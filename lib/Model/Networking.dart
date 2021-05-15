@@ -8,8 +8,8 @@ class Networking{
     },
       body:jsonEncode({'username': username , 'password': password}),
     );
-
     var dec = jsonDecode(response.body);
+
     if(dec['status']!=200)
       {
         var list = [dec['status'],dec['message']];
@@ -38,6 +38,16 @@ class Networking{
       "allotedIcuBeds" : dec['alloted_beds']['icu'],
     };
     return data;
+  }
+
+  Future<dynamic> getPatientList(_token) async{
+    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/admit/";
+    var response = await http.get(Uri.parse(url),headers: {
+      'content-type':'application/json','Authorization' : "Token $_token"});
+    var val = jsonDecode(response.body);
+    print(val);
+
+    return val;
   }
 
 

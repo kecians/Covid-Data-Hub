@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 class PatientListCard extends StatelessWidget {
   const PatientListCard({
-    this.patientName,this.bedNo,this.onPress
+    this.patientName,this.bedNo,this.onPress,this.admittedOn
   });
-  final String patientName,bedNo;
+  final String patientName,bedNo,admittedOn;
   final Function onPress;
   @override
   Widget build(BuildContext context) {
@@ -15,11 +15,27 @@ class PatientListCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
 
-            Text(
-                patientName
+            Container(
+              width: 100,
+              child: Text(
+                  patientName,
+                overflow: TextOverflow.fade,
+                style: TextStyle(fontWeight: FontWeight.w600,fontSize: 12),
+              ),
             ),
-            Text(
-                bedNo
+            Container(
+              width: 50,
+              child: Text(
+                  bedNo
+                  ,style: TextStyle(fontWeight: FontWeight.w800,color: Colors.green[800]),
+              ),
+            ),
+            Container(
+              width: 80,
+              child: Text(
+                admittedOn,
+                style: TextStyle(fontWeight: FontWeight.w800,fontSize: 12),
+              ),
             )
           ],
         ),

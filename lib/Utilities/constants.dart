@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 const kInputDecorantion = InputDecoration(
 
   hintText: 'Enter text',
@@ -20,3 +19,11 @@ const kInputDecorantion = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+const kwhite = TextStyle(
+  color: Colors.white,
+  fontWeight: FontWeight.w700,
+  fontSize: 12
+);
+const kdarkHeader = TextStyle(color: Colors.black,fontWeight: FontWeight.w900 ,fontSize: 16);
+const kdarkValue = TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.w600,fontSize: 13);

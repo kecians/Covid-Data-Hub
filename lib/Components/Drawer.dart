@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Screens/LoadingScreen.dart';
 import 'package:patient_status_app/Screens/Nurses/NurseLogin.dart';
-import 'package:patient_status_app/Screens/Status.dart';
 class MyDrawer extends StatelessWidget {
   final String name,designation;
   const MyDrawer({Key key, this.name, this.designation});
