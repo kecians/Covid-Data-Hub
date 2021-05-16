@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:patient_status_app/Components/DetailCard.dart';
 import 'package:patient_status_app/Components/MyCard.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
+
+import 'Patient/AddPatient.dart';
 class Status extends StatefulWidget {
   static final String id = 'Status';
   final data;
-  Status({this.data});
+  final String designation;
+  Status({this.data,this.designation});
   @override
   _StatusState createState() => _StatusState();
 }
@@ -69,10 +72,21 @@ class _StatusState extends State<Status> {
                  TotalOxy: ox,TotalVen: ven,height: 300,
                  color: Colors.white,),
             SizedBox(height: 60,),
-            Center(
+            widget.designation == "NURSE" ? Center(
               child: RoundButton(color: Color(0XFFD5031A8D),text: "Add  Patient", textColor: Colors.white,
-                onpress: (){},height: 50,width: 260,),
-            ),
+                onpress: (){Navigator.push(context, MaterialPageRoute(
+                    builder: (context){return AddPatient();}));},height: 50,width: 260,),
+            ) :
+            Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                RoundButton(color: Color(0XFFD5031A8D),text: "Deaths", textColor: Colors.white,
+                  onpress: (){},height: 50,width: 100,),
+                RoundButton(color: Color(0XFFD5031A8D),text: "Migrated", textColor: Colors.white,
+                  onpress: (){},height: 50,width: 100,),
+                RoundButton(color: Color(0XFFD5031A8D),text: "Recovered", textColor: Colors.white,
+                  onpress: (){},height: 50,width: 100,),
+              ],
+            )
           ],
         ),
       ),

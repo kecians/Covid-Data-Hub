@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kecians.psa.patient_status_app">
    <application
-        android:label="patient_status_app"
+        android:label="Covid Data Hub"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

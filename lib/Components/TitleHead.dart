@@ -24,6 +24,16 @@ class TitleHead extends StatelessWidget {
           ),
           speed: Duration(milliseconds: 50),
         ),
+        TyperAnimatedText(
+
+          'Base Hospital Almora',
+          textStyle: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.w900,
+              color: Colors.white
+          ),
+          speed: Duration(milliseconds: 50),
+        ),
       ],
         totalRepeatCount: 1,
       ),

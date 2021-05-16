@@ -45,10 +45,29 @@ class Networking{
     var response = await http.get(Uri.parse(url),headers: {
       'content-type':'application/json','Authorization' : "Token $_token"});
     var val = jsonDecode(response.body);
-    print(val);
-
-    return val;
+    return val['data'];
+  }
+  Future<dynamic>lastStat(id)async{
+    String url = "https://ayushbisht200121.pythonanywhere.com/api/health/details/$id/";
+    var res = await http.get(Uri.parse(url));
+    var stat = jsonDecode(res.body);
+     print(stat['data']);
+    return stat['data'][0];
   }
 
-
+  Future<dynamic> HealthUpdate(_token,pat_id,sys,dia,pulse,temp,spo2,condition) async
+  {  String cond;
+    if(condition == 'Asymptomatic') { cond = "1"; }
+    else if(condition == 'Mild') {cond = "2";}
+    else if(condition == 'Moderate') {cond = "3";}
+    else if(condition == 'Severe') {cond = "4";}
+    String url = "https://ayushbisht200121.pythonanywhere.com/api/health/update/";
+    var response = await http.post(Uri.parse(url),
+      headers: {'content-type':'application/json','Authorization' : "Token $_token"},
+      body: jsonEncode({"username":pat_id ,"patient_condition": cond,"oxy_level":spo2,"pulse_rate":pulse
+        ,"blood_pres_systolic":sys , "blood_pres_diastolic" : dia ,"temperature" : temp}),);
+    var res = jsonDecode(response.body);
+    print(res);
+    return res['status'];
+  }
 }

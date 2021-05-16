@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:patient_status_app/Screens/Home.dart';
 import 'package:patient_status_app/Screens/LoadingScreen.dart';
-import 'package:patient_status_app/Screens/Nurses/NurseLogin.dart';
 class MyDrawer extends StatelessWidget {
   final String name,designation;
   const MyDrawer({Key key, this.name, this.designation});
@@ -28,7 +28,7 @@ class MyDrawer extends StatelessWidget {
 
         InkWell(
           onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context){
-            return Loading_Screen();}));},
+            return Loading_Screen(designation: designation,);}));},
           child: ListTile(
             title: Text('Status'),
             leading: Icon(
@@ -39,18 +39,7 @@ class MyDrawer extends StatelessWidget {
         ),
         Divider(indent: 20,endIndent: 20, thickness: 1,),
         InkWell(
-          onTap: () {Navigator.pushNamed(context, NurseLogin.id);},
-          child: ListTile(
-            title: Text('Patient List'),
-            leading: Icon(
-              Icons.list,
-              color: Colors.blueGrey,
-            ),
-          ),
-        ),
-        Divider(indent: 20,endIndent: 20, thickness: 1,),
-        InkWell(
-          onTap: () {},
+          onTap: () {Navigator.pushNamedAndRemoveUntil(context, Home.id, (route) => false);},
           child: ListTile(
             title: Text('Logout'),
             leading: Icon(

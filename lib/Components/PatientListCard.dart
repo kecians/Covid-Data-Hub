@@ -1,10 +1,38 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 class PatientListCard extends StatelessWidget {
   const PatientListCard({
-    this.patientName,this.bedNo,this.onPress,this.admittedOn
+    this.patientName,this.onPress,this.admittedOn,this.isBed
   });
-  final String patientName,bedNo,admittedOn;
+  final String patientName,admittedOn;
+  final isBed;
   final Function onPress;
+
+  String condition(){
+    if(isBed == null) {
+      return "Null";
+    }
+    return "${category()}  ${isBed['bed_number']}";
+  }
+  String category()
+  {
+    if(isBed['bed_category'] == "1")
+      {
+        return  "GEN";
+      }
+    else if(isBed['bed_category'] == "2")
+      {
+        return "OXY";
+      }
+    else if(isBed['bed_category'] == '3')
+      {
+        return 'ICU';
+      }
+    else if(isBed['bed_category'] == '4'){
+      return 'VEN';
+    }
+ }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -26,14 +54,14 @@ class PatientListCard extends StatelessWidget {
             Container(
               width: 50,
               child: Text(
-                  bedNo
-                  ,style: TextStyle(fontWeight: FontWeight.w800,color: Colors.green[800]),
+                  condition()
+                  ,style: TextStyle(fontWeight: FontWeight.w800,color: Colors.green[800],fontSize: 12),
               ),
             ),
             Container(
               width: 80,
               child: Text(
-                admittedOn,
+                admittedOn.substring(0,10),
                 style: TextStyle(fontWeight: FontWeight.w800,fontSize: 12),
               ),
             )

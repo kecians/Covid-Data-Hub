@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:patient_status_app/Screens/Status.dart';
 class Loading_Screen extends StatefulWidget {
+  final String designation;
+  Loading_Screen({this.designation});
    @override
   _Loading_ScreenState createState() => _Loading_ScreenState();
 }

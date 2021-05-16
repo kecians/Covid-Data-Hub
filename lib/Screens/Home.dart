@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                                   decoration: kInputDecorantion.copyWith(hintText: 'Enter your password',),
                                 ),
                               ),
-                              SizedBox(height: 100),
+                              SizedBox(height: 140),
                               RoundButton(color: Color(0XFFD5031A8D),text: "Login", textColor: Colors.white,
                                 onpress: ()async{
                                   final progress = ProgressHUD.of(context);
@@ -85,7 +85,8 @@ class _HomeState extends State<Home> {
                                           builder: (context){return NurseLogin(data: response,);}), (route) => false);
                                     }
                                     else if(response[1]=='DOCTOR'){
-                                      Navigator.pushNamedAndRemoveUntil(context, NurseLogin.id, (route) => false);
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                          builder: (context){return NurseLogin(data: response,);}), (route) => false);
                                     }
                                   }
                                   else
@@ -107,11 +108,6 @@ class _HomeState extends State<Home> {
                                   progress.dismiss();
                                 }
                                 ,height: 50,width: 260,),
-                              SizedBox(height: 10,),
-                              Text('Or',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 16),),
-                              SizedBox(height: 10,),
-                              RoundButton(color: Color(0XFFD5031A8D),text: "Test Button", textColor: Colors.white,
-                                onpress: (){},height: 50,width: 260,),
 
                             ],
                           ),

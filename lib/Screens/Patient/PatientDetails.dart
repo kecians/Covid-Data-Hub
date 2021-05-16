@@ -1,8 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
+import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Screens/Patient/PatientForm.dart';
 import 'package:patient_status_app/Utilities/constants.dart';
-class PatientDetails extends StatelessWidget {
+class PatientDetails extends StatefulWidget {
+  final response;
+  final String token,designation;
+  PatientDetails({this.response,this.token,this.designation});
+
+  @override
+  _PatientDetailsState createState() => _PatientDetailsState();
+}
+
+class _PatientDetailsState extends State<PatientDetails> {
+   String patient,status,gender,patientId,address,condition;
+   int age,contact;
+   String spo2, bpUp,bpDown,temp;
+   var stat={};
+  dataList(){
+    patient = widget.response['name'];
+    status = widget.response['patient_status'];
+    gender = widget.response['gender'];
+    contact = widget.response['contact_number'];
+    age = widget.response['age'];
+    patientId = widget.response['patient_id'];
+    address = widget.response['address'];
+    condition = widget.response['health_condition'];
+  }
+   @override
+  void initState() {
+    super.initState();
+    this.dataList();
+    this.Stat(widget.response['patient_id']);
+  }
+  Stat(id) async{
+    var res = await Networking().lastStat(id);
+    print(res['patient_condition']);
+    setState(() {
+      stat = res;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +67,21 @@ class PatientDetails extends StatelessWidget {
                           children: [
                             Text("Name",style: kdarkHeader,),
                             SizedBox(height: 10,),
-                            Container(child: Text('Seema',style: kdarkValue,),width: 80,alignment: Alignment.center,)
+                            Container(child: Text(patient,style: kdarkValue,),width: 80,alignment: Alignment.center,)
                           ],
                         ),
                         Column(
                           children: [
                             Text("Status",style: kdarkHeader,),
                             SizedBox(height: 10,),
-                            Text('Active',style: kdarkValue,)
+                            Text(status,style: kdarkValue,)
                           ],
                         ),
                         Column(
                           children: [
                             Text("Gender",style: kdarkHeader,),
                             SizedBox(height: 10,),
-                            Text('F',style: kdarkValue,)
+                            Text(gender,style: kdarkValue,)
                           ],
                         ),
                       ],
@@ -59,21 +96,21 @@ class PatientDetails extends StatelessWidget {
                             children: [
                               Text("Contact",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text('41947141084',style: kdarkValue,)
+                              Text("$contact",style: kdarkValue,)
                             ],
                           ),
                           Column(
                             children: [
                               Text("Age",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text('20',style: kdarkValue,)
+                              Text("$age",style: kdarkValue,)
                             ],
                           ),
                           Column(
                             children: [
                               Text("Patient ID",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text('201312141',style: kdarkValue,)
+                              Text(patientId,style: kdarkValue,)
                             ],
                           ),
 
@@ -86,7 +123,7 @@ class PatientDetails extends StatelessWidget {
                         children: [
                           Text("Address",style: kdarkHeader,),
                           SizedBox(height: 10,),
-                          Text('JFcf afhilafndd faofanfab  afbbalf',style: kdarkValue,)
+                          Text(address,style: kdarkValue,)
                         ],
                       ),
                       SizedBox(height: 10,),
@@ -99,21 +136,21 @@ class PatientDetails extends StatelessWidget {
                             children: [
                               Text("Condition",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text('Severe',style: kdarkValue,)
+                              Text(condition,style: kdarkValue,)
                             ],
                           ),
                           Column(
                             children: [
                               Text("B P",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text('20/10',style: kdarkValue,)
+                              Text('${stat['blood_pres_systolic']} / ${stat['blood_pres_diastolic']}',style: kdarkValue,)
                             ],
                           ),
                           Column(
                             children: [
                               Text("SPO2 Level",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text('20',style: kdarkValue,)
+                              Text("${stat['oxy_level']}",style: kdarkValue,)
                             ],
                           ),
 
@@ -128,22 +165,31 @@ class PatientDetails extends StatelessWidget {
                             children: [
                               Text("Temperature",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text('98 °F',style: kdarkValue,)
+                              Text('${stat['temperature']} °F',style: kdarkValue,)
                             ],
                           ),
                           Column(
                             children: [
-                              Text("Last Updated",style: kdarkHeader,),
+                              Text("Pulse Rate",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text('20/10',style: kdarkValue,)
+                              Text("${stat['pulse_rate']}",style: kdarkValue,),
                             ],
                           ),
                         ],
                       ),
                       SizedBox(height: 40,),
-                      RoundButton(color: Color(0XFFD5031A8D),text: "Health Check", textColor: Colors.white,
-                        onpress: (){Navigator.push(context, MaterialPageRoute(
-                            builder: (context){return PatientForm();}));} ,height: 50,width: 260,),
+                      widget.designation=="NURSE" ? RoundButton(color: Color(0XFFD5031A8D),text: "Health Check", textColor: Colors.white,
+                        onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context){return PatientForm(patientName: patient,patient_id: patientId,token: widget.token,);}));} ,height: 50,width: 260,)
+                          :
+                          Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              RoundButton(color: Color(0XFFD5031A8D),text: "Change Status", textColor: Colors.white,
+                                onpress: (){} ,height: 50,width: 120,),
+                              RoundButton(color: Color(0XFFD5031A8D),text: "Change Bed", textColor: Colors.white,
+                                onpress: (){} ,height: 50,width: 120,),
+                            ],
+                          )
                   ],
             ),
           ),
@@ -155,4 +201,4 @@ class PatientDetails extends StatelessWidget {
       ),
     ));
   }
-  }
+}

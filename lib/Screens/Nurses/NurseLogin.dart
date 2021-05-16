@@ -5,16 +5,9 @@ import 'package:patient_status_app/Components/PatientListCard.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Components/SearchBar.dart';
 import 'package:patient_status_app/Model/Networking.dart';
+import 'package:patient_status_app/Screens/Patient/AddPatient.dart';
 import 'package:patient_status_app/Screens/Patient/PatientDetails.dart';
-import 'package:patient_status_app/Screens/Patient/PatientForm.dart';
 import 'package:patient_status_app/Utilities/constants.dart';
-
-enum Bed{
-   OxygenBed,
-   NonOxyBed,
-  VentilatorBed
-}
-
 class NurseLogin extends StatefulWidget {
   final data;
   NurseLogin({this.data});
@@ -24,29 +17,40 @@ class NurseLogin extends StatefulWidget {
 }
 
 class _NurseLoginState extends State<NurseLogin> {
-  Bed typeBed=Bed.NonOxyBed;
   String user,designation;
   String _token;
+  var res=[];
   void data(data){
     user = data[2];
-    designation = "DEO";
+    designation = data[1];
     _token = data[3];
   }
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     data(widget.data);
-    Networking().getPatientList(widget.data[3]);
+    this.response(widget.data[3]);
   }
+  response(_token)async {
+    var resp = await Networking().getPatientList(_token);
+    setState(() {
+      res = resp;
+    });
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return SafeArea(
       child: Scaffold(
         drawer: Drawer(child: MyDrawer(name: user,designation: designation)),
         appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
         ),),
+        bottomNavigationBar: widget.data[1]=='NURSE' ? Container(color: Color(0XFFD5031A8D),
+          child: RoundButton(color: Color(0XFFD5031A8D),text: "Add  Patient", textColor: Colors.white,
+            onpress: (){Navigator.push(context, MaterialPageRoute(
+                builder: (context){return AddPatient();}));} ,height: 50,width: 260,),
+        ) : null,
         body: Column(
           children: [
             SizedBox(height: 10,),
@@ -65,25 +69,16 @@ class _NurseLoginState extends State<NurseLogin> {
             SizedBox(height: 10,),
             Expanded(child: Padding(
               padding: const EdgeInsets.only(left: 10,right: 10),
-              child: ListView(
-                children: [
-                  PatientListCard(patientName: 'Sunder Pichai',bedNo: 'B 21',admittedOn: "15 May 21",onPress: (){Navigator.push(context, MaterialPageRoute(builder:(context){return PatientDetails();}));}),
-                  PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',admittedOn: "15 May 21"),
-                  PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',admittedOn: "15 May 21"),
-                  PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',admittedOn: "15 May 21"),
-                  PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',admittedOn: "15 May 21"),
-                  PatientListCard(patientName: 'Patient 1',bedNo: 'B 21',admittedOn: "15 May 21"),
-
-                ],
+              child: ListView.builder(itemCount: res.length,
+                  itemBuilder:(context , index){
+                 return PatientListCard(patientName: res[index]['name'] ,isBed:res[index]['patient_bed'],admittedOn: res[index]["created_on"],onPress: (){Navigator.push(context
+                     , MaterialPageRoute(builder:(context){return PatientDetails(response: res[index],token: _token,designation:widget.data[1],);}));});
+              })
               ),
             ),
-            )
         ]
       ),
     )
     );
   }
 }
-
-
-
