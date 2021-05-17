@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Components/DetailCard.dart';
+import 'package:patient_status_app/Components/Drawer.dart';
 import 'package:patient_status_app/Components/MyCard.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 
@@ -7,8 +8,8 @@ import 'Patient/AddPatient.dart';
 class Status extends StatefulWidget {
   static final String id = 'Status';
   final data;
-  final String designation;
-  Status({this.data,this.designation});
+  final responseList;
+  Status({this.data,this.responseList});
   @override
   _StatusState createState() => _StatusState();
 }
@@ -41,6 +42,7 @@ class _StatusState extends State<Status> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: Drawer(child: MyDrawer(name: widget.responseList[2],designation: widget.responseList[1],responsedata: widget.responseList)),
         appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
         ),),
@@ -72,7 +74,7 @@ class _StatusState extends State<Status> {
                  TotalOxy: ox,TotalVen: ven,height: 300,
                  color: Colors.white,),
             SizedBox(height: 60,),
-            widget.designation == "NURSE" ? Center(
+            widget.responseList[1] == "NURSE" ? Center(
               child: RoundButton(color: Color(0XFFD5031A8D),text: "Add  Patient", textColor: Colors.white,
                 onpress: (){Navigator.push(context, MaterialPageRoute(
                     builder: (context){return AddPatient();}));},height: 50,width: 260,),
@@ -86,7 +88,7 @@ class _StatusState extends State<Status> {
                 RoundButton(color: Color(0XFFD5031A8D),text: "Recovered", textColor: Colors.white,
                   onpress: (){},height: 50,width: 100,),
               ],
-            )
+            ),
           ],
         ),
       ),

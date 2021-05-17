@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Screens/Home.dart';
 import 'package:patient_status_app/Screens/LoadingScreen.dart';
+import 'package:patient_status_app/Screens/NurseLogin.dart';
 class MyDrawer extends StatelessWidget {
   final String name,designation;
-  const MyDrawer({Key key, this.name, this.designation});
+  final responsedata;
+  const MyDrawer({Key key, this.name, this.designation,this.responsedata});
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -28,9 +30,9 @@ class MyDrawer extends StatelessWidget {
 
         InkWell(
           onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context){
-            return Loading_Screen(designation: designation,);}));},
+            return NurseLogin(data: responsedata,);}));},
           child: ListTile(
-            title: Text('Status'),
+            title: Text('Patient List'),
             leading: Icon(
               Icons.trending_up,
               color: Colors.blueGrey,

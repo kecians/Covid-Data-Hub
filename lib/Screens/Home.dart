@@ -5,9 +5,11 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
-import 'package:patient_status_app/Screens/Nurses/NurseLogin.dart';
+import 'package:patient_status_app/Screens/LoadingScreen.dart';
+import 'package:patient_status_app/Screens/NurseLogin.dart';
 import 'package:patient_status_app/Utilities/constants.dart';
 import 'package:patient_status_app/Components/TitleHead.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class Home extends StatefulWidget {
   static const String id = 'HomeScreen';
   @override
@@ -16,10 +18,19 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Networking instance = Networking();
+  SharedPreferences logindata;
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   String errortext ="";
-  bool isLogin = false;
+  bool isLogin;
+  var res;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    check_if_loggedIn();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -78,15 +89,23 @@ class _HomeState extends State<Home> {
                                   var response = await instance.signin(_usernameController.text, _passwordController.text);
                                   print("this $response");
                                   if(response[0] == 200)
-                                  {
+                                  { String status = "${response[0]}"; String desig = response[1];
+                                    String user = response[2]; String token = response[3];
+                                    List<String> lst = [status,desig,user,token];
+                                    print(lst);
+                                    logindata.setBool('isLoggedIn', true);
+                                    logindata.setStringList('res', lst);
+                                    setState(() {
+                                      res = response;
+                                    });
                                     if(response[1]=='NURSE')
                                     {
                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                                          builder: (context){return NurseLogin(data: response,);}), (route) => false);
+                                          builder: (context){return Loading_Screen();}), (route) => false);
                                     }
                                     else if(response[1]=='DOCTOR'){
                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                                          builder: (context){return NurseLogin(data: response,);}), (route) => false);
+                                          builder: (context){return Loading_Screen();}), (route) => false);
                                     }
                                   }
                                   else
@@ -121,6 +140,15 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+  check_if_loggedIn() async{
+    logindata = await SharedPreferences.getInstance();
+    isLogin = (logindata.getBool('isLoggedIn') ?? false);
+
+    if(isLogin == true)
+      {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Loading_Screen()));
+      }
+  }
+
 }
-
-

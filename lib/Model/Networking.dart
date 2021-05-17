@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 class Networking{
-  Future<dynamic> signin(username,password) async{
+  Future<List> signin(username,password) async{
     String url = "https://ayushbisht200121.pythonanywhere.com/api/staff/login/";
     var response = await http.post( Uri.parse(url),headers: {
       'content-type':'application/json',
