@@ -5,7 +5,7 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:patient_status_app/Components/MyTextField.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
-import 'package:patient_status_app/Screens/NurseLogin.dart';
+import 'package:patient_status_app/Screens/PatientList.dart';
 class PatientForm extends StatefulWidget {
   static final String id = 'PatientForm';
   final String patientName;

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Screens/Home.dart';
-import 'package:patient_status_app/Screens/LoadingScreen.dart';
-import 'package:patient_status_app/Screens/NurseLogin.dart';
+import 'package:patient_status_app/Screens/PatientList.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class MyDrawer extends StatelessWidget {
+  SharedPreferences preferences;
   final String name,designation;
   final responsedata;
-  const MyDrawer({Key key, this.name, this.designation,this.responsedata});
+  MyDrawer({this.name, this.designation,this.responsedata});
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -30,7 +31,7 @@ class MyDrawer extends StatelessWidget {
 
         InkWell(
           onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context){
-            return NurseLogin(data: responsedata,);}));},
+            return PatientList(data: responsedata,);}));},
           child: ListTile(
             title: Text('Patient List'),
             leading: Icon(
@@ -41,7 +42,9 @@ class MyDrawer extends StatelessWidget {
         ),
         Divider(indent: 20,endIndent: 20, thickness: 1,),
         InkWell(
-          onTap: () {Navigator.pushNamedAndRemoveUntil(context, Home.id, (route) => false);},
+          onTap: ()async{ preferences = await SharedPreferences.getInstance();
+          preferences.setBool('isLoggedIn', false);
+             Navigator.pushReplacementNamed(context, Home.id);},
           child: ListTile(
             title: Text('Logout'),
             leading: Icon(

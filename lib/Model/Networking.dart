@@ -70,4 +70,28 @@ class Networking{
     print(res);
     return res['status'];
   }
+  Future<dynamic> AddPatient(_token,name,age,gender,bed_cat,bedNo,phno,condition,address) async
+  {
+    String cond;
+    if(condition == 'Asymptomatic') { cond = "1"; }
+    else if(condition == 'Mild') {cond = "2";}
+    else if(condition == 'Moderate') {cond = "3";}
+    else if(condition == 'Severe') {cond = "4";}
+    String bedCat;
+    if(bed_cat == 'General Bed') { bedCat = "1"; }
+    else if(bed_cat == 'Oxygen Bed') {bedCat = "2";}
+    else if(bed_cat == 'ICU Bed') {bedCat = "3";}
+    else if(bed_cat == 'Ventilators') {bedCat = "4";}
+    
+    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/admit/";
+    
+    var response = await http.post(Uri.parse(url),
+    headers:{'content-type':'application/json','Authorization' : "Token $_token"},
+    body: jsonEncode({"name":name,"age":age, "gender": gender, "bed_category": bedCat,
+      "bed_number":bedNo,"contact_number":phno,"health_condition":cond,"address":address}));
+    var res = jsonDecode(response.body);
+
+    return res['status'];
+
+  }
 }

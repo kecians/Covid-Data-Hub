@@ -42,7 +42,7 @@ class _StatusState extends State<Status> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: Drawer(child: MyDrawer(name: widget.responseList[2],designation: widget.responseList[1],responsedata: widget.responseList)),
+        drawer: Drawer(child: MyDrawer(name: widget.responseList[2],designation: widget.responseList[1]== "NURSE" ? "DEO": widget.responseList[1],responsedata: widget.responseList)),
         appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
         ),),

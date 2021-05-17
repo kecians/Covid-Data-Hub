@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:patient_status_app/Components/Drawer.dart';
 import 'package:patient_status_app/Components/PatientListCard.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Components/SearchBar.dart';
@@ -8,15 +7,15 @@ import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Screens/Patient/AddPatient.dart';
 import 'package:patient_status_app/Screens/Patient/PatientDetails.dart';
 import 'package:patient_status_app/Utilities/constants.dart';
-class NurseLogin extends StatefulWidget {
+class PatientList extends StatefulWidget {
   final data;
-  NurseLogin({this.data});
+  PatientList({this.data});
   static const String id = 'NurseLogin';
   @override
-  _NurseLoginState createState() => _NurseLoginState();
+  _PatientListState createState() => _PatientListState();
 }
 
-class _NurseLoginState extends State<NurseLogin> {
+class _PatientListState extends State<PatientList> {
   String user,designation;
   String _token;
   var res=[];
