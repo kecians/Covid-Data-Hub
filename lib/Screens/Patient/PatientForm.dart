@@ -88,7 +88,7 @@ class _PatientFormState extends State<PatientForm> {
                         {
                           CoolAlert.show(
                             context: context,
-                            type: CoolAlertType.success,
+                            type: CoolAlertType.error,
                             text: "Some field is empty or improperly filled!",
                           );
                         }

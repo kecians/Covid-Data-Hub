@@ -53,7 +53,7 @@ class _StatusState extends State<Status> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                MyCard(height: 120,width: 160,headText: 'Allotted Beds',headerSize: 17,valueColor: Colors.blueGrey[600],
+                MyCard(height: 120,width: 160,headText: 'Total Patients',headerSize: 17,valueColor: Colors.blueGrey[600],
                   color: Colors.white,valueSize: 30,
                   /// Realtime Value
                   valueText: "$alloted",
@@ -77,7 +77,7 @@ class _StatusState extends State<Status> {
             widget.responseList[1] == "NURSE" ? Center(
               child: RoundButton(color: Color(0XFFD5031A8D),text: "Add  Patient", textColor: Colors.white,
                 onpress: (){Navigator.push(context, MaterialPageRoute(
-                    builder: (context){return AddPatient();}));},height: 50,width: 260,),
+                    builder: (context){return AddPatient(token: widget.responseList[3]);}));},height: 50,width: 260,),
             ) :
             Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

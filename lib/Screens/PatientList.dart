@@ -47,7 +47,7 @@ class _PatientListState extends State<PatientList> {
           bottomNavigationBar: widget.data[1]=='NURSE' ? Container(color: Color(0XFFD5031A8D),
             child: RoundButton(color: Color(0XFFD5031A8D),text: "Add  Patient", textColor: Colors.white,
               onpress: (){Navigator.push(context, MaterialPageRoute(
-                  builder: (context){return AddPatient();}));} ,height: 50,width: 260,),
+                  builder: (context){return AddPatient(token:widget.data[3]);}));} ,height: 50,width: 260,),
           ) : null,
           body: Column(
               children: [

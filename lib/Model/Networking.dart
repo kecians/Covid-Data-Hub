@@ -90,7 +90,7 @@ class Networking{
     body: jsonEncode({"name":name,"age":age, "gender": gender, "bed_category": bedCat,
       "bed_number":bedNo,"contact_number":phno,"health_condition":cond,"address":address}));
     var res = jsonDecode(response.body);
-
+    print("this ${res}");
     return res['status'];
 
   }
