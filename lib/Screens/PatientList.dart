@@ -65,14 +65,14 @@ class _PatientListState extends State<PatientList> {
                   color: Colors.blueGrey[900],
                 ),
                 SizedBox(height: 10,),
-                Expanded(child: Padding(
-                    padding: const EdgeInsets.only(left: 10,right: 10),
-                    child: ListView.builder(itemCount: res.length,
-                        itemBuilder:(context , index){
-                          return PatientListCard(patientName: res[index]['name'] ,isBed:res[index]['patient_bed'],admittedOn: res[index]["created_on"],onPress: (){Navigator.push(context
-                              , MaterialPageRoute(builder:(context){return PatientDetails(response: res[index],token: _token,designation:widget.data[1],);}));});
-                        })
-                ),
+                Expanded(child: ListView.builder(itemCount: res.length,
+                    itemBuilder:(context , index){
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 5 , right: 5),
+                        child: PatientListCard(patientName: res[index]['name'] ,isBed:res[index]['patient_bed'],admittedOn: res[index]["created_on"],onPress: (){Navigator.push(context
+                            , MaterialPageRoute(builder:(context){return PatientDetails(response: res[index],token: _token,designation:widget.data[1],);}));}),
+                      );
+                    }),
                 ),
               ]
           ),

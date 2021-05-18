@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
+import 'package:patient_status_app/Screens/Patient/ChangeBed.dart';
+import 'package:patient_status_app/Screens/Patient/ChangeStatus.dart';
 import 'package:patient_status_app/Screens/Patient/PatientForm.dart';
 import 'package:patient_status_app/Utilities/constants.dart';
 class PatientDetails extends StatefulWidget {
@@ -185,9 +187,11 @@ class _PatientDetailsState extends State<PatientDetails> {
                           Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               RoundButton(color: Color(0XFFD5031A8D),text: "Change Status", textColor: Colors.white,
-                                onpress: (){} ,height: 50,width: 120,),
+                                onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
+                                    builder: (context){return ChangeStatus(id: patientId,);}));} ,height: 50,width: 120,),
                               RoundButton(color: Color(0XFFD5031A8D),text: "Change Bed", textColor: Colors.white,
-                                onpress: (){} ,height: 50,width: 120,),
+                                onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
+                                    builder: (context){return ChangeBed(id: patientId,);}));} ,height: 50,width: 120,),
                             ],
                           )
                   ],

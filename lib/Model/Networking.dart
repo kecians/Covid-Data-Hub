@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 class Networking{
+
+
   Future<List> signin(username,password) async{
     String url = "https://ayushbisht200121.pythonanywhere.com/api/staff/login/";
     var response = await http.post( Uri.parse(url),headers: {
@@ -19,6 +21,7 @@ class Networking{
     print(list);
     return list;
   }
+
 
   Future<Map> getBedStatus() async{
     String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/get_alloted_beds/";
@@ -40,6 +43,7 @@ class Networking{
     return data;
   }
 
+
   Future<dynamic> getPatientList(_token) async{
     String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/admit/";
     var response = await http.get(Uri.parse(url),headers: {
@@ -47,6 +51,8 @@ class Networking{
     var val = jsonDecode(response.body);
     return val['data'];
   }
+
+
   Future<dynamic>lastStat(id)async{
     String url = "https://ayushbisht200121.pythonanywhere.com/api/health/details/$id/";
     var res = await http.get(Uri.parse(url));
@@ -54,6 +60,7 @@ class Networking{
      print(stat['data']);
     return stat['data'][0];
   }
+
 
   Future<dynamic> HealthUpdate(_token,pat_id,sys,dia,pulse,temp,spo2,condition) async
   {  String cond;
@@ -70,6 +77,8 @@ class Networking{
     print(res);
     return res['status'];
   }
+
+
   Future<dynamic> AddPatient(_token,name,age,gender,bed_cat,bedNo,phno,condition,address) async
   {
     String cond;
@@ -92,6 +101,80 @@ class Networking{
     var res = jsonDecode(response.body);
     print("this ${res}");
     return res['status'];
+  }
+
+  Future<dynamic>changePatientStatus(id,migratedto,migReason,deathReason,status)async {
+    String url1 = 'https://ayushbisht200121.pythonanywhere.com/api/patient/change_patient_status/$id/';
+    String url2 = 'https://ayushbisht200121.pythonanywhere.com/api/patient/patient_status/';
+
+    if (status == 'Migrated')
+     {
+         var response1 = await http.patch(Uri.parse(url1),headers: {
+           'content-type':'application/json',
+         },body: jsonEncode({'patient_status': 'M' }));
+         var response2 = await http.post(Uri.parse(url2),headers: {
+           'content-type':'application/json',
+         },
+             body: jsonEncode({'patient_id': id, 'migrated_to' : migratedto , 'reason' : migReason}));
+         var res = jsonDecode(response1.body);
+
+         return res['status'];
+     }
+
+    else if(status == 'Death')
+      {
+        var response1 = await http.patch(Uri.parse(url1),headers: {
+          'content-type':'application/json',
+        },body: jsonEncode({'patient_status': 'D' }));
+        var response2 = await http.post(Uri.parse(url2),headers: {
+          'content-type':'application/json',
+        },
+            body: jsonEncode({'patient_id': id,'reason' : deathReason}));
+
+        var res = jsonDecode(response1.body);
+
+        return res['status'];
+      }
+    else if(status =='Recovered'){
+      var response1 = await http.patch(Uri.parse(url1),headers: {
+        'content-type':'application/json',
+      },body: jsonEncode({'patient_status': 'R' }));
+
+      var res = jsonDecode(response1.body);
+      return res['status'];
+    }
 
   }
+
+
+
+  Future<dynamic> changePatientBed(id,bedtype,bedno) async{
+    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/bed_allotment/";
+    var bedtp;
+    if(bedtype=='General Bed')
+    {
+      bedtp = '1';
+    }
+    else if(bedtype == 'Oxygen Bed')
+    {
+      bedtp = '2';
+    }
+    else if(bedtype == 'ICU Bed')
+    {
+      bedtp ='3';
+    }
+    else if(bedtype == 'Ventilators')
+    {
+      bedtp ='4';
+    }
+    var response = await http.post(Uri.parse(url),headers: {
+      'content-type':'application/json',},body: jsonEncode({'patient_id':id,'bed_category':bedtp,'bed_number':bedno}));
+
+    var res = jsonDecode(response.body);
+
+    return res['status'];
+
+  }
+
 }
+

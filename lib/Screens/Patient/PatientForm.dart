@@ -82,7 +82,7 @@ class _PatientFormState extends State<PatientForm> {
                         var res = await instance.HealthUpdate(widget.token,widget.patient_id, sys, dia, pulse, temp, spo2, dropdownValue);
                         if(res == 201)
                         {
-                          Navigator.popUntil(context, (route) => false);
+                          Navigator.pop(context);
                         }
                         else
                         {
