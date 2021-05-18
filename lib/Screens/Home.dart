@@ -97,15 +97,8 @@ class _HomeState extends State<Home> {
                                     setState(() {
                                       res = response;
                                     });
-                                    if(response[1]=='NURSE')
-                                    {
                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                                           builder: (context){return Loading_Screen();}), (route) => false);
-                                    }
-                                    else if(response[1]=='DOCTOR'){
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                                          builder: (context){return Loading_Screen();}), (route) => false);
-                                    }
                                   }
                                   else
                                   {

@@ -4,6 +4,7 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:patient_status_app/Components/MyTextField.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
+import 'package:patient_status_app/Model/Toast.dart';
 class AddPatient extends StatefulWidget {
   final token;
   AddPatient({this.token});
@@ -89,7 +90,7 @@ class _AddPatientState extends State<AddPatient> {
                         var res = await instance.AddPatient(widget.token, name, age,dropdownValue1,
                             dropdownValue2, bedNo,number, dropdownValue3, address);
                         if(res == 201)
-                        {
+                        { showToast(context, "Patient added Successfully");
                           Navigator.pop(context);
                         }
                         else

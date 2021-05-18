@@ -5,6 +5,7 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:patient_status_app/Components/MyTextField.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
+import 'package:patient_status_app/Model/Toast.dart';
 import 'package:patient_status_app/Screens/PatientList.dart';
 class PatientForm extends StatefulWidget {
   static final String id = 'PatientForm';
@@ -81,7 +82,7 @@ class _PatientFormState extends State<PatientForm> {
                         progress.show();
                         var res = await instance.HealthUpdate(widget.token,widget.patient_id, sys, dia, pulse, temp, spo2, dropdownValue);
                         if(res == 201)
-                        {
+                        { showToast(context, "Patient added Successfully");
                           Navigator.pop(context);
                         }
                         else

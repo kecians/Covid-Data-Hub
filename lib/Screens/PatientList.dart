@@ -24,9 +24,11 @@ class _PatientListState extends State<PatientList> {
     designation = data[1];
     _token = data[3];
   }
+
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
     data(widget.data);
     this.response(widget.data[3]);
   }
@@ -39,44 +41,54 @@ class _PatientListState extends State<PatientList> {
 
   @override
   Widget build(BuildContext context){
-    return SafeArea(
-        child: Scaffold(
-          appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
-          ),leading: IconButton(icon:Icon(Icons.arrow_back),onPressed: (){Navigator.pop(context);},),),
-          bottomNavigationBar: widget.data[1]=='NURSE' ? Container(color: Color(0XFFD5031A8D),
-            child: RoundButton(color: Color(0XFFD5031A8D),text: "Add  Patient", textColor: Colors.white,
-              onpress: (){Navigator.push(context, MaterialPageRoute(
-                  builder: (context){return AddPatient(token:widget.data[3]);}));} ,height: 50,width: 260,),
-          ) : null,
-          body: Column(
-              children: [
-                SizedBox(height: 10,),
-                SearchBar(),
-                SizedBox(height: 10,),
-                Container(child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('Patient Name',style: kwhite),
-                    Text('Bed Number',style: kwhite),
-                    Text('Admitted On',style: kwhite)
-                  ],
-                ),height: 50,width: double.infinity,
-                  color: Colors.blueGrey[900],
-                ),
-                SizedBox(height: 10,),
-                Expanded(child: ListView.builder(itemCount: res.length,
-                    itemBuilder:(context , index){
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 5 , right: 5),
-                        child: PatientListCard(patientName: res[index]['name'] ,isBed:res[index]['patient_bed'],admittedOn: res[index]["created_on"],onPress: (){Navigator.push(context
-                            , MaterialPageRoute(builder:(context){return PatientDetails(response: res[index],token: _token,designation:widget.data[1],);}));}),
-                      );
-                    }),
-                ),
-              ]
-          ),
-        )
+    return RefreshIndicator(
+      child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
+            ),leading: IconButton(icon:Icon(Icons.arrow_back),onPressed: (){Navigator.pop(context);},),),
+            bottomNavigationBar: widget.data[1]=='NURSE' ? Container(color: Color(0XFFD5031A8D),
+              child: RoundButton(color: Color(0XFFD5031A8D),text: "Add  Patient", textColor: Colors.white,
+                onpress: (){Navigator.push(context, MaterialPageRoute(
+                    builder: (context){return AddPatient(token:widget.data[3]);}),);} ,height: 50,width: 260,),
+            ) : null,
+            body: Column(
+                children: [
+                  SizedBox(height: 10,),
+                  SearchBar(),
+                  SizedBox(height: 10,),
+                  Container(child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('Patient Name',style: kwhite),
+                      Text('Bed Number',style: kwhite),
+                      Text('Admitted On',style: kwhite)
+                    ],
+                  ),height: 50,width: double.infinity,
+                    color: Colors.blueGrey[900],
+                  ),
+                  SizedBox(height: 10,),
+                  Expanded(child: ListView.builder(
+                      itemCount: res.length,
+                      itemBuilder:(context , index){
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 5 , right: 5),
+                          child: PatientListCard(patientName: res[index]['name'] ,isBed:res[index]['patient_bed'],admittedOn: res[index]["created_on"],onPress: (){Navigator.push(context
+                              , MaterialPageRoute(builder:(context){return PatientDetails(response: res[index],token: _token,designation:widget.data[1],);}));}),
+                        );
+                      }),
+                  ),
+                ]
+            ),
+          )
+      ),
+      onRefresh: () async {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => super.widget));
+        await Future.value({});
+      },
     );
   }
 }
