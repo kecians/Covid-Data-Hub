@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Screens/LoadingScreen.dart';
+import 'package:patient_status_app/Screens/PatientLogin.dart';
 import 'package:patient_status_app/Utilities/constants.dart';
 import 'package:patient_status_app/Components/TitleHead.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,7 +57,7 @@ class _HomeState extends State<Home> {
 
                         children:[
                           TitleHead(),
-                          SizedBox(height: 80),
+                          SizedBox(height: 60),
                           Column(
                             children: [
                               Text(errortext,style: TextStyle(color: Colors.red),),
@@ -81,7 +82,7 @@ class _HomeState extends State<Home> {
                                   decoration: kInputDecorantion.copyWith(hintText: 'Enter your password',),
                                 ),
                               ),
-                              SizedBox(height: 140),
+                              SizedBox(height: 100),
                               RoundButton(color: Color(0XFFD5031A8D),text: "Login", textColor: Colors.white,
                                 onpress: ()async{
                                   final progress = ProgressHUD.of(context);
@@ -120,6 +121,11 @@ class _HomeState extends State<Home> {
                                   progress.dismiss();
                                 }
                                 ,height: 50,width: 260,),
+                              SizedBox(height: 40,),
+                              RoundButton(color: Color(0XFFD5031A8),text: "Login as Patient", textColor: Colors.white,
+                                onpress: (){Navigator.push(context,MaterialPageRoute(builder: (context)=>PatientLogin()));}
+                                ,height: 50,width: 260,),
+
 
                             ],
                           ),

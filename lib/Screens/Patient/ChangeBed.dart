@@ -6,6 +6,7 @@ import 'package:patient_status_app/Components/MyTextField.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Model/Toast.dart';
+import 'package:patient_status_app/Screens/LoadingScreen.dart';
 class ChangeBed extends StatefulWidget {
   final id;
   ChangeBed({this.id});
@@ -63,14 +64,14 @@ class _ChangeBedState extends State<ChangeBed> {
                           if(res == 201)
                             {
                                showToast(context, "Changed Bed Successfully");
-                               Navigator.pop(context);
+                               Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Loading_Screen()));
                             }
                           else
                             {
                               CoolAlert.show(
                                 context: context,
                                 type: CoolAlertType.error,
-                                text: "Please enter a valid field!",
+                                text: "Please enter a valid field!\n Bed may be allotted!",
                               );
                             }
 

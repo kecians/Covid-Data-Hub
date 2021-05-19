@@ -1,0 +1,113 @@
+import 'package:cool_alert/cool_alert.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:patient_status_app/Components/RoundButton.dart';
+import 'package:patient_status_app/Model/Networking.dart';
+import 'package:patient_status_app/Screens/Patient/LastFive.dart';
+import 'package:patient_status_app/Screens/Patient/PatientInfo.dart';
+import 'package:patient_status_app/Utilities/constants.dart';
+class PatientLogin extends StatefulWidget {
+  @override
+  _PatientLoginState createState() => _PatientLoginState();
+}
+
+class _PatientLoginState extends State<PatientLogin> {
+  Networking instance = Networking();
+  String errortext="";
+  TextEditingController userController = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          bottomNavigationBar: Container(
+            height: 30,
+            color: Colors.black,
+            child: Center(child: Text("@Copyright @2021 All rights reserved",
+              style: TextStyle(color: Colors.white,fontSize: 12),),),
+          ),
+          body: ProgressHUD(
+            child: Builder(
+              builder: (context)=> Stack(
+                children: [
+                  Container(
+                    alignment: Alignment.bottomLeft,
+                    child: SvgPicture.asset('assets/CovidAnimate.svg',height: 200,width: 200,),
+
+                  ),
+                  Center(
+
+                    child: ListView(
+
+                      children:[
+                        SizedBox(height: 100,),
+                        Center(
+                          child: Text('Health Check Form',style: TextStyle(color: Colors.blue[900],fontSize: 26,
+                            fontWeight: FontWeight.w900,),),
+                        ),
+                        SizedBox(height: 100),
+                        Column(
+                          children: [
+                            Text(errortext,style: TextStyle(color: Colors.red),),
+                            SizedBox(height: 10,),
+                            Container(
+                              width: 260,
+                              child: TextField(
+
+                                controller: userController,
+
+                                style: TextStyle(color: Colors.black),
+                                decoration: kInputDecorantion.copyWith(hintText: "Enter Patient ID"),
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                            Container(
+                              width: 260,
+                              child: TextField(
+                                obscureText: true,
+                                controller: passwordcontroller,
+                                style: TextStyle(color: Colors.black),
+                                decoration: kInputDecorantion.copyWith(hintText: 'Enter your password',),
+                              ),
+                            ),
+                            SizedBox(height: 160),
+                            RoundButton(color: Color(0XFFD5031A8D),text: "Login as Patient", textColor: Colors.white,
+                              onpress: ()async{
+                                final progress = ProgressHUD.of(context);
+                                progress.show();
+                                var response = await instance.getPatientProfile(userController.text,passwordcontroller.text);
+                                progress.dismiss();
+                                if(response==400)
+                                  {
+                                    CoolAlert.show(
+                                      context: context,
+                                      type: CoolAlertType.error,
+                                      text: " Invalid User !",
+                                    );
+                                  }
+                                else{
+                                   Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context){
+                                     return PatientInfo(data: response);
+                                   }), (route) => false);
+                                }
+
+                              }
+
+                              ,height: 50,width: 260,),
+
+
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+      ),
+    );
+  }
+}

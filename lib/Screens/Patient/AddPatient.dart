@@ -17,8 +17,8 @@ class _AddPatientState extends State<AddPatient> {
   Networking instance = Networking();
   String dropdownValue1 = "Gender",
       dropdownValue2 = "Bed Type",
-      dropdownValue3 = "Condition";
-  String name,number,age,bedNo,address;
+      dropdownValue3 = "Condition",dropdownValue4="Covid Status";
+  String name,number,age,bedNo,address,remark;
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: ProgressHUD(
@@ -50,6 +50,8 @@ class _AddPatientState extends State<AddPatient> {
                         inputType: TextInputType.number,
                         onPress: (value) {number = value;}),
                     SizedBox(height: 20),
+                    DropDown4(),
+                    SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -81,6 +83,11 @@ class _AddPatientState extends State<AddPatient> {
                         width: 260,
                         inputType: TextInputType.streetAddress,
                         onPress: (value) {address=value;}),
+                    SizedBox(height: 20,),
+                    MyTextField(text: 'Remark',
+                        width: 260,
+                        inputType: TextInputType.streetAddress,
+                        onPress: (value) {address=value;}),
                     SizedBox(height: 30),
                     RoundButton(color: Color(0XFFD5031A8D),
                       text: "Submit",
@@ -106,6 +113,7 @@ class _AddPatientState extends State<AddPatient> {
                       },
                       height: 50,
                       width: 260,),
+                    SizedBox(height: 40,)
                   ],
                 ),
               ],
@@ -199,6 +207,40 @@ class _AddPatientState extends State<AddPatient> {
             });
           },
           items: <String>['Bed Type','General Bed','Oxygen Bed','ICU Bed','Ventilators']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown4() {
+    return Container(width: 260,padding: EdgeInsets.only(left: 3),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: dropdownValue4,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              dropdownValue4 = newValue;
+            });
+          },
+          items: <String>[
+            "Covid Status",
+            "Suspect",
+            "Positive"
+          ]
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,

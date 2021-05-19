@@ -5,6 +5,7 @@ import 'package:patient_status_app/Components/MyTextField.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Model/Toast.dart';
+import 'package:patient_status_app/Screens/LoadingScreen.dart';
 class ChangeStatus extends StatefulWidget {
   final id;
   ChangeStatus({this.id});
@@ -93,7 +94,7 @@ class _ChangeStatusState extends State<ChangeStatus> {
                             }
                             else
                               { showToast(context, "Status Successfully Updated!");
-                                Navigator.pop(context);
+                              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Loading_Screen()));
                               }
 
                         progress.dismiss();

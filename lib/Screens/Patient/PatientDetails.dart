@@ -3,6 +3,7 @@ import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Screens/Patient/ChangeBed.dart';
 import 'package:patient_status_app/Screens/Patient/ChangeStatus.dart';
+import 'package:patient_status_app/Screens/Patient/LastFive.dart';
 import 'package:patient_status_app/Screens/Patient/PatientForm.dart';
 import 'package:patient_status_app/Utilities/constants.dart';
 class PatientDetails extends StatefulWidget {
@@ -191,7 +192,8 @@ class _PatientDetailsState extends State<PatientDetails> {
                           {return Column(
                             children: [
                                InkWell(child: Text("Last 5 Days Report   >",
-                                 style: TextStyle(fontWeight: FontWeight.w600),),onTap: (){},),
+                                 style: TextStyle(fontWeight: FontWeight.w600),),onTap: (){Navigator.push(context,
+                                   MaterialPageRoute(builder: (context){return LastFive(id: patientId,);}));},),
                               SizedBox(height: 30,),
                               RoundButton(color: Color(0XFFD5031A8D),text: "Health Check", textColor: Colors.white,
                                 onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
@@ -203,7 +205,8 @@ class _PatientDetailsState extends State<PatientDetails> {
                           { return Column(
                             children: [
                               InkWell(child: Text("Last 5 Days Report   >",
-                                style: TextStyle(fontWeight: FontWeight.w600),),onTap: (){},),
+                                style: TextStyle(fontWeight: FontWeight.w600),),onTap: (){Navigator.push(context,
+                                  MaterialPageRoute(builder: (context){return LastFive(id: patientId,);}));},),
                               SizedBox(height: 30,),
                               Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
@@ -222,8 +225,8 @@ class _PatientDetailsState extends State<PatientDetails> {
                              children: [
                                SizedBox(height: 40,),
                                RoundButton(color: Color(0XFFD5031A8D),text: "Last 5 Days Report", textColor: Colors.white,
-                                 onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
-                                     builder: (context){return ChangeStatus(id: patientId,);}));} ,height: 50,width: 160,),
+                                 onpress: (){Navigator.push(context,
+                                     MaterialPageRoute(builder: (context){return LastFive(id: patientId,);}));} ,height: 50,width: 160,),
                              ],
                            );
                         }

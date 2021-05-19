@@ -61,7 +61,13 @@ class Networking{
     return stat['data'].last;
   }
 
-
+  Future<dynamic>lastFiveStat(id)async{
+    String url = "https://ayushbisht200121.pythonanywhere.com/api/health/details/$id/";
+    var res = await http.get(Uri.parse(url));
+    var stat = jsonDecode(res.body);
+    print(stat['data']);
+    return stat['data'];
+  }
   Future<dynamic> HealthUpdate(_token,pat_id,sys,dia,pulse,temp,spo2,condition) async
   {  String cond;
     if(condition == 'Asymptomatic') { cond = "1"; }
@@ -183,6 +189,17 @@ class Networking{
     var response = await http.get(Uri.parse(url));
     var res = jsonDecode(response.body);
     print(res);
+    return res['data'];
+  }
+
+  Future<dynamic> getPatientProfile(id,phno)async{
+    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/get_patient_profile/$id/";
+    var response = await http.get(Uri.parse(url));
+    var res = jsonDecode(response.body);
+    if(res['status'] !=200)
+      {
+        return 400;
+      }
     return res['data'];
   }
 
