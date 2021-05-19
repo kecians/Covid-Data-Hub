@@ -75,6 +75,7 @@ class _HomeState extends State<Home> {
                               Container(
                                 width: 260,
                                 child: TextField(
+                                  obscureText: true,
                                   controller: _passwordController,
                                   style: TextStyle(color: Colors.black),
                                   decoration: kInputDecorantion.copyWith(hintText: 'Enter your password',),
@@ -144,3 +145,4 @@ class _HomeState extends State<Home> {
   }
 
 }
+

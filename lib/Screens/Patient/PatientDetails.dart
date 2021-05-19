@@ -52,7 +52,7 @@ class _PatientDetailsState extends State<PatientDetails> {
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.only(left: 10,right: 10,top: 20),
-          height: 600,
+          height: 610,
           child: Center(
             child: Column(
                     children: [
@@ -94,12 +94,14 @@ class _PatientDetailsState extends State<PatientDetails> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Column(
-                            children: [
-                              Text("Contact",style: kdarkHeader,),
-                              SizedBox(height: 10,),
-                              Text("$contact",style: kdarkValue,)
-                            ],
+                          Container(width: 100,
+                            child: Column(
+                              children: [
+                                Text("Contact",style: kdarkHeader,),
+                                SizedBox(height: 10,),
+                                Text("$contact",style: kdarkValue,)
+                              ],
+                            ),
                           ),
                           Column(
                             children: [
@@ -108,12 +110,14 @@ class _PatientDetailsState extends State<PatientDetails> {
                               Text("$age",style: kdarkValue,)
                             ],
                           ),
-                          Column(
-                            children: [
-                              Text("Patient ID",style: kdarkHeader,),
-                              SizedBox(height: 10,),
-                              Text(patientId,style: kdarkValue,)
-                            ],
+                          Container(width: 90,
+                            child: Column(
+                              children: [
+                                Text("Patient ID",style: kdarkHeader,),
+                                SizedBox(height: 10,),
+                                Text(patientId,style: kdarkValue,)
+                              ],
+                            ),
                           ),
 
                         ],
@@ -125,7 +129,9 @@ class _PatientDetailsState extends State<PatientDetails> {
                         children: [
                           Text("Address",style: kdarkHeader,),
                           SizedBox(height: 10,),
-                          Text(address,style: kdarkValue,)
+                          Container(child: Text(address,style: kdarkValue,),
+                            width: double.infinity,alignment: Alignment.center,
+                            margin: EdgeInsets.only(left: 20,right: 20),)
                         ],
                       ),
                       SizedBox(height: 10,),
@@ -138,7 +144,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                             children: [
                               Text("Condition",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text(condition,style: kdarkValue,)
+                              Text(condtions(),style: kdarkValue,)
                             ],
                           ),
                           Column(
@@ -179,21 +185,49 @@ class _PatientDetailsState extends State<PatientDetails> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 40,),
-                      widget.designation=="NURSE" ? RoundButton(color: Color(0XFFD5031A8D),text: "Health Check", textColor: Colors.white,
-                        onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context){return PatientForm(patientName: patient,patient_id: patientId,token: widget.token,);}));} ,height: 50,width: 260,)
-                          :
-                          Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      SizedBox(height: 20,),
+                      ((){
+                        if(widget.designation=="NURSE")
+                          {return Column(
                             children: [
-                              RoundButton(color: Color(0XFFD5031A8D),text: "Change Status", textColor: Colors.white,
+                               InkWell(child: Text("Last 5 Days Report   >",
+                                 style: TextStyle(fontWeight: FontWeight.w600),),onTap: (){},),
+                              SizedBox(height: 30,),
+                              RoundButton(color: Color(0XFFD5031A8D),text: "Health Check", textColor: Colors.white,
                                 onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
-                                    builder: (context){return ChangeStatus(id: patientId,);}));} ,height: 50,width: 120,),
-                              RoundButton(color: Color(0XFFD5031A8D),text: "Change Bed", textColor: Colors.white,
-                                onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
-                                    builder: (context){return ChangeBed(id: patientId,);}));} ,height: 50,width: 120,),
+                                    builder: (context){return PatientForm(patientName: patient,patient_id: patientId,token: widget.token,);}));} ,height: 50,width: 260,)
                             ],
-                          )
+                          );
+                          }
+                        else if(widget.designation=='DOCTOR')
+                          { return Column(
+                            children: [
+                              InkWell(child: Text("Last 5 Days Report   >",
+                                style: TextStyle(fontWeight: FontWeight.w600),),onTap: (){},),
+                              SizedBox(height: 30,),
+                              Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  RoundButton(color: Color(0XFFD5031A8D),text: "Change Status", textColor: Colors.white,
+                                    onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
+                                        builder: (context){return ChangeStatus(id: patientId,);}));} ,height: 50,width: 120,),
+                                  RoundButton(color: Color(0XFFD5031A8D),text: "Change Bed", textColor: Colors.white,
+                                    onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
+                                        builder: (context){return ChangeBed(id: patientId,);}));} ,height: 50,width: 120,),
+                                ],
+                              ),
+                            ],
+                          );}
+                        else {
+                           return Column(
+                             children: [
+                               SizedBox(height: 40,),
+                               RoundButton(color: Color(0XFFD5031A8D),text: "Last 5 Days Report", textColor: Colors.white,
+                                 onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
+                                     builder: (context){return ChangeStatus(id: patientId,);}));} ,height: 50,width: 160,),
+                             ],
+                           );
+                        }
+                      })()
                   ],
             ),
           ),
@@ -204,5 +238,24 @@ class _PatientDetailsState extends State<PatientDetails> {
         ),
       ),
     ));
+  }
+
+  String condtions(){
+    if(condition == '1')
+      {
+        return "Asymptomatic";
+      }
+    else if(condition =='2')
+      {
+        return "Mild";
+      }
+    else if(condition == '3')
+      {
+        return "Moderate";
+      }
+    else if(condition == '4')
+      {
+        return "Severe";
+      }
   }
 }

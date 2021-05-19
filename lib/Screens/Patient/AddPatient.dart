@@ -5,6 +5,7 @@ import 'package:patient_status_app/Components/MyTextField.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Model/Toast.dart';
+import 'package:patient_status_app/Screens/LoadingScreen.dart';
 class AddPatient extends StatefulWidget {
   final token;
   AddPatient({this.token});
@@ -91,7 +92,7 @@ class _AddPatientState extends State<AddPatient> {
                             dropdownValue2, bedNo,number, dropdownValue3, address);
                         if(res == 201)
                         { showToast(context, "Patient added Successfully");
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Loading_Screen()));
                         }
                         else
                         {

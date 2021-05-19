@@ -58,7 +58,7 @@ class Networking{
     var res = await http.get(Uri.parse(url));
     var stat = jsonDecode(res.body);
      print(stat['data']);
-    return stat['data'][0];
+    return stat['data'].last;
   }
 
 
@@ -174,6 +174,16 @@ class Networking{
 
     return res['status'];
 
+  }
+
+  Future<dynamic> getSearched(query)async{
+    print('this is $query');
+    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/get_searched_patients/$query/";
+
+    var response = await http.get(Uri.parse(url));
+    var res = jsonDecode(response.body);
+    print(res);
+    return res['data'];
   }
 
 }
