@@ -19,19 +19,19 @@ class DetailCard extends StatelessWidget {
               Column(
                 children: [
                       Text("General Beds",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16,color: Colors.blueGrey)),
-                      SizedBox(height: 5,),
+                      SizedBox(height: 1,),
                       Text("(Available / Total )",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 10,color: Colors.grey)),
-                  SizedBox(height: 10,),
-                  Text("$valueGen / $TotalGen",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 22,color: Colors.blue[700]) )
+                  SizedBox(height: 5,),
+                  Text("$valueGen / $TotalGen",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: Colors.blue[700]) )
                 ],
               ),
               Column(
               children: [
                 Text("Oxygen Beds",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16,color: Colors.blueGrey)),
-                SizedBox(height: 5,),
+                SizedBox(height: 1,),
                 Text("(Available / Total )",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 10,color: Colors.grey)),
-                SizedBox(height: 10,),
-                Text("$valueOxy / $TotalOxy",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 22,color: Colors.blue[700]) )
+                SizedBox(height: 5,),
+                Text("$valueOxy / $TotalOxy",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: Colors.blue[700]) )
               ],
               )
           ],),
@@ -42,19 +42,19 @@ class DetailCard extends StatelessWidget {
               Column(
                 children: [
                   Text("ICU Beds",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16,color: Colors.blueGrey)),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 1,),
                   Text("(Available / Total )",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 10,color: Colors.grey)),
-                  SizedBox(height: 10,),
-                  Text("$valueIcu / $TotalIcu",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 22,color: Colors.blue[700]) )
+                  SizedBox(height: 5,),
+                  Text("$valueIcu / $TotalIcu",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: Colors.blue[700]) )
                 ],
               ),
               Column(
                 children: [
                   Text("Ventilator Beds",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16,color: Colors.blueGrey)),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 1,),
                   Text("(Available / Total )",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 10,color: Colors.grey)),
-                  SizedBox(height: 10,),
-                  Text("$valueVen / $TotalVen",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 22,color: Colors.blue[700]) )
+                  SizedBox(height: 5,),
+                  Text("$valueVen / $TotalVen",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: Colors.blue[700]) )
                 ],
               )
             ],),

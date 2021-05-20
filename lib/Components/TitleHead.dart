@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 class TitleHead extends StatelessWidget {
+  final double height;
+  TitleHead({this.height});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,9 +28,9 @@ class TitleHead extends StatelessWidget {
         ),
         TyperAnimatedText(
 
-          'Base Hospital Almora',
+          'G T Govt Base Hospital Almora',
           textStyle: TextStyle(
-              fontSize: 26,
+              fontSize: 20,
               fontWeight: FontWeight.w900,
               color: Colors.white
           ),
@@ -37,7 +39,7 @@ class TitleHead extends StatelessWidget {
       ],
         totalRepeatCount: 1,
       ),
-      height: 200,
+      height: height,
       width: double.infinity,
       alignment: Alignment.bottomCenter,
       margin: EdgeInsets.only(left: 10,right: 10),

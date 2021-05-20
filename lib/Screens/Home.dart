@@ -56,8 +56,8 @@ class _HomeState extends State<Home> {
                       child: ListView(
 
                         children:[
-                          TitleHead(),
-                          SizedBox(height: 60),
+                          TitleHead(height: 200,),
+                          SizedBox(height: 80),
                           Column(
                             children: [
                               Text(errortext,style: TextStyle(color: Colors.red),),
@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
                                   decoration: kInputDecorantion.copyWith(hintText: 'Enter your password',),
                                 ),
                               ),
-                              SizedBox(height: 100),
+                              SizedBox(height: 140),
                               RoundButton(color: Color(0XFFD5031A8D),text: "Login", textColor: Colors.white,
                                 onpress: ()async{
                                   final progress = ProgressHUD.of(context);
@@ -122,11 +122,6 @@ class _HomeState extends State<Home> {
                                 }
                                 ,height: 50,width: 260,),
                               SizedBox(height: 40,),
-                              RoundButton(color: Color(0XFFD5031A8),text: "Login as Patient", textColor: Colors.white,
-                                onpress: (){Navigator.push(context,MaterialPageRoute(builder: (context)=>PatientLogin()));}
-                                ,height: 50,width: 260,),
-
-
                             ],
                           ),
                         ],

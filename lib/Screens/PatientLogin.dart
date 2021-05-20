@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
+import 'package:patient_status_app/Components/TitleHead.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Screens/Patient/LastFive.dart';
 import 'package:patient_status_app/Screens/Patient/PatientInfo.dart';
@@ -42,16 +43,15 @@ class _PatientLoginState extends State<PatientLogin> {
                     child: ListView(
 
                       children:[
-                        SizedBox(height: 100,),
+                        TitleHead(height: 200),
+                        SizedBox(height: 40,),
                         Center(
-                          child: Text('Health Check Form',style: TextStyle(color: Colors.blue[900],fontSize: 26,
+                          child: Text('Patient Login',style: TextStyle(color: Colors.blue[900],fontSize: 26,
                             fontWeight: FontWeight.w900,),),
                         ),
-                        SizedBox(height: 100),
+                        SizedBox(height: 40),
                         Column(
                           children: [
-                            Text(errortext,style: TextStyle(color: Colors.red),),
-                            SizedBox(height: 10,),
                             Container(
                               width: 260,
                               child: TextField(
@@ -72,7 +72,7 @@ class _PatientLoginState extends State<PatientLogin> {
                                 decoration: kInputDecorantion.copyWith(hintText: 'Enter your password',),
                               ),
                             ),
-                            SizedBox(height: 160),
+                            SizedBox(height: 140),
                             RoundButton(color: Color(0XFFD5031A8D),text: "Login as Patient", textColor: Colors.white,
                               onpress: ()async{
                                 final progress = ProgressHUD.of(context);
@@ -86,6 +86,10 @@ class _PatientLoginState extends State<PatientLogin> {
                                       type: CoolAlertType.error,
                                       text: " Invalid User !",
                                     );
+                                    setState(() {
+                                      userController.text='';
+                                      passwordcontroller.text='';
+                                    });
                                   }
                                 else{
                                    Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context){

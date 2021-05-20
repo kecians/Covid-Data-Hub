@@ -24,7 +24,7 @@ class Networking{
 
 
   Future<Map> getBedStatus() async{
-    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/get_alloted_beds/";
+    String url = "https://api.ukcovid19.in/api/patient/get_alloted_beds/";
     var response = await http.get(Uri.parse(url));
     var dec = jsonDecode(response.body);
     var data = {
@@ -39,6 +39,10 @@ class Networking{
       "allotedOxyBeds" : dec['alloted_beds']['oxygen'],
       "allotedVenBeds" : dec['alloted_beds']['ventillator'],
       "allotedIcuBeds" : dec['alloted_beds']['icu'],
+      "active" : dec['alloted_beds']['total'],
+      "migrated" : dec['patient_status']['migrated'],
+      "recovered" : dec['patient_status']['recovered'],
+      "death" : dec ['patient_status']['death']
     };
     return data;
   }

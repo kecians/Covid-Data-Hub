@@ -4,6 +4,7 @@ import 'package:patient_status_app/Components/DetailCard.dart';
 import 'package:patient_status_app/Components/Drawer.dart';
 import 'package:patient_status_app/Components/MyCard.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
+import 'package:patient_status_app/Components/TodayStatusCard.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Screens/BottomAppScreen.dart';
 
@@ -18,7 +19,7 @@ class Status extends StatefulWidget {
 }
 
 class _StatusState extends State<Status> {
-  int ox,gen,ven,icu,availox,availgen,availicu,availven,total,alloted;
+  int ox,gen,ven,icu,availox,availgen,availicu,availven,total,alloted,active,migrated,recov,death;
 
   @override
   void initState() {
@@ -39,7 +40,10 @@ class _StatusState extends State<Status> {
     availven =data['ventilatorBeds'] - data['allotedVenBeds'];
     total = data['totalBeds'];
     alloted = data['allotedTotal'];
-
+    active = data['active'];
+    migrated = data['migrated'];
+    recov = data['recovered'];
+    death = data['death'];
   }
   @override
   Widget build(BuildContext context) {
@@ -75,9 +79,10 @@ class _StatusState extends State<Status> {
                 SizedBox(height: 20,),
 
                 DetailCard(valueGen: availgen,valueIcu: availicu,valueOxy: availox,valueVen: availven,TotalGen: gen,TotalIcu: icu,
-                  TotalOxy: ox,TotalVen: ven,height: 300,
+                  TotalOxy: ox,TotalVen: ven,height: 200,
                   color: Colors.white,),
-                SizedBox(height: 60,),
+                TodayStatus(recov:recov,death: death,mig: migrated,active: active,),
+                SizedBox(height: 40,),
                 widget.responseList[1] == "NURSE" ? Center(
                   child: RoundButton(color: Color(0XFFD5031A8D),text: "Add  Patient", textColor: Colors.white,
                     onpress: (){Navigator.push(context, MaterialPageRoute(
