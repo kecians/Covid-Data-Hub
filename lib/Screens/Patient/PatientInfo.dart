@@ -93,15 +93,29 @@ class _PatientInfoState extends State<PatientInfo> {
                 SizedBox(height: 10,),
                 Divider(),
                 SizedBox(height: 10,),
-                Column(
+                Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text("Address",style: kdarkHeader,),
-                    SizedBox(height: 10,),
-                    Container(child: Text('${widget.data['address']}',style: kdarkValue,),
-                      width: double.infinity,alignment: Alignment.center,
-                      margin: EdgeInsets.only(left: 20,right: 20),)
-                  ],
-                ),
+                  Container(  width: 160,
+                    child: Column(
+                      children: [
+                        Text("Address",style: kdarkHeader,),
+                        SizedBox(height: 10,),
+                        Container(child: Text('${widget.data['address']}',style: kdarkValue,),
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(left: 20,right: 20),)
+                      ],
+                    ),
+                  ),
+                  Container( width: 160,
+                    child: Column(
+                      children: [
+                        Text("Updated On",style: kdarkHeader,),
+                        SizedBox(height: 10,),
+                        Text("${widget.data['updated_on']}".substring(0,10),style: kdarkValue,)
+                      ],
+                    ),
+                  ),
+                ],),
                 SizedBox(height: 10,),
                 Divider(),
                 SizedBox(height: 10,),
@@ -122,8 +136,13 @@ class _PatientInfoState extends State<PatientInfo> {
                         Text("${widget.data['bed_number']}",style: kdarkValue,)
                       ],
                     ),
-
-
+                    Column(
+                      children: [
+                        Text("Updated On",style: kdarkHeader,),
+                        SizedBox(height: 10,),
+                        Text("${widget.data['updated_on']}".substring(0,10),style: kdarkValue,)
+                      ],
+                    ),
                   ],
                 ),
                 SizedBox(height: 30,),

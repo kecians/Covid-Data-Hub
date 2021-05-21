@@ -17,8 +17,8 @@ class PatientDetails extends StatefulWidget {
 
 class _PatientDetailsState extends State<PatientDetails> {
    String patient,status,gender,patientId,address,condition;
-   int age,contact;
-   String spo2, bpUp,bpDown,temp;
+   int age;
+   String spo2, bpUp,bpDown,temp,contact;
    var stat={};
   dataList(){
     patient = widget.response['name'];
@@ -53,7 +53,7 @@ class _PatientDetailsState extends State<PatientDetails> {
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.only(left: 10,right: 10,top: 20),
-          height: 610,
+          height: 620,
           child: Center(
             child: Column(
                     children: [
@@ -126,13 +126,29 @@ class _PatientDetailsState extends State<PatientDetails> {
                       SizedBox(height: 10,),
                       Divider(),
                       SizedBox(height: 10,),
-                      Column(
+                      Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text("Address",style: kdarkHeader,),
-                          SizedBox(height: 10,),
-                          Container(child: Text(address,style: kdarkValue,),
-                            width: double.infinity,alignment: Alignment.center,
-                            margin: EdgeInsets.only(left: 20,right: 20),)
+                          Container( width: 150,
+                            child: Column(
+                              children: [
+                                Text("Address",style: kdarkHeader,),
+                                SizedBox(height: 10,),
+                                Container(child: Text(address,style: kdarkValue,),
+                                  alignment: Alignment.center,width: 150,
+                                  margin: EdgeInsets.only(left: 20,right: 20),)
+                              ],
+                            ),
+                          ),Container( width: 150,
+                            child: Column(
+                              children: [
+                                Text("Updated On",style: kdarkHeader,),
+                                SizedBox(height: 10,),
+                                Container(child: Text("${widget.response['updated_on']}".substring(0,10),style: kdarkValue,),
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(left: 20,right: 20),),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(height: 10,),
@@ -184,9 +200,16 @@ class _PatientDetailsState extends State<PatientDetails> {
                               Text("${stat['pulse_rate']}",style: kdarkValue,),
                             ],
                           ),
+                          Column(
+                            children: [
+                              Text("Covid Status",style: kdarkHeader,),
+                              SizedBox(height: 10,),
+                              Text(covidStatus(),style: kdarkValue,),
+                            ],
+                          ),
                         ],
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 30,),
                       ((){
                         if(widget.designation=="NURSE")
                           {return Column(
@@ -260,5 +283,16 @@ class _PatientDetailsState extends State<PatientDetails> {
       {
         return "Severe";
       }
+  }
+  String covidStatus(){
+    if(widget.response['covid_status']=='P')
+      {
+        return "Positive";
+      }
+    else if(widget.response['covid_status']=='S')
+      {
+        return "Suspect";
+      }
+
   }
 }

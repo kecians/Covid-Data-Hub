@@ -4,7 +4,7 @@ class Networking{
 
 
   Future<List> signin(username,password) async{
-    String url = "https://ayushbisht200121.pythonanywhere.com/api/staff/login/";
+    String url = "https://api.ukcovid19.in/api/staff/login/";
     var response = await http.post( Uri.parse(url),headers: {
       'content-type':'application/json',
     },
@@ -49,7 +49,7 @@ class Networking{
 
 
   Future<dynamic> getPatientList(_token) async{
-    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/admit/";
+    String url = "https://api.ukcovid19.in/api/patient/admit/";
     var response = await http.get(Uri.parse(url),headers: {
       'content-type':'application/json','Authorization' : "Token $_token"});
     var val = jsonDecode(response.body);
@@ -58,7 +58,7 @@ class Networking{
 
 
   Future<dynamic>lastStat(id)async{
-    String url = "https://ayushbisht200121.pythonanywhere.com/api/health/details/$id/";
+    String url = "https://api.ukcovid19.in/api/health/details/$id/";
     var res = await http.get(Uri.parse(url));
     var stat = jsonDecode(res.body);
      print(stat['data']);
@@ -66,7 +66,7 @@ class Networking{
   }
 
   Future<dynamic>lastFiveStat(id)async{
-    String url = "https://ayushbisht200121.pythonanywhere.com/api/health/details/$id/";
+    String url = "https://api.ukcovid19.in/api/health/details/$id/";
     var res = await http.get(Uri.parse(url));
     var stat = jsonDecode(res.body);
     print(stat['data']);
@@ -78,7 +78,7 @@ class Networking{
     else if(condition == 'Mild') {cond = "2";}
     else if(condition == 'Moderate') {cond = "3";}
     else if(condition == 'Severe') {cond = "4";}
-    String url = "https://ayushbisht200121.pythonanywhere.com/api/health/update/";
+    String url = "https://api.ukcovid19.in/api/health/update/";
     var response = await http.post(Uri.parse(url),
       headers: {'content-type':'application/json','Authorization' : "Token $_token"},
       body: jsonEncode({"username":pat_id ,"patient_condition": cond,"oxy_level":spo2,"pulse_rate":pulse
@@ -92,17 +92,17 @@ class Networking{
   Future<dynamic> AddPatient(_token,name,age,gender,bed_cat,bedNo,phno,condition,address) async
   {
     String cond;
-    if(condition == 'Asymptomatic') { cond = "1"; }
+    if(condition == 'Asymptomatic') { cond = "1";}
     else if(condition == 'Mild') {cond = "2";}
     else if(condition == 'Moderate') {cond = "3";}
     else if(condition == 'Severe') {cond = "4";}
     String bedCat;
-    if(bed_cat == 'General Bed') { bedCat = "1"; }
+    if(bed_cat == 'General Bed') {bedCat = "1";}
     else if(bed_cat == 'Oxygen Bed') {bedCat = "2";}
     else if(bed_cat == 'ICU Bed') {bedCat = "3";}
     else if(bed_cat == 'Ventilators') {bedCat = "4";}
     
-    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/admit/";
+    String url = "https://api.ukcovid19.in/api/patient/admit/";
     
     var response = await http.post(Uri.parse(url),
     headers:{'content-type':'application/json','Authorization' : "Token $_token"},
@@ -114,8 +114,8 @@ class Networking{
   }
 
   Future<dynamic>changePatientStatus(id,migratedto,migReason,deathReason,status)async {
-    String url1 = 'https://ayushbisht200121.pythonanywhere.com/api/patient/change_patient_status/$id/';
-    String url2 = 'https://ayushbisht200121.pythonanywhere.com/api/patient/patient_status/';
+    String url1 = 'https://api.ukcovid19.in/api/patient/change_patient_status/$id/';
+    String url2 = 'https://api.ukcovid19.in/api/patient/patient_status/';
 
     if (status == 'Migrated')
      {
@@ -159,7 +159,7 @@ class Networking{
 
 
   Future<dynamic> changePatientBed(id,bedtype,bedno) async{
-    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/bed_allotment/";
+    String url = "https://api.ukcovid19.in/api/patient/bed_allotment/";
     var bedtp;
     if(bedtype=='General Bed')
     {
@@ -188,7 +188,7 @@ class Networking{
 
   Future<dynamic> getSearched(query)async{
     print('this is $query');
-    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/get_searched_patients/$query/";
+    String url = "https://api.ukcovid19.in/api/patient/get_searched_patients/$query/";
 
     var response = await http.get(Uri.parse(url));
     var res = jsonDecode(response.body);
@@ -197,7 +197,7 @@ class Networking{
   }
 
   Future<dynamic> getPatientProfile(id,phno)async{
-    String url = "https://ayushbisht200121.pythonanywhere.com/api/patient/get_patient_profile/$id/";
+    String url = "https://api.ukcovid19.in/api/patient/get_patient_profile/$id/$phno/";
     var response = await http.get(Uri.parse(url));
     var res = jsonDecode(response.body);
     if(res['status'] !=200)

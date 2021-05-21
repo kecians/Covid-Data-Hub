@@ -56,7 +56,7 @@ class _LastFiveState extends State<LastFive> {
           {
             return "Severe";
           }})(),sis: res[index]['blood_pres_systolic'],dia: res[index]['blood_pres_diastolic'],
-            temp: res[index]['temperature'],spo2:res[index]['oxy_level'],pulse: res[index]['pulse_rate'],),
+            temp: res[index]['temperature'],spo2:res[index]['oxy_level'],pulse: res[index]['pulse_rate'],createdOn: res[index]['created_on'],),
         );
       }),
     ));

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 class LastFiveCard extends StatelessWidget {
-  final String cond,temp;
+  final String cond,temp,createdOn;
   final int sis,dia,spo2,pulse;
-  LastFiveCard({this.cond,this.temp,this.pulse,this.spo2,this.dia,this.sis});
+  LastFiveCard({this.cond,this.temp,this.pulse,this.spo2,this.dia,this.sis,this.createdOn});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,24 +30,24 @@ class LastFiveCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              Container(
-                width: 80,
+              ),Container(
+                width: 100,
                 child: Column(
                   children: [
                     Text(
-                      "B P",
+                      "SPO2 Level",
                       style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),
                     ),
                     SizedBox(height: 10,),
                     Text(
-                      "$sis / $dia",
+                      "$spo2 %",
                       overflow: TextOverflow.fade,
                       style: TextStyle(fontWeight: FontWeight.w600,fontSize: 12),
                     ),
                   ],
                 ),
               ),
+
               Container(
                 width: 80,
                 child: Column(
@@ -89,18 +89,34 @@ class LastFiveCard extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 10,),
+              Container(
+                width: 80,
+                child: Column(
+                  children: [
+                    Text(
+                      "B P",
+                      style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),
+                    ),
+                    SizedBox(height: 10,),
+                    Text(
+                      "$sis / $dia",
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(fontWeight: FontWeight.w600,fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 width: 100,
                 child: Column(
                   children: [
                     Text(
-                      "SPO2 Level",
+                      "Updated On",
                       style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),
                     ),
                     SizedBox(height: 10,),
                     Text(
-                      "$spo2 %",
+                      "$createdOn".substring(0,10),
                       overflow: TextOverflow.fade,
                       style: TextStyle(fontWeight: FontWeight.w600,fontSize: 12),
                     ),
