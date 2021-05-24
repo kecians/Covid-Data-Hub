@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Screens/LoadingScreen.dart';
-import 'package:patient_status_app/Screens/PatientLogin.dart';
 import 'package:patient_status_app/Utilities/constants.dart';
 import 'package:patient_status_app/Components/TitleHead.dart';
 import 'package:shared_preferences/shared_preferences.dart';

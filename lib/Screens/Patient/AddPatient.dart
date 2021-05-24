@@ -1,4 +1,5 @@
 import 'package:cool_alert/cool_alert.dart';
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:patient_status_app/Components/MyTextField.dart';
@@ -6,6 +7,8 @@ import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Model/Toast.dart';
 import 'package:patient_status_app/Screens/LoadingScreen.dart';
+import 'package:patient_status_app/Utilities/constants.dart';
+
 class AddPatient extends StatefulWidget {
   final token;
   AddPatient({this.token});
@@ -15,10 +18,15 @@ class AddPatient extends StatefulWidget {
 
 class _AddPatientState extends State<AddPatient> {
   Networking instance = Networking();
+  DateTime selectedDate1 = DateTime.now();
+  DateTime selectedDate2 = DateTime.now();
+  TextEditingController _date = new TextEditingController();
   String dropdownValue1 = "Gender",
       dropdownValue2 = "Bed Type",
-      dropdownValue3 = "Condition",dropdownValue4="Covid Status";
-  String name,number,age,bedNo,address,remark;
+      dropdownValue3 = "Condition",dropdownValue4="Covid Test",
+      dropdownValue5 = "Test Type",dropdownValue6 = "Test Result",
+     dropdownValue7 = "Vaccination",dropdownValue8= "Vaccine Status",wardValue="Select Ward",vaccineName="Name of Vaccine";
+  String name,number,age,bedNo,address,remark,floor;
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: ProgressHUD(
@@ -49,8 +57,6 @@ class _AddPatientState extends State<AddPatient> {
                         width: 260,
                         inputType: TextInputType.number,
                         onPress: (value) {number = value;}),
-                    SizedBox(height: 20),
-                    DropDown4(),
                     SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -65,6 +71,21 @@ class _AddPatientState extends State<AddPatient> {
                       ],
                     ),
                     SizedBox(height: 20,),
+                    DropDown3(),
+                    SizedBox(height: 20,),
+                    MyTextField(text: 'Address',
+                        width: 260,
+                        inputType: TextInputType.streetAddress,
+                        onPress: (value) {address=value;}),
+                    SizedBox(height: 40),
+                    Container(
+                      width: double.infinity,
+                      height: 50,color: Colors.blue[900],
+                      child: Center(child: Text('Bed Details',style: TextStyle(color: Colors.white,fontSize: 20),)),
+                    ),
+                    SizedBox(height: 40,),
+                    DropDown2(),
+                    SizedBox(height: 20,),
                     MyTextField(text: 'Bed Number',
                         width: 260,
                         inputType: TextInputType.number,
@@ -73,21 +94,71 @@ class _AddPatientState extends State<AddPatient> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        DropDown2(),
+                        DropDown9(),
                         SizedBox(width: 20,),
-                        DropDown3()
+                        MyTextField(text: 'Floor Number',
+                            width: 120,
+                            inputType: TextInputType.number,
+                            onPress: (value) {floor = value;}),
                       ],
                     ),
+                    SizedBox(height: 40,),
+                    Container(
+                      width: double.infinity,
+                      height: 50,color: Colors.blue[900],
+                      child: Center(child: Text('Covid Details',style: TextStyle(color: Colors.white,fontSize: 20),)),
+                    ),
+                    SizedBox(height: 40,),
+                    DropDown4(),
                     SizedBox(height: 20,),
-                    MyTextField(text: 'Address',
-                        width: 260,
-                        inputType: TextInputType.streetAddress,
-                        onPress: (value) {address=value;}),
+                    dropdownValue4 == 'Yes' ? Column(
+                      children: [
+                        Row( mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            DropDown5(),
+                            SizedBox(width: 20,),
+                            DropDown6(),
+                          ],
+                        ),
+
+                        SizedBox(height: 20,)
+                      ],
+                    ): SizedBox(height: 1,),
+                    DropDown7(),
                     SizedBox(height: 20,),
+                    dropdownValue7 == 'Yes' ? Column(
+                      children: [
+                        DropDown10(),
+                        SizedBox(height: 20,),
+                        DropDown8(),
+                        SizedBox(height: 20,)
+                      ],
+                    ) : SizedBox(height: 1,),
+                    ((){
+                      if(dropdownValue8 == "1st Dose"){
+                        return Column(
+                          children: [
+                            Text('1st Dose date',style: TextStyle(color: Colors.grey),),
+                            Date1(),
+                          ],
+                        );
+                      }
+                      else if(dropdownValue8 == '1st and 2nd Dose')
+                        { return Column(children: [
+                          Text('1st Dose date',style: TextStyle(color: Colors.grey),),
+                          Date1(),
+                          SizedBox(height: 20,),
+                          Text('2nd Dose date',style: TextStyle(color: Colors.grey),),
+                          Date2()
+                        ],);
+                        }
+                      else{return SizedBox(height: 1,);}
+                    })(),
+                    SizedBox(height: 40,),
                     MyTextField(text: 'Remark',
                         width: 260,
                         inputType: TextInputType.streetAddress,
-                        onPress: (value) {address=value;}),
+                        onPress: (value) {remark=value;}),
                     SizedBox(height: 30),
                     RoundButton(color: Color(0XFFD5031A8D),
                       text: "Submit",
@@ -96,7 +167,9 @@ class _AddPatientState extends State<AddPatient> {
                         final progress = ProgressHUD.of(context);
                         progress.show();
                         var res = await instance.AddPatient(widget.token, name, age,dropdownValue1,
-                            dropdownValue2, bedNo,number, dropdownValue3, address);
+                            dropdownValue2, bedNo, number,dropdownValue3, address, wardValue, floor,
+                            dropdownValue4,dropdownValue5,dropdownValue6, dropdownValue7, vaccineName,
+                            dropdownValue8, selectedDate1, selectedDate2,remark);
                         if(res == 201)
                         { showToast(context, "Patient added Successfully");
                           Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Loading_Screen()));
@@ -156,7 +229,7 @@ class _AddPatientState extends State<AddPatient> {
   }
 
   Container DropDown3() {
-    return Container(width: 120,padding: EdgeInsets.only(left: 3),
+    return Container(width: 260,padding: EdgeInsets.only(left: 3),
       child: Center(
         child: DropdownButton<String>(
           underline: Container(height: 0,),
@@ -193,7 +266,7 @@ class _AddPatientState extends State<AddPatient> {
   }
 
   Container DropDown2() {
-    return Container(width: 120,padding: EdgeInsets.only(left: 10),
+    return Container(width: 260,padding: EdgeInsets.only(left: 10),
       child: Center(
         child: DropdownButton<String>(
           underline: Container(height: 0,),
@@ -237,9 +310,9 @@ class _AddPatientState extends State<AddPatient> {
             });
           },
           items: <String>[
-            "Covid Status",
-            "Suspect",
-            "Positive"
+            "Covid Test",
+            "Yes",
+            "No"
           ]
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
@@ -255,5 +328,216 @@ class _AddPatientState extends State<AddPatient> {
       ),
 
     );
+  }
+  Container DropDown5() {
+    return Container(width: 125,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: dropdownValue5,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              dropdownValue5 = newValue;
+            });
+          },
+          items: <String>['Test Type','Rapid AntiGen','RT-PCR','TrueNat']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown6() {
+    return Container(width: 120,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: dropdownValue6,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              dropdownValue6 = newValue;
+            });
+          },
+          items: <String>['Test Result','Positive','Negative','Awaited','Rejected']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown7() {
+    return Container(width: 260,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: dropdownValue7,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              dropdownValue7 = newValue;
+            });
+          },
+          items: <String>['Vaccination','Yes','No']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown8() {
+    return Container(width: 260,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: dropdownValue8,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              dropdownValue8 = newValue;
+            });
+          },
+          items: <String>['Vaccine Status','1st Dose','1st and 2nd Dose']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown9() {
+    return Container(width: 120,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: wardValue,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              wardValue = newValue;
+            });
+          },
+          items: <String>['Select Ward','A','B']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown10() {
+    return Container(width: 260,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: vaccineName,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              vaccineName = newValue;
+            });
+          },
+          items: <String>['Name of Vaccine','CoviShield','Covaxin']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Date1(){
+    return Container(width: 260,
+      child: DateField(
+          onDateSelected: (DateTime value) {
+            setState(() {
+              selectedDate1 = value;
+            });
+          },
+          selectedDate: selectedDate1,
+          label:null,
+          decoration: kInputDecorantion
+      ),
+
+    );
+  }
+  Date2(){
+    return Container(width: 260,
+      child: DateField(
+          onDateSelected: (DateTime value) {
+            setState(() {
+              selectedDate2 = value;
+            });
+          },
+          selectedDate: selectedDate2,
+          label:null,
+          decoration: kInputDecorantion
+      ),
+
+    );
+
   }
 }

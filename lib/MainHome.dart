@@ -3,9 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:patient_status_app/Components/DetailCard.dart';
 import 'package:patient_status_app/Components/TodayStatusCard.dart';
 import 'package:patient_status_app/Screens/Home.dart';
+import 'Components/MyCard.dart';
 import 'Components/RoundButton.dart';
 import 'Components/TitleHead.dart';
 import 'Model/Networking.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 import 'Screens/PatientLogin.dart';
 class MainHome extends StatefulWidget {
   final data;
@@ -67,9 +69,43 @@ class _MainHomeState extends State<MainHome> {
                   children:[
                     TitleHead(height: 100,),
                     SizedBox(height: 20),
-                    DetailCard(valueGen: availgen,valueIcu: availicu,valueOxy: availox,valueVen: availven,TotalGen: gen,TotalIcu: icu,
-                      TotalOxy: ox,TotalVen: ven,height: 200,
-                      color: Colors.white,),
+                    SizedBox(
+                        height: 200.0,
+                        width: 300.0,
+                        child: Carousel(
+                          images: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5,bottom: 5),
+                              child: Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  MyCard(height: 200,width: 160,headText: 'Total Patients',headerSize: 17,valueColor: Colors.blueGrey[600],
+                                    color: Colors.white,valueSize: 50,
+                                    /// Realtime Value
+                                    valueText: "$alloted",
+                                    headerColor: Colors.blueGrey,
+                                  ),
+                                  MyCard(height: 200,width: 160,headText: 'Total Beds',headerSize: 17,valueColor: Colors.blueGrey[600],
+                                    color: Colors.white,valueSize: 50,
+                                    /// Realtime Value
+                                    valueText: "$total",
+                                    headerColor: Colors.blueGrey,
+                                  )
+                                ],
+                              )
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5,bottom: 5),
+                              child: DetailCard(valueGen: availgen,valueIcu: availicu,valueOxy: availox,valueVen: availven,TotalGen: gen,TotalIcu: icu,
+                                TotalOxy: ox,TotalVen: ven,height: 200,
+                                color: Colors.white,),
+                            ),
+                          ],
+                          dotSize: 0.0,
+                          dotBgColor: Colors.transparent,
+                          borderRadius: true,
+                          animationDuration:Duration(seconds: 1),
+                        )
+                    ),
                     TodayStatus(recov:recov,death: death,mig: migrated,active: active,),
                     Column(
                       children: [

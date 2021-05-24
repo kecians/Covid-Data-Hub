@@ -89,7 +89,8 @@ class Networking{
   }
 
 
-  Future<dynamic> AddPatient(_token,name,age,gender,bed_cat,bedNo,phno,condition,address) async
+  Future<dynamic> AddPatient(_token,name,age,gender,bed_cat,bedNo,phno,condition,address,
+      ward,floor,isTested,testType,testResult,isVaccinated,nameVaccine,numDose,frstDate,secDate,remark) async
   {
     String cond;
     if(condition == 'Asymptomatic') { cond = "1";}
@@ -101,15 +102,112 @@ class Networking{
     else if(bed_cat == 'Oxygen Bed') {bedCat = "2";}
     else if(bed_cat == 'ICU Bed') {bedCat = "3";}
     else if(bed_cat == 'Ventilators') {bedCat = "4";}
-    
+
+    String fst = frstDate.toString().substring(0,10);
+    String sec = secDate.toString().substring(0,10);
+    var vaccineState;
+    if(numDose == '1st Dose')
+      {   if(nameVaccine == 'CoviShield')
+        {
+           vaccineState =[
+             {
+               "type" : '1',
+               "vaccinated_on" :  fst
+             }
+           ];
+        }
+        else if(nameVaccine == 'Covaxin')
+          {
+            vaccineState =[
+              {
+                "type" : '2',
+                "vaccinated_on" :  fst
+              }
+            ];
+          }
+
+      }
+    else if(numDose == '1st and 2nd Dose')
+      {
+        if(nameVaccine == 'CoviShield')
+        {
+          vaccineState =[
+            {
+              "type" : '1',
+              "vaccinated_on" :  fst
+            },
+            {
+              "type" : '1',
+              "vaccinated_on" :  sec
+            }
+
+          ];
+        }
+        else if(nameVaccine == 'Covaxin')
+        {
+          vaccineState =[
+            {
+              "type" : '2',
+              "vaccinated_on" :  fst
+            },
+            {
+              "type" : '2',
+              "vaccinated_on" :  sec
+            }
+          ];
+        }
+      }
+
+    String covidSta='S',result;
+    if(testResult == 'Positive'){covidSta = 'P';
+      result = '1';}
+    else if(testResult == 'Negative'){covidSta = 'N';
+    result = '2';}
+    else if(testResult == 'Awaited'){covidSta = 'A';
+    result = '3';}
+    else if(testResult == 'Rejected'){covidSta = 'R';
+    result = '4';}
+
+    String testTyp;
+    if( testType == 'Rapid AntiGen'){testTyp = '1';}
+    else if( testType == 'RT-PCR'){testTyp = '2';}
+    else if( testType =='TrueNat'){testTyp = '3';}
+
+    bool isTest;
+    if( isTested == 'Yes'){isTest = true; }
+    else if(isTested =='No'){isTest = false; testTyp='3'; result='4';}
+
+
+    bool isVac;
+    if( isVaccinated == 'Yes'){isVac = true;}
+    else if(isVaccinated == 'No'){isVac = false; vaccineState = null;}
+
+    var patBed = {
+      'bed_number' : bedNo, 'bed_category': bedCat, 'ward':ward,'floor':floor
+    };
+     var covidTest = {
+  'is_tested' : isTest,
+  'type' : testTyp,
+  'result' : result};
+
+    var vacStat = {
+      'is_vaccinated' : isVac , 'vaccine_status' : vaccineState
+    };
+
+    var eData = {
+      "name":name,"age":age, "gender": gender,"contact_number":phno,
+      "health_condition":cond,"address":address,"covid_status":covidSta,"remark":remark,
+      'patient_bed': patBed, 'patient_covid_test' : covidTest , 'patient_vaccine_status' : vacStat
+    };
+
+
     String url = "https://api.ukcovid19.in/api/patient/admit/";
     
     var response = await http.post(Uri.parse(url),
     headers:{'content-type':'application/json','Authorization' : "Token $_token"},
-    body: jsonEncode({"name":name,"age":age, "gender": gender, "bed_category": bedCat,
-      "bed_number":bedNo,"contact_number":phno,"health_condition":cond,"address":address}));
+    body: jsonEncode(eData));
     var res = jsonDecode(response.body);
-    print("this ${res}");
+    print("this is the ${res}");
     return res['status'];
   }
 

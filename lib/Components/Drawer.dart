@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Screens/Home.dart';
+import 'package:patient_status_app/Screens/Patient/About.dart';
 import 'package:patient_status_app/Screens/PatientList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class MyDrawer extends StatelessWidget {
@@ -35,7 +36,19 @@ class MyDrawer extends StatelessWidget {
           child: ListTile(
             title: Text('Patient List'),
             leading: Icon(
-              Icons.trending_up,
+              Icons.list,
+              color: Colors.blueGrey,
+            ),
+          ),
+        ),
+        Divider(indent: 20,endIndent: 20, thickness: 1,),
+        InkWell(
+          onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context){
+            return About();}));},
+          child: ListTile(
+            title: Text('Developer Info'),
+            leading: Icon(
+              Icons.info_outline,
               color: Colors.blueGrey,
             ),
           ),
