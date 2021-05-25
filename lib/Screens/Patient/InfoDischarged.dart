@@ -40,7 +40,7 @@ class InfoDischarged extends StatelessWidget {
                       children: [
                         Text("Status",style: kdarkHeader,),
                         SizedBox(height: 10,),
-                        Text('${data['patient_status']}',style: kdarkValue,)
+                       Text(Status(),style: kdarkValue,)
                       ],
                     ),
                     Column(
@@ -111,16 +111,16 @@ class InfoDischarged extends StatelessWidget {
                              children: [
                                Column(
                                  children: [
-                                   Text("Migrated To",style: kdarkHeader,),
+                                   Text("Referred To",style: kdarkHeader,),
                                    SizedBox(height: 10,),
                                    Text('${data['patient_migrate']['migrated_to']}',style: kdarkValue,)
                                  ],
                                ),
                                Column(
                                  children: [
-                                   Text("Migrated On",style: kdarkHeader,),
+                                   Text("Referred On",style: kdarkHeader,),
                                    SizedBox(height: 10,),
-                                   Text('${data['patient_migrate']['migrated_on']}'.substring(0,10),style: kdarkValue,)
+                                 Text('${data['patient_migrate']['migrated_on']}'.substring(0,10),style: kdarkValue,)
                                  ],
                                ),
                              ],
@@ -130,7 +130,7 @@ class InfoDischarged extends StatelessWidget {
                              children: [
                                Text("Reason",style: kdarkHeader,),
                                SizedBox(height: 10,),
-                               Container(child: Text('${data['patient_migrate']['reason']}'.substring(0,10),style: kdarkValue,)
+                              Container(child: Text('${data['patient_migrate']['reason']}',style: kdarkValue,)
                                 ,width: double.infinity,margin: EdgeInsets.only(left: 20,right: 20),alignment: Alignment.center,
                                )
                              ],
@@ -180,5 +180,27 @@ class InfoDischarged extends StatelessWidget {
         ),
       ),
     ));
+  }
+  String Status(){
+    if(data['patient_status']=='M')
+      {
+        return "Referred";
+      }
+    else if(data['patient_status']=='R')
+      {
+        return "Recovereed";
+      }
+    else if(data['patient_status']=='D')
+      {
+        return "Death";
+      }
+    else if(data['patient_status']=='A')
+      {
+        return "Active";
+      }
+    else if(data['patient_status']=='H')
+      {
+        return "Home Isolated";
+      }
   }
 }

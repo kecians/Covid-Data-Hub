@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:patient_status_app/Model/Networking.dart';
@@ -42,10 +43,21 @@ class _SearchBarState extends State<SearchBar> {
         final progress = ProgressHUD.of(context);
         progress.show();
         var response = await Networking().getSearched(inputController.text);
-        progress.dismiss();
-        showModalBottomSheet(context: context, builder:(context)=>
-            BottomAppScreen(lst: response,designation: widget.designation,token: widget.token,));
 
+        if(response['status'] == 404)
+           {
+             progress.dismiss();
+             CoolAlert.show(
+               context: context,
+               type: CoolAlertType.error,
+               text: " Data not Found!",
+             );
+            }
+        else{
+          showModalBottomSheet(context: context, builder:(context)=>
+              BottomAppScreen(lst: response['data'],designation: widget.designation,token: widget.token,));
+          progress.dismiss();
+        }
       }
    }
 }

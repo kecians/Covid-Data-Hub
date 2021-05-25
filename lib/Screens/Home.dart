@@ -1,4 +1,5 @@
 
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
@@ -85,11 +86,20 @@ class _HomeState extends State<Home> {
                               RoundButton(color: Color(0XFFD5031A8D),text: "Login", textColor: Colors.white,
                                 onpress: ()async{
                                   final progress = ProgressHUD.of(context);
-                                  progress.show();
-                                  var response = await instance.signin(_usernameController.text, _passwordController.text);
-                                  print("this $response");
-                                  if(response[0] == 200)
-                                  { String status = "${response[0]}"; String desig = response[1];
+                                  if(_usernameController.text.length <=4 || _passwordController.text.length<3)
+                                  {
+                                    CoolAlert.show(
+                                      context: context,
+                                      type: CoolAlertType.error,
+                                      text: " Enter too Short!",
+                                    );
+                                  }
+                                  else{
+                                    progress.show();
+                                    var response = await instance.signin(_usernameController.text, _passwordController.text);
+                                    print("this $response");
+                                    if(response[0] == 200)
+                                    { String status = "${response[0]}"; String desig = response[1];
                                     String user = response[2]; String token = response[3];
                                     List<String> lst = [status,desig,user,token];
                                     print(lst);
@@ -98,26 +108,22 @@ class _HomeState extends State<Home> {
                                     setState(() {
                                       res = response;
                                     });
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                                          builder: (context){return Loading_Screen();}), (route) => false);
-                                  }
-                                  else
-                                  {
-                                    if(_usernameController.text.length <=4 || _passwordController.text.length<3)
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                        builder: (context){return Loading_Screen();}), (route) => false);
+                                    }
+                                    else
                                     {
-                                      errortext = "Entery too short";
-                                    }
-                                    else{
                                       errortext = "Invalid User";
+                                      setState(() {
+                                        // ignore: unnecessary_statements
+                                        errortext;
+                                        _usernameController.text = "";
+                                        _passwordController.text ="";
+                                      });
                                     }
-                                    setState(() {
-                                      // ignore: unnecessary_statements
-                                      errortext;
-                                      _usernameController.text = "";
-                                      _passwordController.text ="";
-                                    });
+                                    progress.dismiss();
                                   }
-                                  progress.dismiss();
+
                                 }
                                 ,height: 50,width: 260,),
                               SizedBox(height: 40,),

@@ -47,10 +47,11 @@ class _BottomAppScreenState extends State<BottomAppScreen> {
                 itemBuilder:(context , index){
                   return Padding(
                     padding: const EdgeInsets.only(left: 5 , right: 5),
-                    child: SearchPatientCard(patientName: widget.lst[index]['name'] ,status:widget.lst[index]['patient_status'],
+                    child: widget.lst.length == 0 ? Text("No Data Found") :
+                    SearchPatientCard(patientName: widget.lst[index]['name'] ,status:widget.lst[index]['patient_status'],
                         admittedOn: widget.lst[index]["created_on"],onPress: (){
-                           Navigator.pushReplacement(context,MaterialPageRoute(builder:(context)=>InfoDischarged(data: widget.lst[index],
-                             desgination: widget.designation,token: widget.token,)));
+                          Navigator.pushReplacement(context,MaterialPageRoute(builder:(context)=>InfoDischarged(data: widget.lst[index],
+                            desgination: widget.designation,token: widget.token,)));
                         }),
                   );
 

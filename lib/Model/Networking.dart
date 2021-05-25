@@ -211,11 +211,13 @@ class Networking{
     return res['status'];
   }
 
-  Future<dynamic>changePatientStatus(id,migratedto,migReason,deathReason,status)async {
+  Future<dynamic>changePatientStatus(id,migratedto,migReason,deathReason,status,deathDate)async {
     String url1 = 'https://api.ukcovid19.in/api/patient/change_patient_status/$id/';
-    String url2 = 'https://api.ukcovid19.in/api/patient/patient_status/';
+    String url2 = 'https://api.ukcovid19.in/api/patient/patient_migrate_status/';
+    String url3 = 'https://api.ukcovid19.in/api/patient/patient_death_status/';
 
-    if (status == 'Migrated')
+    String deathDated = deathDate.toString().substring(0,10);
+    if (status == 'Referred')
      {
          var response1 = await http.patch(Uri.parse(url1),headers: {
            'content-type':'application/json',
@@ -234,10 +236,10 @@ class Networking{
         var response1 = await http.patch(Uri.parse(url1),headers: {
           'content-type':'application/json',
         },body: jsonEncode({'patient_status': 'D' }));
-        var response2 = await http.post(Uri.parse(url2),headers: {
+        var response3 = await http.post(Uri.parse(url3),headers: {
           'content-type':'application/json',
         },
-            body: jsonEncode({'patient_id': id,'reason' : deathReason}));
+            body: jsonEncode({'patient_id': id,'reason' : deathReason, 'date' : deathDated}));
 
         var res = jsonDecode(response1.body);
 
@@ -251,12 +253,20 @@ class Networking{
       var res = jsonDecode(response1.body);
       return res['status'];
     }
+    else if(status =='Home Isolation'){
+      var response1 = await http.patch(Uri.parse(url1),headers: {
+        'content-type':'application/json',
+      },body: jsonEncode({'patient_status': 'H' }));
+
+      var res = jsonDecode(response1.body);
+      return res['status'];
+    }
 
   }
 
 
 
-  Future<dynamic> changePatientBed(id,bedtype,bedno) async{
+  Future<dynamic> changePatientBed(id,bedtype,bedno,ward,floor) async{
     String url = "https://api.ukcovid19.in/api/patient/bed_allotment/";
     var bedtp;
     if(bedtype=='General Bed')
@@ -276,7 +286,9 @@ class Networking{
       bedtp ='4';
     }
     var response = await http.post(Uri.parse(url),headers: {
-      'content-type':'application/json',},body: jsonEncode({'patient_id':id,'bed_category':bedtp,'bed_number':bedno}));
+      'content-type':'application/json',},body: jsonEncode({'patient_id':id,'bed_category':bedtp,'bed_number':bedno
+      ,'ward':ward,'floor':floor
+      }));
 
     var res = jsonDecode(response.body);
 
@@ -291,7 +303,7 @@ class Networking{
     var response = await http.get(Uri.parse(url));
     var res = jsonDecode(response.body);
     print(res);
-    return res['data'];
+    return res;
   }
 
   Future<dynamic> getPatientProfile(id,phno)async{

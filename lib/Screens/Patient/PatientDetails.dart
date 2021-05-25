@@ -188,9 +188,9 @@ class _PatientDetailsState extends State<PatientDetails> {
                         children: [
                           Column(
                             children: [
-                              Text("Temperature",style: kdarkHeader,),
+                              Text("Vaccination",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text('${stat['temperature']} °F',style: kdarkValue,)
+                              Text(VaccineStatus(),style: kdarkValue,)
                             ],
                           ),
                           Column(
@@ -202,9 +202,9 @@ class _PatientDetailsState extends State<PatientDetails> {
                           ),
                           Column(
                             children: [
-                              Text("Covid Status",style: kdarkHeader,),
+                              Text("Test Result",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text(covidStatus(),style: kdarkValue,),
+                              Text(TestStatus(),style: kdarkValue,),
                             ],
                           ),
                         ],
@@ -284,15 +284,48 @@ class _PatientDetailsState extends State<PatientDetails> {
         return "Severe";
       }
   }
-  String covidStatus(){
-    if(widget.response['covid_status']=='P')
+  String TestStatus(){
+    if(widget.response["patient_covid_test"]==null || widget.response["patient_covid_test"]["is_tested"]==false )
       {
-        return "Positive";
+        return "Not Tested";
       }
-    else if(widget.response['covid_status']=='S')
+    else if(widget.response["patient_covid_test"]["is_tested"]==true)
       {
-        return "Suspect";
+        if(widget.response["patient_covid_test"]['result']=='1')
+          {
+            return "Positive";
+          }
+        else if(widget.response["patient_covid_test"]['result']=='2')
+          {
+            return 'Negative';
+          }
+        else if(widget.response["patient_covid_test"]['result']=='3')
+          {
+            return 'Awaited';
+          }
+        else if(widget.response["patient_covid_test"]['result']=='4')
+          {
+            return 'Rejected';
+          }
       }
 
   }
+   String VaccineStatus(){
+     if(widget.response["patient_vaccine_status"]==null || widget.response["patient_vaccine_status"]["is_vaccinated"]==false)
+     {
+       return "Not Vaccinated";
+     }
+     else if(widget.response["patient_vaccine_status"]["is_vaccinated"]==true)
+     {
+       if(widget.response["patient_vaccine_status"]['vaccine_status'].length==1)
+       {
+         return "One Dose";
+       }
+       else if(widget.response["patient_vaccine_status"]['vaccine_status'].length>=2)
+       {
+         return 'Both Dose';
+       }
+     }
+
+   }
 }

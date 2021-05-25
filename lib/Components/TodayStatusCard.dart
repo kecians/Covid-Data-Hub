@@ -44,7 +44,7 @@ class _TodayStatusState extends State<TodayStatus> {
                 child: Column(
                   children: [
                     Text(
-                      "Migrated",
+                      "Referred",
                       style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16,color: Colors.blueGrey[600]),
                     ),
                     SizedBox(height: 8,),

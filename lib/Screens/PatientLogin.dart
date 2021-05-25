@@ -76,10 +76,25 @@ class _PatientLoginState extends State<PatientLogin> {
                             RoundButton(color: Color(0XFFD5031A8D),text: "Login as Patient", textColor: Colors.white,
                               onpress: ()async{
                                 final progress = ProgressHUD.of(context);
-                                progress.show();
-                                var response = await instance.getPatientProfile(userController.text,passwordcontroller.text);
-                                progress.dismiss();
-                                if(response==400)
+
+                                if(userController.text.length <=4 || passwordcontroller.text.length <=4)
+                                {
+                                  CoolAlert.show(
+                                    context: context,
+                                    type: CoolAlertType.error,
+                                    text: " Entry too Short !",
+                                  );
+                                  setState(() {
+                                    userController.text='';
+                                    passwordcontroller.text='';
+                                  });
+                                }
+                                else{
+                                  progress.show();
+                                  var response = await instance.getPatientProfile(userController.text,passwordcontroller.text);
+                                  progress.dismiss();
+
+                                  if(response==400)
                                   {
                                     CoolAlert.show(
                                       context: context,
@@ -91,11 +106,13 @@ class _PatientLoginState extends State<PatientLogin> {
                                       passwordcontroller.text='';
                                     });
                                   }
-                                else{
-                                   Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context){
-                                     return PatientInfo(data: response);
-                                   }), (route) => false);
+                                  else{
+                                    Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context){
+                                      return PatientInfo(data: response);
+                                    }), (route) => false);
+                                  }
                                 }
+
 
                               }
 

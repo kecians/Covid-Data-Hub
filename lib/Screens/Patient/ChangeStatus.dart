@@ -1,3 +1,4 @@
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:patient_status_app/Components/MyTextField.dart';
@@ -5,6 +6,7 @@ import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Model/Toast.dart';
 import 'package:patient_status_app/Screens/LoadingScreen.dart';
+import 'package:patient_status_app/Utilities/constants.dart';
 class ChangeStatus extends StatefulWidget {
   final id;
   ChangeStatus({this.id});
@@ -15,6 +17,7 @@ class ChangeStatus extends StatefulWidget {
 class _ChangeStatusState extends State<ChangeStatus> {
   String dropdownValue = "Select Status";
   String migratedTo,migReason,deathReason;
+  DateTime deathDate = DateTime.now();
   Networking instance = Networking();
   @override
   Widget build(BuildContext context) {
@@ -50,14 +53,14 @@ class _ChangeStatusState extends State<ChangeStatus> {
                       DropDown(),
                       SizedBox(height: 30),
                       ((){
-                        if(dropdownValue == "Migrated")
+                        if(dropdownValue == "Referred")
                         {return Column(
                           children: [
                             MyTextField(
-                              text: "Reason of Migration", width: 260, onPress: (value) {migReason = value;},),
+                              text: "Reason of Referral", width: 260, onPress: (value) {migReason = value;},),
                             SizedBox(height: 30,),
                             MyTextField(
-                              text: "Migrated to..", width: 260, onPress: (
+                              text: "Referred to..", width: 260, onPress: (
                                 value) {migratedTo = value;},),
                             SizedBox(height: 30,)
                           ],
@@ -69,6 +72,8 @@ class _ChangeStatusState extends State<ChangeStatus> {
                                 MyTextField(
                                   text: "Cause of Death..", width: 260, onPress: (
                                     value) {deathReason=value;},),
+                                SizedBox(height: 30,),
+                                Date(),
                                 SizedBox(height: 30,)
                               ],
                             );
@@ -85,7 +90,7 @@ class _ChangeStatusState extends State<ChangeStatus> {
                         onpress: ()async {
                           final progress = ProgressHUD.of(context);
                           progress.show();
-                          instance.changePatientStatus(widget.id , migratedTo, migReason, deathReason, dropdownValue);
+                          instance.changePatientStatus(widget.id , migratedTo, migReason, deathReason, dropdownValue,deathDate);
 
                           if(dropdownValue == "Select Status")
                             {
@@ -123,7 +128,7 @@ Container DropDown() {
             dropdownValue = newValue;
           });
         },
-        items: <String>['Select Status','Migrated', 'Recovered','Death',]
+        items: <String>['Select Status','Referred', 'Recovered','Death','Home Isolation']
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -139,4 +144,20 @@ Container DropDown() {
 
   );
 }
+  Date(){
+    return Container(width: 260,
+      child: DateField(
+          onDateSelected: (DateTime value) {
+            setState(() {
+              deathDate = value;
+            });
+          },
+          selectedDate: deathDate,
+          label:null,
+          decoration: kInputDecorantion
+      ),
+
+    );
+
+  }
 }

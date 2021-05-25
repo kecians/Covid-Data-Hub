@@ -59,13 +59,16 @@ class _PatientListState extends State<PatientList> {
                     SizedBox(height: 10,),
                     SearchBar(designation: widget.data[1],token: widget.data[3],),
                     SizedBox(height: 10,),
-                    Container(child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text('Patient Name',style: kwhite),
-                        Text('Bed Number',style: kwhite),
-                        Text('Admitted On',style: kwhite)
-                      ],
+                    Container(child: Padding(
+                      padding: const EdgeInsets.only(left: 8,right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Patient Name',style: kwhite),
+                          Text('Bed Number',style: kwhite),
+                          Text('Admitted On',style: kwhite)
+                        ],
+                      ),
                     ),height: 50,width: double.infinity,
                       color: Colors.blueGrey[900],
                     ),

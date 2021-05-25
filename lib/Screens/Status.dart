@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:patient_status_app/Components/DetailCard.dart';
@@ -88,42 +89,96 @@ class _StatusState extends State<Status> {
                     onpress: (){Navigator.push(context, MaterialPageRoute(
                         builder: (context){return AddPatient(token: widget.responseList[3]);}));},height: 50,width: 260,),
                 ) :
-                Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Column(
                   children: [
-                    RoundButton(color: Color(0XFFD5031A8D),text: "Deaths", textColor: Colors.white,
-                      onpress: ()async{
+                    Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        RoundButton(color: Color(0XFFD5031A8D),text: "Deaths", textColor: Colors.white,
+                          onpress: ()async{
 
-                        final progress = ProgressHUD.of(context);
-                        progress.show();
-                        var response = await Networking().getSearched("Death");
-                        progress.dismiss();
-                        showModalBottomSheet(context: context, builder:(contexts)=>
-                            BottomAppScreen(lst: response,designation: widget.responseList[1],token: widget.responseList[3],));
+                            final progress = ProgressHUD.of(context);
+                            progress.show();
+                            var response = await Networking().getSearched("Death");
+                            if(response['status']==404)
+                              {progress.dismiss();
+                              CoolAlert.show(
+                                context: context,
+                                type: CoolAlertType.error,
+                                text: " Data not Found!",
+                              );
+                              }
+                            else{progress.dismiss();
+                            showModalBottomSheet(context: context, builder:(contexts)=>
+                                BottomAppScreen(lst: response['data'],designation: widget.responseList[1],token: widget.responseList[3],));
+                            }
+                          },height: 50,width: 140,),
+                        RoundButton(color: Color(0XFFD5031A8D),text: "Referred", textColor: Colors.white,
+                          onpress: ()async{
 
-                      },height: 50,width: 100,),
-                    RoundButton(color: Color(0XFFD5031A8D),text: "Migrated", textColor: Colors.white,
-                      onpress: ()async{
+                            final progress = ProgressHUD.of(context);
+                            progress.show();
+                            var response = await Networking().getSearched("Migrated");
+                            if(response['status']==404)
+                            {progress.dismiss();
+                            CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.error,
+                              text: " Data not Found!",
+                            );
+                            }
+                            else{progress.dismiss();
+                            showModalBottomSheet(context: context, builder:(contexts)=>
+                                BottomAppScreen(lst: response['data'],designation: widget.responseList[1],token: widget.responseList[3],));
+                            }
+                          },height: 50,width: 140,),
 
-                        final progress = ProgressHUD.of(context);
-                        progress.show();
-                        var response = await Networking().getSearched("Migrated");
-                        progress.dismiss();
-                        showModalBottomSheet(context: context, builder:(contexts)=>
-                            BottomAppScreen(lst: response,designation: widget.responseList[1],token: widget.responseList[3],));
+                      ],
+                    ),
+                    SizedBox(height: 20,),
+                    Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        RoundButton(color: Color(0XFFD5031A8D),text: "Home Isolated", textColor: Colors.white,
+                          onpress: ()async{
 
+                            final progress = ProgressHUD.of(context);
+                            progress.show();
+                            var response = await Networking().getSearched("home_isolated");
+                            if(response['status']==404)
+                            {progress.dismiss();
+                            CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.error,
+                              text: " Data not Found!",
+                            );
+                            }
+                            else{progress.dismiss();
+                            showModalBottomSheet(context: context, builder:(contexts)=>
+                                BottomAppScreen(lst: response['data'],designation: widget.responseList[1],token: widget.responseList[3],));
+                            }
+                          },height: 50,width: 140,),
+                        RoundButton(color: Color(0XFFD5031A8D),text: "Recovered", textColor: Colors.white,
+                          onpress: ()async{
 
-                      },height: 50,width: 100,),
-                    RoundButton(color: Color(0XFFD5031A8D),text: "Recovered", textColor: Colors.white,
-                      onpress: ()async{
+                            final progress = ProgressHUD.of(context);
+                            progress.show();
+                            var response = await Networking().getSearched("Recovered");
+                            if(response['status']==404)
+                            {progress.dismiss();
+                            CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.error,
+                              text: " Data not Found!",
+                            );
+                            }
+                            else{progress.dismiss();
+                            showModalBottomSheet(context: context, builder:(contexts)=>
+                                BottomAppScreen(lst: response['data'],designation: widget.responseList[1],token: widget.responseList[3],));
+                            }
+                          },height: 50,width: 140,),
 
-                        final progress = ProgressHUD.of(context);
-                        progress.show();
-                        var response = await Networking().getSearched("Recovered");
-                        progress.dismiss();
-                        showModalBottomSheet(context: context, builder:(contexts)=>
-                            BottomAppScreen(lst: response,designation: widget.responseList[1],token: widget.responseList[3],));
-
-                      },height: 50,width: 100,),
+                      ],
+                    ),
+                    SizedBox(height: 40,)
                   ],
                 ),
               ],

@@ -22,8 +22,12 @@ class SearchPatientCard extends StatelessWidget {
       return 'Death';
     }
     else if(status == 'M'){
-      return 'Migrated';
+      return 'Referred';
     }
+    else if(status == 'H')
+      {
+        return 'Home Isolation';
+      }
   }
 
   @override

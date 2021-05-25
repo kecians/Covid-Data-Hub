@@ -27,9 +27,9 @@ class About extends StatelessWidget {
             InkWell(onTap: (){ launch("https://prashantpandey.ml"); },
                 child: Text('Prashant Pandey',style: TextStyle(fontSize: 16),)),
             SizedBox(height: 20,),
-            Text('Students of BKTI Dwarahat',style: TextStyle(fontSize: 16),),
+            Text('Bipin Tripathi Kumaon Institute of Technology',style: TextStyle(fontSize: 16),),
             SizedBox(height: 20,),
-            Text('Under the able guidance of Dr. K S Vaisla Sir.',style: TextStyle(fontSize: 16),),
+
           ],
         ),
       ),

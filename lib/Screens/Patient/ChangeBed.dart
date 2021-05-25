@@ -15,7 +15,7 @@ class ChangeBed extends StatefulWidget {
 }
 
 class _ChangeBedState extends State<ChangeBed> {
-  String dropdownValue = 'Bed Type';
+  String dropdownValue = 'Bed Type',wardVlue="Select Ward",floorValue="Select Floor";
   String bedNumber;
   Networking instance = Networking();
   @override
@@ -53,6 +53,10 @@ class _ChangeBedState extends State<ChangeBed> {
                         text: "New Bed Number", width: 260, onPress: (value) {bedNumber = value;},inputType: TextInputType.number,),
                       SizedBox(height: 30),
                       DropDown(),
+                      SizedBox(height: 30),
+                      DropDown2(),
+                      SizedBox(height: 30),
+                      DropDown3(),
                       SizedBox(height: 60),
                       RoundButton(color: Color(0XFFD5031A8D),
                         text: "Change",
@@ -60,7 +64,7 @@ class _ChangeBedState extends State<ChangeBed> {
                         onpress: ()async {
                           final progress = ProgressHUD.of(context);
                           progress.show();
-                          var res = await instance.changePatientBed(widget.id,dropdownValue,bedNumber);
+                          var res = await instance.changePatientBed(widget.id,dropdownValue,bedNumber,wardVlue,floorValue);
                           if(res == 201)
                             {
                                showToast(context, "Changed Bed Successfully");
@@ -103,6 +107,66 @@ class _ChangeBedState extends State<ChangeBed> {
             });
           },
           items: <String>['Bed Type','General Bed','Oxygen Bed','ICU Bed','Ventilators']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration:  BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown2() {
+    return Container( width: 260,
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: wardVlue,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              wardVlue = newValue;
+            });
+          },
+          items: <String>['Select Ward','A','B']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration:  BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown3() {
+    return Container( width: 260,
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: floorValue,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              floorValue = newValue;
+            });
+          },
+          items: <String>['Select Floor','1','2','3','4']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,

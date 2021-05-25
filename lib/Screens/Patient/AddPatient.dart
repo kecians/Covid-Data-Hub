@@ -25,8 +25,8 @@ class _AddPatientState extends State<AddPatient> {
       dropdownValue2 = "Bed Type",
       dropdownValue3 = "Condition",dropdownValue4="Covid Test",
       dropdownValue5 = "Test Type",dropdownValue6 = "Test Result",
-     dropdownValue7 = "Vaccination",dropdownValue8= "Vaccine Status",wardValue="Select Ward",vaccineName="Name of Vaccine";
-  String name,number,age,bedNo,address,remark,floor;
+     dropdownValue7 = "Vaccination",dropdownValue8= "Vaccine Status",floor="Select Floor",wardValue="Select Ward",vaccineName="Name of Vaccine";
+  String name,number,age,bedNo,address,remark;
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: ProgressHUD(
@@ -96,10 +96,7 @@ class _AddPatientState extends State<AddPatient> {
                       children: [
                         DropDown9(),
                         SizedBox(width: 20,),
-                        MyTextField(text: 'Floor Number',
-                            width: 120,
-                            inputType: TextInputType.number,
-                            onPress: (value) {floor = value;}),
+                        DropDown11()
                       ],
                     ),
                     SizedBox(height: 40,),
@@ -494,6 +491,36 @@ class _AddPatientState extends State<AddPatient> {
             });
           },
           items: <String>['Name of Vaccine','CoviShield','Covaxin']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown11() {
+    return Container(width: 120,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: floor,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              floor = newValue;
+            });
+          },
+          items: <String>['Select Floor','1','2','3','4']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
