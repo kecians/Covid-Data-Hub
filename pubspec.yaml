@@ -40,6 +40,7 @@ dependencies:
   url_launcher: ^6.0.4
   carousel_pro: ^1.0.0
   date_field: ^0.1.2
+  top_sheet: ^0.0.4
 
 dev_dependencies:
   flutter_test:

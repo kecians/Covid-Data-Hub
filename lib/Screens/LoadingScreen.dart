@@ -1,3 +1,4 @@
+import 'package:patient_status_app/Model/HoriTab.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -27,15 +28,15 @@ class _Loading_ScreenState extends State<Loading_Screen> {
     var data = await Networking().getBedStatus();
     print("this is $data");
 
-    Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context){return Status(data: data,responseList: result);}));
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+        builder: (context){return Horitab(data: data,responseList: result);}), (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(child: SpinKitCircle(
-          color: Colors.blue[900],
+          color: Colors.lightBlue[900],
         ))
     );
   }

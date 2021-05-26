@@ -25,7 +25,7 @@ class _ChangeStatusState extends State<ChangeStatus> {
         child: Builder(
           builder: (context)=>Scaffold(
             appBar: AppBar(
-              backgroundColor: Color(0XFFD5031A8D), shape: RoundedRectangleBorder(
+              backgroundColor: Colors.lightBlue[900], shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20))
             ),),
@@ -38,7 +38,7 @@ class _ChangeStatusState extends State<ChangeStatus> {
                     children: [
                       SizedBox(height: 60,),
                       Text('Change Patient Status',
-                        style: TextStyle(color: Colors.blue[900], fontSize: 26,
+                        style: TextStyle(color:Colors.lightBlue[900], fontSize: 26,
                           fontWeight: FontWeight.w900,),),
                       SizedBox(height: 60,),
                       Container(
@@ -84,7 +84,7 @@ class _ChangeStatusState extends State<ChangeStatus> {
 
 
                       })(),
-                      RoundButton(color: Color(0XFFD5031A8D),
+                      RoundButton(color: Colors.lightBlue[900],
                         text: "Change",
                         textColor: Colors.white,
                         onpress: ()async {
@@ -98,7 +98,8 @@ class _ChangeStatusState extends State<ChangeStatus> {
                             }
                             else
                               { showToast(context, "Status Successfully Updated!");
-                              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Loading_Screen()));
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(builder: (context)=>Loading_Screen()), (route) => false);
                               }
 
                         progress.dismiss();

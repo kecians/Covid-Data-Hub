@@ -46,7 +46,7 @@ class _PatientLoginState extends State<PatientLogin> {
                         TitleHead(height: 200),
                         SizedBox(height: 40,),
                         Center(
-                          child: Text('Patient Login',style: TextStyle(color: Colors.blue[900],fontSize: 26,
+                          child: Text('Patient Login',style: TextStyle(color: Colors.lightBlue[900],fontSize: 26,
                             fontWeight: FontWeight.w900,),),
                         ),
                         SizedBox(height: 40),
@@ -73,7 +73,7 @@ class _PatientLoginState extends State<PatientLogin> {
                               ),
                             ),
                             SizedBox(height: 140),
-                            RoundButton(color: Color(0XFFD5031A8D),text: "Login as Patient", textColor: Colors.white,
+                            RoundButton(color: Color(0XFFE901579B),text: "Login as Patient", textColor: Colors.white,
                               onpress: ()async{
                                 final progress = ProgressHUD.of(context);
 

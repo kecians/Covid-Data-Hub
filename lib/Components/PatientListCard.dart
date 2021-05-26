@@ -12,7 +12,7 @@ class PatientListCard extends StatelessWidget {
     if(isBed == null) {
       return "Null";
     }
-    return "${isBed['floor']}-${isBed['ward']}-${isBed['bed_number']} ${category()}";
+    return "F${isBed['floor']}-${isBed['ward']}-${isBed['bed_number']} ${category()}";
   }
   String category()
   {
@@ -53,7 +53,7 @@ class PatientListCard extends StatelessWidget {
             ),
             Container(
 
-              width: 80,
+              width: 85,
               child: Text(
                   condition()
                   ,style: TextStyle(fontWeight: FontWeight.w800,color: Colors.green[800],fontSize: 12),

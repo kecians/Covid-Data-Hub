@@ -26,7 +26,7 @@ class _LoadingScreenHomeState extends State<LoadingScreenHome> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(child: SpinKitCircle(
-          color: Colors.blue[900],
+          color:Colors.lightBlue[900],
         ))
     );
   }

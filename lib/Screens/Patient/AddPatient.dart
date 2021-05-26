@@ -33,7 +33,7 @@ class _AddPatientState extends State<AddPatient> {
       child: Builder(
         builder: (context)=>Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0XFFD5031A8D), shape: RoundedRectangleBorder(
+            backgroundColor: Colors.lightBlue[900], shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(20), bottomLeft: Radius.circular(20))
           ),),
@@ -46,7 +46,7 @@ class _AddPatientState extends State<AddPatient> {
                   children: [
                     SizedBox(height: 30,),
                     Text('Patient Admission Form',
-                      style: TextStyle(color: Colors.blue[900], fontSize: 26,
+                      style: TextStyle(color: Colors.lightBlue[900], fontSize: 26,
                         fontWeight: FontWeight.w900,),),
                     SizedBox(height: 30),
                     MyTextField(text: 'Enter Patient\'s Name',
@@ -157,7 +157,7 @@ class _AddPatientState extends State<AddPatient> {
                         inputType: TextInputType.streetAddress,
                         onPress: (value) {remark=value;}),
                     SizedBox(height: 30),
-                    RoundButton(color: Color(0XFFD5031A8D),
+                    RoundButton(color: Colors.lightBlue[900],
                       text: "Submit",
                       textColor: Colors.white,
                       onpress: ()async {
@@ -169,7 +169,7 @@ class _AddPatientState extends State<AddPatient> {
                             dropdownValue8, selectedDate1, selectedDate2,remark);
                         if(res == 201)
                         { showToast(context, "Patient added Successfully");
-                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Loading_Screen()));
+                          Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=>Loading_Screen()), (route) => false);
                         }
                         else
                         {

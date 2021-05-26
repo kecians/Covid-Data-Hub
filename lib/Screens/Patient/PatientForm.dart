@@ -37,7 +37,7 @@ class _PatientFormState extends State<PatientForm> {
                 Column(
                   children: [
                     SizedBox(height: 40,),
-                    Text('Health Check Form',style: TextStyle(color: Colors.blue[900],fontSize: 26,
+                    Text('Health Check Form',style: TextStyle(color: Colors.lightBlue[900],fontSize: 26,
                       fontWeight: FontWeight.w900,),),
                     SizedBox(height: 40),
                     Container(
@@ -77,14 +77,14 @@ class _PatientFormState extends State<PatientForm> {
                     SizedBox(height: 20,),
                     MyTextField(text: 'Temperature in Fahrenheit',width: 260,inputType: TextInputType.number,onPress: (value){temp = value;}),
                     SizedBox(height: 40),
-                    RoundButton(color: Color(0XFFD5031A8D),text: "Submit", textColor: Colors.white,
+                    RoundButton(color: Colors.lightBlue[900],text: "Submit", textColor: Colors.white,
                       onpress: ()async{
                         final progress = ProgressHUD.of(context);
                         progress.show();
                         var res = await instance.HealthUpdate(widget.token,widget.patient_id, sys, dia, pulse, temp, spo2, dropdownValue);
                         if(res == 201)
                         { showToast(context, "Health Status Updated Successfully!");
-                        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Loading_Screen()));
+                        Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=>Loading_Screen()), (route) => false);
                         }
                         else
                         {

@@ -33,7 +33,7 @@ class _LastFiveState extends State<LastFive> {
   Widget build(BuildContext context) {
     return SafeArea(child:
     Scaffold(
-      appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
+      appBar: AppBar(backgroundColor: Colors.lightBlue[900],shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
       ),leading: IconButton(icon:Icon(Icons.arrow_back),onPressed: (){Navigator.pop(context);},),),
       body: ListView.builder(

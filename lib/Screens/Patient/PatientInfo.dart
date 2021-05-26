@@ -14,7 +14,7 @@ class _PatientInfoState extends State<PatientInfo> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
-      appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
+      appBar: AppBar(backgroundColor: Colors.lightBlue[900],shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
       ),),
       body: SingleChildScrollView(
@@ -25,7 +25,7 @@ class _PatientInfoState extends State<PatientInfo> {
             child: Column(
               children: [
                 SizedBox(height: 30,),
-                Text('Patient Details',style: TextStyle(color: Colors.blue[900],fontSize: 24,
+                Text('Patient Details',style: TextStyle(color:Colors.lightBlue[900],fontSize: 24,
                   fontWeight: FontWeight.w700,),),
                 SizedBox(height: 20),
                 Divider(),
@@ -151,7 +151,7 @@ class _PatientInfoState extends State<PatientInfo> {
                 Column(
                       children: [
                         SizedBox(height: 40,),
-                        RoundButton(color: Color(0XFFD5031A8D),text: "Last 5 Days Report", textColor: Colors.white,
+                        RoundButton(color: Colors.lightBlue[900],text: "Last 5 Days Report", textColor: Colors.white,
                           onpress: (){Navigator.push(context, MaterialPageRoute(builder: (context){return LastFive(id: widget.data['patient_id']);}));} ,height: 50,width: 160,),
                       ],
                     )

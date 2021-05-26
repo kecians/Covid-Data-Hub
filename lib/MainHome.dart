@@ -52,8 +52,9 @@ class _MainHomeState extends State<MainHome> {
           bottomNavigationBar: Container(
             height: 30,
             color: Colors.black,
-            child: Center(child: Text("@Copyright @2021 All rights reserved",
-              style: TextStyle(color: Colors.white,fontSize: 12),),),
+            child: Center(child: Text("Developed by Ayush Bisht | Prashant Pandey | Shubham Tripathi BTKIT Dwarahat",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white,fontSize: 12,),),),
           ),
           body:Stack(
             children: [
@@ -114,10 +115,10 @@ class _MainHomeState extends State<MainHome> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            RoundButton(color: Color(0XFFD5031A8D),text: "Staff Login", textColor: Colors.white,
+                            RoundButton(color: Color(0XFFE901579B),text: "Staff Login", textColor: Colors.white,
                               onpress: (){Navigator.push(context,MaterialPageRoute(builder:(context)=>Home()));},height: 50,width: 120,),
                             SizedBox(width: 20,),
-                            RoundButton(color: Color(0XFFB7570384),text: "Patient Login", textColor: Colors.white,
+                            RoundButton(color: Color(0XFFE901579B),text: "Patient Login", textColor: Colors.white,
                               onpress: (){Navigator.push(context,MaterialPageRoute(builder: (context)=>PatientLogin()));}
                               ,height: 50,width: 120,),
                           ],

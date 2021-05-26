@@ -44,7 +44,7 @@ class TitleHead extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       margin: EdgeInsets.only(left: 10,right: 10),
       decoration: BoxDecoration(
-          color: Color(0XFFD5031A8D),
+          color: Colors.lightBlue[900],
           borderRadius: BorderRadius.only(bottomRight:Radius.circular(20),
               bottomLeft:Radius.circular(20) )
       ),

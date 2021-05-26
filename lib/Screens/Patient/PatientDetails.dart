@@ -47,7 +47,7 @@ class _PatientDetailsState extends State<PatientDetails> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
-        appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
+        appBar: AppBar(backgroundColor: Colors.lightBlue[900],shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
         ),),
       body: SingleChildScrollView(
@@ -58,7 +58,7 @@ class _PatientDetailsState extends State<PatientDetails> {
             child: Column(
                     children: [
                     SizedBox(height: 30,),
-                    Text('Patient Details',style: TextStyle(color: Colors.blue[900],fontSize: 24,
+                    Text('Patient Details',style: TextStyle(color: Colors.lightBlue[900],fontSize: 24,
                       fontWeight: FontWeight.w700,),),
                     SizedBox(height: 20),
                     Divider(),
@@ -75,9 +75,9 @@ class _PatientDetailsState extends State<PatientDetails> {
                         ),
                         Column(
                           children: [
-                            Text("Status",style: kdarkHeader,),
+                            Text("Age",style: kdarkHeader,),
                             SizedBox(height: 10,),
-                            Text(status,style: kdarkValue,)
+                            Text("$age",style: kdarkValue,)
                           ],
                         ),
                         Column(
@@ -104,13 +104,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                               ],
                             ),
                           ),
-                          Column(
-                            children: [
-                              Text("Age",style: kdarkHeader,),
-                              SizedBox(height: 10,),
-                              Text("$age",style: kdarkValue,)
-                            ],
-                          ),
+
                           Container(width: 90,
                             child: Column(
                               children: [
@@ -121,34 +115,16 @@ class _PatientDetailsState extends State<PatientDetails> {
                             ),
                           ),
 
-                        ],
-                      ),
-                      SizedBox(height: 10,),
-                      Divider(),
-                      SizedBox(height: 10,),
-                      Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container( width: 150,
+                          Container(width: 100,
                             child: Column(
                               children: [
-                                Text("Address",style: kdarkHeader,),
+                                Text("Pulse Rate",style: kdarkHeader,),
                                 SizedBox(height: 10,),
-                                Container(child: Text(address,style: kdarkValue,),
-                                  alignment: Alignment.center,width: 150,
-                                  margin: EdgeInsets.only(left: 20,right: 20),)
-                              ],
-                            ),
-                          ),Container( width: 150,
-                            child: Column(
-                              children: [
-                                Text("Updated On",style: kdarkHeader,),
-                                SizedBox(height: 10,),
-                                Container(child: Text("${widget.response['updated_on']}".substring(0,10),style: kdarkValue,),
-                                  alignment: Alignment.center,
-                                  margin: EdgeInsets.only(left: 20,right: 20),),
+                                Text("${stat['pulse_rate']}",style: kdarkValue,),
                               ],
                             ),
                           ),
+
                         ],
                       ),
                       SizedBox(height: 10,),
@@ -195,9 +171,9 @@ class _PatientDetailsState extends State<PatientDetails> {
                           ),
                           Column(
                             children: [
-                              Text("Pulse Rate",style: kdarkHeader,),
+                              Text("Test Type",style: kdarkHeader,),
                               SizedBox(height: 10,),
-                              Text("${stat['pulse_rate']}",style: kdarkValue,),
+                              Text(TestType(),style: kdarkValue,),
                             ],
                           ),
                           Column(
@@ -206,6 +182,35 @@ class _PatientDetailsState extends State<PatientDetails> {
                               SizedBox(height: 10,),
                               Text(TestStatus(),style: kdarkValue,),
                             ],
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 10,),
+                      Divider(),
+                      SizedBox(height: 10,),
+                      Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container( width: 150,
+                            child: Column(
+                              children: [
+                                Text("Address",style: kdarkHeader,),
+                                SizedBox(height: 10,),
+                                Container(child: Text(address,style: kdarkValue,),
+                                  alignment: Alignment.center,width: 150,
+                                  margin: EdgeInsets.only(left: 20,right: 20),)
+                              ],
+                            ),
+                          ),Container( width: 150,
+                            child: Column(
+                              children: [
+                                Text("Updated On",style: kdarkHeader,),
+                                SizedBox(height: 10,),
+                                Container(child: Text("${widget.response['updated_on']}".substring(0,10),style: kdarkValue,),
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(left: 20,right: 20),),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -218,7 +223,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                                  style: TextStyle(fontWeight: FontWeight.w600),),onTap: (){Navigator.push(context,
                                    MaterialPageRoute(builder: (context){return LastFive(id: patientId,);}));},),
                               SizedBox(height: 30,),
-                              RoundButton(color: Color(0XFFD5031A8D),text: "Health Check", textColor: Colors.white,
+                              RoundButton(color: Colors.lightBlue[900],text: "Health Check", textColor: Colors.white,
                                 onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
                                     builder: (context){return PatientForm(patientName: patient,patient_id: patientId,token: widget.token,);}));} ,height: 50,width: 260,)
                             ],
@@ -233,10 +238,10 @@ class _PatientDetailsState extends State<PatientDetails> {
                               SizedBox(height: 30,),
                               Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  RoundButton(color: Color(0XFFD5031A8D),text: "Change Status", textColor: Colors.white,
+                                  RoundButton(color: Colors.lightBlue[900],text: "Change Status", textColor: Colors.white,
                                     onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
                                         builder: (context){return ChangeStatus(id: patientId,);}));} ,height: 50,width: 120,),
-                                  RoundButton(color: Color(0XFFD5031A8D),text: "Change Bed", textColor: Colors.white,
+                                  RoundButton(color: Colors.lightBlue[900],text: "Change Bed", textColor: Colors.white,
                                     onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
                                         builder: (context){return ChangeBed(id: patientId,);}));} ,height: 50,width: 120,),
                                 ],
@@ -247,7 +252,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                            return Column(
                              children: [
                                SizedBox(height: 40,),
-                               RoundButton(color: Color(0XFFD5031A8D),text: "Last 5 Days Report", textColor: Colors.white,
+                               RoundButton(color:Colors.lightBlue[900],text: "Last 5 Days Report", textColor: Colors.white,
                                  onpress: (){Navigator.push(context,
                                      MaterialPageRoute(builder: (context){return LastFive(id: patientId,);}));} ,height: 50,width: 160,),
                              ],
@@ -310,6 +315,28 @@ class _PatientDetailsState extends State<PatientDetails> {
       }
 
   }
+   String TestType(){
+     if(widget.response["patient_covid_test"]==null || widget.response["patient_covid_test"]["is_tested"]==false )
+     {
+       return "Not Tested";
+     }
+     else if(widget.response["patient_covid_test"]["is_tested"]==true)
+     {
+       if(widget.response["patient_covid_test"]['type']=='1')
+       {
+         return "Rapid AntiGen";
+       }
+       else if(widget.response["patient_covid_test"]['type']=='2')
+       {
+         return 'RT-PCR';
+       }
+       else if(widget.response["patient_covid_test"]['type']=='3')
+       {
+         return 'TrueNat';
+       }
+     }
+
+   }
    String VaccineStatus(){
      if(widget.response["patient_vaccine_status"]==null || widget.response["patient_vaccine_status"]["is_vaccinated"]==false)
      {

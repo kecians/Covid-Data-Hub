@@ -56,8 +56,8 @@ class _HomeState extends State<Home> {
                       child: ListView(
 
                         children:[
-                          TitleHead(height: 200,),
-                          SizedBox(height: 80),
+                          TitleHead(height: 140,),
+                          SizedBox(height: 40),
                           Column(
                             children: [
                               Text(errortext,style: TextStyle(color: Colors.red),),
@@ -82,8 +82,8 @@ class _HomeState extends State<Home> {
                                   decoration: kInputDecorantion.copyWith(hintText: 'Enter your password',),
                                 ),
                               ),
-                              SizedBox(height: 140),
-                              RoundButton(color: Color(0XFFD5031A8D),text: "Login", textColor: Colors.white,
+                              SizedBox(height: 80),
+                              RoundButton(color: Color(0XFFE901579B),text: "Login", textColor: Colors.white,
                                 onpress: ()async{
                                   final progress = ProgressHUD.of(context);
                                   if(_usernameController.text.length <=4 || _passwordController.text.length<3)

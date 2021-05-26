@@ -10,7 +10,7 @@ class InfoDischarged extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
-      appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
+      appBar: AppBar(backgroundColor: Colors.lightBlue[900],shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
       ),),
       body: SingleChildScrollView(
@@ -21,7 +21,7 @@ class InfoDischarged extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 30,),
-                Text('Patient Details',style: TextStyle(color: Colors.blue[900],fontSize: 24,
+                Text('Patient Details',style: TextStyle(color: Colors.lightBlue[900],fontSize: 24,
                   fontWeight: FontWeight.w700,),),
                 SizedBox(height: 20),
                 Divider(),
@@ -144,17 +144,17 @@ class InfoDischarged extends StatelessWidget {
                           SizedBox(height:60),
                           ((){
                             if(desgination=="NURSE")
-                            {return RoundButton(color: Color(0XFFD5031A8D),text: "Health Check", textColor: Colors.white,
+                            {return RoundButton(color: Colors.lightBlue[900],text: "Health Check", textColor: Colors.white,
                               onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
                                   builder: (context){return PatientForm(patientName:data['name'],patient_id:data['patient_id'],token:token,);}));} ,height: 50,width: 260,);
                             }
                             else if(desgination=='DOCTOR')
                             { return Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                RoundButton(color: Color(0XFFD5031A8D),text: "Change Status", textColor: Colors.white,
+                                RoundButton(color: Colors.lightBlue[900],text: "Change Status", textColor: Colors.white,
                                   onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
                                       builder: (context){return ChangeStatus(id:data['patient_id']);}));} ,height: 50,width: 120,),
-                                RoundButton(color: Color(0XFFD5031A8D),text: "Change Bed", textColor: Colors.white,
+                                RoundButton(color: Colors.lightBlue[900],text: "Change Bed", textColor: Colors.white,
                                   onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
                                       builder: (context){return ChangeBed(id:data['patient_id']);}));} ,height: 50,width: 120,),
                               ],
