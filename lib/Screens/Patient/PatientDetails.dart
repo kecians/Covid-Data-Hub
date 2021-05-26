@@ -1,4 +1,7 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:patient_status_app/Components/Cards/CovidInfo.dart';
+import 'package:patient_status_app/Components/Cards/General_Info.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
 import 'package:patient_status_app/Model/Networking.dart';
 import 'package:patient_status_app/Screens/Patient/ChangeBed.dart';
@@ -19,6 +22,7 @@ class _PatientDetailsState extends State<PatientDetails> {
    String patient,status,gender,patientId,address,condition;
    int age;
    String spo2, bpUp,bpDown,temp,contact;
+   String frstDate,secDate;
    var stat={};
   dataList(){
     patient = widget.response['name'];
@@ -46,6 +50,7 @@ class _PatientDetailsState extends State<PatientDetails> {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(child: Scaffold(
         appBar: AppBar(backgroundColor: Colors.lightBlue[900],shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
@@ -53,167 +58,38 @@ class _PatientDetailsState extends State<PatientDetails> {
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.only(left: 10,right: 10,top: 20),
-          height: 620,
+          height: 630,
           child: Center(
             child: Column(
                     children: [
-                    SizedBox(height: 30,),
+                    SizedBox(height: 20,),
                     Text('Patient Details',style: TextStyle(color: Colors.lightBlue[900],fontSize: 24,
                       fontWeight: FontWeight.w700,),),
                     SizedBox(height: 20),
-                    Divider(),
-                    SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            Text("Name",style: kdarkHeader,),
-                            SizedBox(height: 10,),
-                            Container(child: Text(patient,style: kdarkValue,),width: 80,alignment: Alignment.center,)
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text("Age",style: kdarkHeader,),
-                            SizedBox(height: 10,),
-                            Text("$age",style: kdarkValue,)
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text("Gender",style: kdarkHeader,),
-                            SizedBox(height: 10,),
-                            Text(gender,style: kdarkValue,)
-                          ],
-                        ),
-                      ],
-                    ),
-                      SizedBox(height: 10,),
-                      Divider(),
-                      SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(width: 100,
-                            child: Column(
-                              children: [
-                                Text("Contact",style: kdarkHeader,),
-                                SizedBox(height: 10,),
-                                Text("$contact",style: kdarkValue,)
-                              ],
-                            ),
-                          ),
+                      SizedBox(
+                          height: 400.0,
+                          width: 350.0,
+                          child: Carousel(
+                            images: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5,bottom: 5),
+                                child: General_Info(name: patient,age: age,address: address,condition:condtions()
+                                    ,gender: gender,patId: patientId,bedNo: "X",contact: contact),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5,bottom: 5),
+                                child: CovidInfo(result: TestStatus(),type: TestType(),vaccination: VaccineStatus(),
+                                    vaccine: VaccineName()),
+                              ),
 
-                          Container(width: 90,
-                            child: Column(
-                              children: [
-                                Text("Patient ID",style: kdarkHeader,),
-                                SizedBox(height: 10,),
-                                Text(patientId,style: kdarkValue,)
-                              ],
-                            ),
-                          ),
-
-                          Container(width: 100,
-                            child: Column(
-                              children: [
-                                Text("Pulse Rate",style: kdarkHeader,),
-                                SizedBox(height: 10,),
-                                Text("${stat['pulse_rate']}",style: kdarkValue,),
-                              ],
-                            ),
-                          ),
-
-                        ],
-                      ),
-                      SizedBox(height: 10,),
-                      Divider(),
-                      SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              Text("Condition",style: kdarkHeader,),
-                              SizedBox(height: 10,),
-                              Text(condtions(),style: kdarkValue,)
                             ],
-                          ),
-                          Column(
-                            children: [
-                              Text("B P",style: kdarkHeader,),
-                              SizedBox(height: 10,),
-                              Text('${stat['blood_pres_systolic']} / ${stat['blood_pres_diastolic']}',style: kdarkValue,)
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text("SPO2 Level",style: kdarkHeader,),
-                              SizedBox(height: 10,),
-                              Text("${stat['oxy_level']}",style: kdarkValue,)
-                            ],
-                          ),
-
-
-                        ],
-                      ),
-                      SizedBox(height: 30,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              Text("Vaccination",style: kdarkHeader,),
-                              SizedBox(height: 10,),
-                              Text(VaccineStatus(),style: kdarkValue,)
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text("Test Type",style: kdarkHeader,),
-                              SizedBox(height: 10,),
-                              Text(TestType(),style: kdarkValue,),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text("Test Result",style: kdarkHeader,),
-                              SizedBox(height: 10,),
-                              Text(TestStatus(),style: kdarkValue,),
-                            ],
-                          ),
-                        ],
+                            dotSize: 0.0,
+                            dotBgColor: Colors.transparent,
+                            borderRadius: true,
+                            autoplay: false,
+                          )
                       ),
 
-                      SizedBox(height: 10,),
-                      Divider(),
-                      SizedBox(height: 10,),
-                      Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container( width: 150,
-                            child: Column(
-                              children: [
-                                Text("Address",style: kdarkHeader,),
-                                SizedBox(height: 10,),
-                                Container(child: Text(address,style: kdarkValue,),
-                                  alignment: Alignment.center,width: 150,
-                                  margin: EdgeInsets.only(left: 20,right: 20),)
-                              ],
-                            ),
-                          ),Container( width: 150,
-                            child: Column(
-                              children: [
-                                Text("Updated On",style: kdarkHeader,),
-                                SizedBox(height: 10,),
-                                Container(child: Text("${widget.response['updated_on']}".substring(0,10),style: kdarkValue,),
-                                  alignment: Alignment.center,
-                                  margin: EdgeInsets.only(left: 20,right: 20),),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
                       SizedBox(height: 30,),
                       ((){
                         if(widget.designation=="NURSE")
@@ -225,7 +101,8 @@ class _PatientDetailsState extends State<PatientDetails> {
                               SizedBox(height: 30,),
                               RoundButton(color: Colors.lightBlue[900],text: "Health Check", textColor: Colors.white,
                                 onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
-                                    builder: (context){return PatientForm(patientName: patient,patient_id: patientId,token: widget.token,);}));} ,height: 50,width: 260,)
+                                    builder: (context){return PatientForm(patientName: patient,patient_id: patientId,token: widget.token,);
+                                    }));} ,height: 50,width: 260,)
                             ],
                           );
                           }
@@ -345,14 +222,34 @@ class _PatientDetailsState extends State<PatientDetails> {
      else if(widget.response["patient_vaccine_status"]["is_vaccinated"]==true)
      {
        if(widget.response["patient_vaccine_status"]['vaccine_status'].length==1)
-       {
+       {  String frstDate = widget.response["patient_vaccine_status"]['vaccine_status'][0]['vaccinated_on'];
          return "One Dose";
        }
        else if(widget.response["patient_vaccine_status"]['vaccine_status'].length>=2)
-       {
-         return 'Both Dose';
+       { String frstDate = widget.response["patient_vaccine_status"]['vaccine_status'][0]['vaccinated_on'];
+       String secDate = widget.response["patient_vaccine_status"]['vaccine_status'][1]['vaccinated_on'];
+         return "Both Dose";
        }
      }
 
    }
+   String VaccineName(){
+     if(widget.response["patient_vaccine_status"]==null || widget.response["patient_vaccine_status"]["is_vaccinated"]==false)
+     {
+       return "Not Vaccinated";
+     }
+     else if(widget.response["patient_vaccine_status"]["is_vaccinated"]==true)
+     {
+       if(widget.response["patient_vaccine_status"]['vaccine_status'][0]['type']=='1')
+       {
+         return "CoviShield";
+       }
+       else if(widget.response["patient_vaccine_status"]['vaccine_status'][0]['type']=='2')
+       {
+         return 'Covaxine';
+       }
+     }
+
+   }
+
 }
