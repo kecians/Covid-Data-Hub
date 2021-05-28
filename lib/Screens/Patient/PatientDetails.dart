@@ -22,7 +22,6 @@ class _PatientDetailsState extends State<PatientDetails> {
    String patient,status,gender,patientId,address,condition;
    int age;
    String spo2, bpUp,bpDown,temp,contact;
-   String frstDate,secDate;
    var stat={};
   dataList(){
     patient = widget.response['name'];
@@ -65,9 +64,9 @@ class _PatientDetailsState extends State<PatientDetails> {
                     SizedBox(height: 20,),
                     Text('Patient Details',style: TextStyle(color: Colors.lightBlue[900],fontSize: 24,
                       fontWeight: FontWeight.w700,),),
-                    SizedBox(height: 20),
+                    SizedBox(height: 5),
                       SizedBox(
-                          height: 400.0,
+                          height: 420.0,
                           width: 350.0,
                           child: Carousel(
                             images: [
@@ -83,10 +82,13 @@ class _PatientDetailsState extends State<PatientDetails> {
                               ),
 
                             ],
-                            dotSize: 0.0,
+                            dotSize: 5.0,
+                            dotColor: Colors.grey,
                             dotBgColor: Colors.transparent,
                             borderRadius: true,
                             autoplay: false,
+                            dotIncreasedColor: Colors.blueAccent,
+                            dotSpacing: 15,
                           )
                       ),
 
@@ -167,7 +169,7 @@ class _PatientDetailsState extends State<PatientDetails> {
       }
   }
   String TestStatus(){
-    if(widget.response["patient_covid_test"]==null || widget.response["patient_covid_test"]["is_tested"]==false )
+    if(widget.response["patient_covid_test"]==null || widget.response["patient_covid_test"]["is_tested"]==null )
       {
         return "Not Tested";
       }
@@ -193,7 +195,7 @@ class _PatientDetailsState extends State<PatientDetails> {
 
   }
    String TestType(){
-     if(widget.response["patient_covid_test"]==null || widget.response["patient_covid_test"]["is_tested"]==false )
+     if(widget.response["patient_covid_test"]==null || widget.response["patient_covid_test"]["is_tested"]==null )
      {
        return "Not Tested";
      }

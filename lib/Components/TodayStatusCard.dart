@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 class TodayStatus extends StatefulWidget {
-  int active,mig,death,recov;
-  TodayStatus({this.death,this.active,this.mig,this.recov});
+  int home,mig,death,recov;
+  TodayStatus({this.death,this.home,this.mig,this.recov});
   @override
   _TodayStatusState createState() => _TodayStatusState();
 }
@@ -23,16 +23,16 @@ class _TodayStatusState extends State<TodayStatus> {
             children: [
 
               Container(
-                width: 100,
+                width: 120,
                 child: Column(
                   children: [
                     Text(
-                      "Active",
+                      "Home Isolated",
                       style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16,color: Colors.blueGrey[600]),
                     ),
                     SizedBox(height: 8,),
                     Text(
-                      "${widget.active}",
+                      "${widget.home}",
                       overflow: TextOverflow.fade,
                       style: TextStyle(fontWeight: FontWeight.w600,fontSize: 14,color: Colors.blue[700]),
                     ),
@@ -68,7 +68,7 @@ class _TodayStatusState extends State<TodayStatus> {
                 child: Column(
                   children: [
                     Text(
-                      "Death",
+                      "Deaths",
                       style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16,color: Colors.blueGrey[600]),
                     ),
                     SizedBox(height: 8,),

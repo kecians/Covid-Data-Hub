@@ -19,7 +19,7 @@ static final String id = 'MainHome';
 
 class _MainHomeState extends State<MainHome> {
   Networking instance = Networking();
-  int ox,gen,ven,icu,availox,availgen,availicu,availven,total,alloted,active,migrated,recov,death;
+  int ox,gen,ven,icu,availox,home,availgen,availicu,availven,total,alloted,active,migrated,recov,death;
   @override
   void initState() {
     // TODO: implement initState
@@ -43,6 +43,7 @@ class _MainHomeState extends State<MainHome> {
     migrated = data['migrated'];
     recov = data['recovered'];
     death = data['death'];
+    home = data['home_isolated'];
   }
   @override
   Widget build(BuildContext context) {
@@ -60,16 +61,15 @@ class _MainHomeState extends State<MainHome> {
             children: [
               Container(
                 alignment: Alignment.bottomLeft,
-                child: SvgPicture.asset('assets/CovidAnimate.svg',height: 200,width: 200,),
+                child: SvgPicture.asset('assets/CovidAnimate.svg',height: 140,width: 140,),
 
               ),
               Center(
 
                 child: ListView(
-
                   children:[
                     TitleHead(height: 100,),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     SizedBox(
                         height: 200.0,
                         width: 300.0,
@@ -79,7 +79,7 @@ class _MainHomeState extends State<MainHome> {
                               padding: const EdgeInsets.only(top: 5,bottom: 5),
                               child: Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  MyCard(height: 200,width: 160,headText: 'Total Patients',headerSize: 17,valueColor: Colors.blueGrey[600],
+                                  MyCard(height: 200,width: 160,headText: 'Active Patients',headerSize: 17,valueColor: Colors.blueGrey[600],
                                     color: Colors.white,valueSize: 50,
                                     /// Realtime Value
                                     valueText: "$alloted",
@@ -107,20 +107,20 @@ class _MainHomeState extends State<MainHome> {
                           animationDuration:Duration(seconds: 1),
                         )
                     ),
-                    TodayStatus(recov:recov,death: death,mig: migrated,active: active,),
+                    TodayStatus(recov:recov,death: death,mig: migrated,home: home,),
                     Column(
                       children: [
 
-                        SizedBox(height: 100),
-                        Row(
+                        SizedBox(height: 30),
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             RoundButton(color: Color(0XFFE901579B),text: "Staff Login", textColor: Colors.white,
-                              onpress: (){Navigator.push(context,MaterialPageRoute(builder:(context)=>Home()));},height: 50,width: 120,),
-                            SizedBox(width: 20,),
+                              onpress: (){Navigator.push(context,MaterialPageRoute(builder:(context)=>Home()));},height: 50,width: 115,),
+                            SizedBox(height: 20,),
                             RoundButton(color: Color(0XFFE901579B),text: "Patient Login", textColor: Colors.white,
                               onpress: (){Navigator.push(context,MaterialPageRoute(builder: (context)=>PatientLogin()));}
-                              ,height: 50,width: 120,),
+                              ,height: 50,width: 115,),
                           ],
                         )
 

@@ -42,7 +42,9 @@ class Networking{
       "active" : dec['alloted_beds']['total'],
       "migrated" : dec['patient_status']['migrated'],
       "recovered" : dec['patient_status']['recovered'],
-      "death" : dec ['patient_status']['death']
+      "death" : dec ['patient_status']['death'],
+      "home_isolated" : dec['patient_status']['home_isolated']
+
     };
     return data;
   }
@@ -90,8 +92,12 @@ class Networking{
 
 
   Future<dynamic> AddPatient(_token,name,age,gender,bed_cat,bedNo,phno,condition,address,
-      ward,floor,isTested,testType,testResult,isVaccinated,nameVaccine,numDose,frstDate,secDate,remark) async
+      ward,floor,isTested,testType,testResult,isVaccinated,nameVaccine,numDose,frstDate,secDate,remark,admissionType) async
   {
+    String admission;
+    if(admissionType == 'Home Isolation'){admission = 'H';}
+    else if(admissionType == 'Hospitalization'){admission = 'A';}
+
     String cond;
     if(condition == 'Asymptomatic') { cond = "1";}
     else if(condition == 'Mild') {cond = "2";}
@@ -182,9 +188,12 @@ class Networking{
     if( isVaccinated == 'Yes'){isVac = true;}
     else if(isVaccinated == 'No'){isVac = false; vaccineState = null;}
 
-    var patBed = {
-      'bed_number' : bedNo, 'bed_category': bedCat, 'ward':ward,'floor':floor
-    };
+    var patBed;
+   if(admission == 'H'){ patBed ={};}
+   else if(admission == 'A'){patBed = {
+     'bed_number' : bedNo, 'bed_category': bedCat, 'ward':ward,'floor':floor
+   };}
+
      var covidTest = {
   'is_tested' : isTest,
   'type' : testTyp,
@@ -196,7 +205,7 @@ class Networking{
 
     var eData = {
       "name":name,"age":age, "gender": gender,"contact_number":phno,
-      "health_condition":cond,"address":address,"covid_status":covidSta,"remark":remark,
+      "health_condition":cond,"address":address,"covid_status":covidSta,"remark":remark,'patient_status' : admission,
       'patient_bed': patBed, 'patient_covid_test' : covidTest , 'patient_vaccine_status' : vacStat
     };
 
@@ -287,7 +296,7 @@ class Networking{
     }
     var response = await http.post(Uri.parse(url),headers: {
       'content-type':'application/json',},body: jsonEncode({'patient_id':id,'bed_category':bedtp,'bed_number':bedno
-      ,'ward':ward,'floor':floor
+      ,'ward':ward,'floor':floor,
       }));
 
     var res = jsonDecode(response.body);

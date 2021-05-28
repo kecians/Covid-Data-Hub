@@ -39,8 +39,9 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: Container(
           height: 30,
           color: Colors.black,
-          child: Center(child: Text("@Copyright @2021 All rights reserved",
-            style: TextStyle(color: Colors.white,fontSize: 12),),),
+          child: Center(child: Text("Developed by Ayush Bisht | Prashant Pandey | Shubham Tripathi BTKIT Dwarahat",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white,fontSize: 12,),),),
         ),
         body: ProgressHUD(
           child: Builder(

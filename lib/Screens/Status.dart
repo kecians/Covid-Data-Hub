@@ -19,7 +19,7 @@ class Status extends StatefulWidget {
 }
 
 class _StatusState extends State<Status> {
-  int ox,gen,ven,icu,availox,availgen,availicu,availven,total,alloted,active,migrated,recov,death;
+  int ox,gen,ven,icu,availox,home,availgen,availicu,availven,total,alloted,active,migrated,recov,death;
 
   @override
   void initState() {
@@ -44,6 +44,7 @@ class _StatusState extends State<Status> {
     migrated = data['migrated'];
     recov = data['recovered'];
     death = data['death'];
+    home = data['home_isolated'];
   }
 
   @override
@@ -58,13 +59,12 @@ class _StatusState extends State<Status> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  MyCard(height: 120,width: 160,headText: 'Total Patients',headerSize: 17,valueColor: Colors.blueGrey[600],
+                  MyCard(height: 120,width: 160,headText: 'Active Patients',headerSize: 17,valueColor: Colors.blueGrey[600],
                     color: Colors.white,valueSize: 30,
                     /// Realtime Value
                     valueText: "$alloted",
                     headerColor: Colors.blueGrey,
                   ),
-
                   MyCard(height: 120,width: 160,headText: 'Total Beds',headerSize: 17,valueColor: Colors.blueGrey[600],
                     color: Colors.white,valueSize: 30,
                     /// Realtime Value
@@ -78,13 +78,8 @@ class _StatusState extends State<Status> {
               DetailCard(valueGen: availgen,valueIcu: availicu,valueOxy: availox,valueVen: availven,TotalGen: gen,TotalIcu: icu,
                 TotalOxy: ox,TotalVen: ven,height: 200,
                 color: Colors.white,),
-              TodayStatus(recov:recov,death: death,mig: migrated,active: active,),
+              TodayStatus(recov:recov,death: death,mig: migrated,home:home,),
               SizedBox(height: 40,),
-              widget.responseList[1] == "NURSE" ? Center(
-                child: RoundButton(color: Colors.lightBlue[900],text: "Add  Patient", textColor: Colors.white,
-                  onpress: (){Navigator.push(context, MaterialPageRoute(
-                      builder: (context){return AddPatient(token: widget.responseList[3]);}));},height: 50,width: 260,),
-              ) :
               Column(
                 children: [
                   Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,

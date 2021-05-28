@@ -24,7 +24,7 @@ class _AddPatientState extends State<AddPatient> {
   String dropdownValue1 = "Gender",
       dropdownValue2 = "Bed Type",
       dropdownValue3 = "Condition",dropdownValue4="Covid Test",
-      dropdownValue5 = "Test Type",dropdownValue6 = "Test Result",
+      dropdownValue5 = "Test Type",dropdownValue6 = "Test Result",admissionType= "Select Admission Category",
      dropdownValue7 = "Vaccination",dropdownValue8= "Vaccine Status",floor="Select Floor",wardValue="Select Ward",vaccineName="Name of Vaccine";
   String name,number,age,bedNo,address,remark;
   @override
@@ -80,25 +80,30 @@ class _AddPatientState extends State<AddPatient> {
                     SizedBox(height: 40),
                     Container(
                       width: double.infinity,
+
                       height: 50,color: Colors.blue[900],
-                      child: Center(child: Text('Bed Details',style: TextStyle(color: Colors.white,fontSize: 20),)),
+                      child: Center(child: Text('Admission Details',style: TextStyle(color: Colors.white,fontSize: 20),)),
                     ),
                     SizedBox(height: 40,),
-                    DropDown2(),
-                    SizedBox(height: 20,),
-                    MyTextField(text: 'Bed Number',
-                        width: 260,
-                        inputType: TextInputType.number,
-                        onPress: (value) {bedNo=value;}),
-                    SizedBox(height: 20,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        DropDown9(),
-                        SizedBox(width: 20,),
-                        DropDown11()
-                      ],
-                    ),
+                    DropDown12(),
+                    admissionType == 'Hospitalization'? Column(children: [
+                      SizedBox(height: 20,),
+                      DropDown2(),
+                      SizedBox(height: 20,),
+                      MyTextField(text: 'Bed Number',
+                          width: 260,
+                          inputType: TextInputType.number,
+                          onPress: (value) {bedNo=value;}),
+                      SizedBox(height: 20,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DropDown9(),
+                          SizedBox(width: 20,),
+                          DropDown11()
+                        ],
+                      ),
+                    ],): SizedBox(height: 1,),
                     SizedBox(height: 40,),
                     Container(
                       width: double.infinity,
@@ -166,7 +171,7 @@ class _AddPatientState extends State<AddPatient> {
                         var res = await instance.AddPatient(widget.token, name, age,dropdownValue1,
                             dropdownValue2, bedNo, number,dropdownValue3, address, wardValue, floor,
                             dropdownValue4,dropdownValue5,dropdownValue6, dropdownValue7, vaccineName,
-                            dropdownValue8, selectedDate1, selectedDate2,remark);
+                            dropdownValue8, selectedDate1, selectedDate2,remark,admissionType);
                         if(res == 201)
                         { showToast(context, "Patient added Successfully");
                           Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=>Loading_Screen()), (route) => false);
@@ -521,6 +526,36 @@ class _AddPatientState extends State<AddPatient> {
             });
           },
           items: <String>['Select Floor','1','2','3','4']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown12() {
+    return Container(width: 260,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: admissionType,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              admissionType = newValue;
+            });
+          },
+          items: <String>['Select Admission Category','Hospitalization','Home Isolation']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,

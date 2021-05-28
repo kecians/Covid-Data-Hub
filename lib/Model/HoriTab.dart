@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Components/RoundButton.dart';
+import 'package:patient_status_app/MainHome.dart';
+import 'package:patient_status_app/Model/LoadingScreenHome.dart';
 import 'package:patient_status_app/Screens/Home.dart';
 import 'package:patient_status_app/Screens/PatientList.dart';
 import 'package:patient_status_app/Screens/Status.dart';
@@ -49,7 +51,7 @@ class _HoritabState extends State<Horitab> {
                     RoundButton(color: Colors.lightBlue[900],text: "Logout",textColor: Colors.white,
                     width: 120, onpress: ()async{ preferences = await SharedPreferences.getInstance();
               preferences.setBool('isLoggedIn', false);
-              Navigator.pushNamedAndRemoveUntil(context,Home.id, (route) => false);},
+              Navigator.pushNamedAndRemoveUntil(context, LoadingScreenHome.id, (route) => false);},
                     )
                   ],
                 ),
