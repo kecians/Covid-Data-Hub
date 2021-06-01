@@ -111,7 +111,7 @@ class _PatientInfoState extends State<PatientInfo> {
                       children: [
                         Text("Admitted On",style: kdarkHeader,),
                         SizedBox(height: 10,),
-                        Text("${widget.data['created_on']}".substring(0,10),style: kdarkValue,)
+                        Text("${widget.data['admitted_on']}",style: kdarkValue,)
                       ],
                     ),
                   ),

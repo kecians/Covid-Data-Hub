@@ -62,7 +62,7 @@ class PatientListCard extends StatelessWidget {
             Container(
               width: 80,
               child: Text(
-                admittedOn.substring(0,10),
+                admittedOn,
                 style: TextStyle(fontWeight: FontWeight.w800,fontSize: 12),
               ),
             )

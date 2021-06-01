@@ -66,7 +66,7 @@ class _HoritabState extends State<Horitab> {
               Tab(
                   child: Container(
                       child: Text(
-                        "Live Status",
+                        "Current Status",
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ))),
               Tab(

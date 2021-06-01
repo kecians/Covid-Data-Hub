@@ -465,7 +465,7 @@ class _AddPatientState extends State<AddPatient> {
               wardValue = newValue;
             });
           },
-          items: <String>['Select Ward','A','B']
+          items: <String>['Select Ward','A','B','Obs & Gynae','Paediatric']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,

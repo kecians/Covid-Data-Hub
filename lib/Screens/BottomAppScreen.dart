@@ -38,7 +38,7 @@ class _BottomAppScreenState extends State<BottomAppScreen> {
                 children: [
                   Text('Patient Name',style: kwhite),
                   Text('Status',style: kwhite),
-                  Text('Admitted On',style: kwhite)
+                  Text('Bed Number',style: kwhite)
                 ],
               ),
             ),
@@ -49,7 +49,9 @@ class _BottomAppScreenState extends State<BottomAppScreen> {
                     padding: const EdgeInsets.only(left: 5 , right: 5),
                     child: widget.lst.length == 0 ? Text("No Data Found") :
                     SearchPatientCard(patientName: widget.lst[index]['name'] ,status:widget.lst[index]['patient_status'],
-                        admittedOn: widget.lst[index]["created_on"],onPress: (){
+                        bedno: widget.lst[index]['patient_status']=="A" ?
+                        widget.lst[index]["patient_bed"]['bed_id']:"NO BED",
+                        onPress: (){
                           Navigator.pushReplacement(context,MaterialPageRoute(builder:(context)=>InfoDischarged(data: widget.lst[index],
                             desgination: widget.designation,token: widget.token,)));
                         }),

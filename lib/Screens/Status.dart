@@ -59,10 +59,10 @@ class _StatusState extends State<Status> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  MyCard(height: 120,width: 160,headText: 'Active Patients',headerSize: 17,valueColor: Colors.blueGrey[600],
+                  MyCard(height: 120,width: 160,headText: 'Total Patients',headerSize: 17,valueColor: Colors.blueGrey[600],
                     color: Colors.white,valueSize: 30,
                     /// Realtime Value
-                    valueText: "$alloted",
+                    valueText: "${alloted+home}",
                     headerColor: Colors.blueGrey,
                   ),
                   MyCard(height: 120,width: 160,headText: 'Total Beds',headerSize: 17,valueColor: Colors.blueGrey[600],
@@ -78,7 +78,7 @@ class _StatusState extends State<Status> {
               DetailCard(valueGen: availgen,valueIcu: availicu,valueOxy: availox,valueVen: availven,TotalGen: gen,TotalIcu: icu,
                 TotalOxy: ox,TotalVen: ven,height: 200,
                 color: Colors.white,),
-              TodayStatus(recov:recov,death: death,mig: migrated,home:home,),
+              TodayStatus(recov:recov,death: death,mig: migrated,home: home,active : active),
               SizedBox(height: 40,),
               Column(
                 children: [
@@ -180,9 +180,3 @@ class _StatusState extends State<Status> {
     );
   }
 }
-
-
-/*drawer: Drawer(child: MyDrawer(name: widget.responseList[2],designation: widget.responseList[1]== "NURSE" ? "DEO": widget.responseList[1],responsedata: widget.responseList)),
-      appBar: AppBar(backgroundColor: Color(0XFFD5031A8D),shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
-      ),),*/

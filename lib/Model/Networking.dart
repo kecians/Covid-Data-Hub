@@ -74,7 +74,7 @@ class Networking{
     print(stat['data']);
     return stat['data'];
   }
-  Future<dynamic> HealthUpdate(_token,pat_id,sys,dia,pulse,temp,spo2,condition) async
+  Future<dynamic> HealthUpdate(_token,pat_id,sys,dia,pulse,temp,spo2,condition,resRate) async
   {  String cond;
     if(condition == 'Asymptomatic') { cond = "1"; }
     else if(condition == 'Mild') {cond = "2";}
@@ -84,7 +84,7 @@ class Networking{
     var response = await http.post(Uri.parse(url),
       headers: {'content-type':'application/json','Authorization' : "Token $_token"},
       body: jsonEncode({"username":pat_id ,"patient_condition": cond,"oxy_level":spo2,"pulse_rate":pulse
-        ,"blood_pres_systolic":sys , "blood_pres_diastolic" : dia ,"temperature" : temp}),);
+        ,"blood_pres_systolic":sys , "blood_pres_diastolic" : dia ,"temperature" : temp,'respiration_rate':resRate}),);
     var res = jsonDecode(response.body);
     print(res);
     return res['status'];
@@ -94,6 +94,12 @@ class Networking{
   Future<dynamic> AddPatient(_token,name,age,gender,bed_cat,bedNo,phno,condition,address,
       ward,floor,isTested,testType,testResult,isVaccinated,nameVaccine,numDose,frstDate,secDate,remark,admissionType) async
   {
+    String wardSelected;
+    if(ward =='A'){wardSelected = 'A';}
+    else if(ward == 'B'){wardSelected = 'B';}
+    else if(ward == 'Obs & Gynae'){wardSelected = 'OG';}
+    else if(ward == 'Paediatric'){wardSelected = 'P';}
+
     String admission;
     if(admissionType == 'Home Isolation'){admission = 'H';}
     else if(admissionType == 'Hospitalization'){admission = 'A';}
@@ -191,7 +197,7 @@ class Networking{
     var patBed;
    if(admission == 'H'){ patBed ={};}
    else if(admission == 'A'){patBed = {
-     'bed_number' : bedNo, 'bed_category': bedCat, 'ward':ward,'floor':floor
+     'bed_number' : bedNo, 'bed_category': bedCat, 'ward':wardSelected,'floor':floor
    };}
 
      var covidTest = {
@@ -209,7 +215,6 @@ class Networking{
       'patient_bed': patBed, 'patient_covid_test' : covidTest , 'patient_vaccine_status' : vacStat
     };
 
-
     String url = "https://api.ukcovid19.in/api/patient/admit/";
     
     var response = await http.post(Uri.parse(url),
@@ -220,15 +225,27 @@ class Networking{
     return res['status'];
   }
 
-  Future<dynamic>changePatientStatus(id,migratedto,migReason,deathReason,status,deathDate)async {
+  Future<dynamic>changePatientStatus(id,migratedto,migReason,deathReason,status,deathDate,bed_cat,bedNo,ward,floor)async {
     String url1 = 'https://api.ukcovid19.in/api/patient/change_patient_status/$id/';
     String url2 = 'https://api.ukcovid19.in/api/patient/patient_migrate_status/';
     String url3 = 'https://api.ukcovid19.in/api/patient/patient_death_status/';
 
+    String wardSelected;
+    if(ward =='A'){wardSelected = 'A';}
+    else if(ward == 'B'){wardSelected = 'B';}
+    else if(ward == 'Obs & Gynae'){wardSelected = 'OG';}
+    else if(ward == 'Paediatric'){wardSelected = 'P';}
+
+    String bedCat;
+    if(bed_cat == 'General Bed') {bedCat = "1";}
+    else if(bed_cat == 'Oxygen Bed') {bedCat = "2";}
+    else if(bed_cat == 'ICU Bed') {bedCat = "3";}
+    else if(bed_cat == 'Ventilators') {bedCat = "4";}
+
+
     String deathDated = deathDate.toString().substring(0,10);
     if (status == 'Referred')
-     {
-         var response1 = await http.patch(Uri.parse(url1),headers: {
+     {   var response1 = await http.patch(Uri.parse(url1),headers: {
            'content-type':'application/json',
          },body: jsonEncode({'patient_status': 'M' }));
          var response2 = await http.post(Uri.parse(url2),headers: {
@@ -237,27 +254,24 @@ class Networking{
              body: jsonEncode({'patient_id': id, 'migrated_to' : migratedto , 'reason' : migReason}));
          var res = jsonDecode(response1.body);
 
-         return res['status'];
-     }
+         return res['status'];  }
 
     else if(status == 'Death')
-      {
-        var response1 = await http.patch(Uri.parse(url1),headers: {
+      { var response1 = await http.patch(Uri.parse(url1),headers: {
           'content-type':'application/json',
         },body: jsonEncode({'patient_status': 'D' }));
         var response3 = await http.post(Uri.parse(url3),headers: {
           'content-type':'application/json',
         },
-            body: jsonEncode({'patient_id': id,'reason' : deathReason, 'date' : deathDated}));
+            body: jsonEncode({'patient_id': id,'reason' : deathReason, 'expired_on' : deathDated,'patient_bed': {}}));
 
         var res = jsonDecode(response1.body);
-
-        return res['status'];
-      }
+           print("Wait here ${response3.body}");
+        return res['status']; }
     else if(status =='Recovered'){
       var response1 = await http.patch(Uri.parse(url1),headers: {
         'content-type':'application/json',
-      },body: jsonEncode({'patient_status': 'R' }));
+      },body: jsonEncode({'patient_status': 'R' ,'patient_bed': {} }));
 
       var res = jsonDecode(response1.body);
       return res['status'];
@@ -265,7 +279,17 @@ class Networking{
     else if(status =='Home Isolation'){
       var response1 = await http.patch(Uri.parse(url1),headers: {
         'content-type':'application/json',
-      },body: jsonEncode({'patient_status': 'H' }));
+      },body: jsonEncode({'patient_status': 'H' ,'patient_bed': {}}));
+
+      var res = jsonDecode(response1.body);
+      return res['status'];
+    }
+    else if(status == 'Hospitalise'){
+      var response1 = await http.patch(Uri.parse(url1),headers: {
+        'content-type':'application/json',
+      },body: jsonEncode({'patient_status': 'A','patient_bed': {
+      'bed_number' : bedNo, 'bed_category': bedCat, 'ward':wardSelected,'floor':floor
+      } }));
 
       var res = jsonDecode(response1.body);
       return res['status'];
@@ -277,32 +301,23 @@ class Networking{
 
   Future<dynamic> changePatientBed(id,bedtype,bedno,ward,floor) async{
     String url = "https://api.ukcovid19.in/api/patient/bed_allotment/";
+    String wardSelected;
+    if(ward =='A'){wardSelected = 'A';}
+    else if(ward == 'B'){wardSelected = 'B';}
+    else if(ward == 'Obs & Gynae'){wardSelected = 'OG';}
+    else if(ward == 'Paediatric'){wardSelected = 'P';}
+
     var bedtp;
-    if(bedtype=='General Bed')
-    {
-      bedtp = '1';
-    }
-    else if(bedtype == 'Oxygen Bed')
-    {
-      bedtp = '2';
-    }
-    else if(bedtype == 'ICU Bed')
-    {
-      bedtp ='3';
-    }
-    else if(bedtype == 'Ventilators')
-    {
-      bedtp ='4';
-    }
+    if(bedtype == 'General Bed') { bedtp = '1'; }
+    else if(bedtype == 'Oxygen Bed') { bedtp = '2'; }
+    else if(bedtype == 'ICU Bed') { bedtp = '3'; }
+    else if(bedtype == 'Ventilators') { bedtp = '4'; }
     var response = await http.post(Uri.parse(url),headers: {
       'content-type':'application/json',},body: jsonEncode({'patient_id':id,'bed_category':bedtp,'bed_number':bedno
-      ,'ward':ward,'floor':floor,
+      ,'ward':wardSelected,'floor':floor,
       }));
-
     var res = jsonDecode(response.body);
-
     return res['status'];
-
   }
 
   Future<dynamic> getSearched(query)async{

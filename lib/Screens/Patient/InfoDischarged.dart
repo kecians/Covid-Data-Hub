@@ -138,6 +138,32 @@ class InfoDischarged extends StatelessWidget {
                          ],
                        );
                     }
+                  else if(data['patient_status']=='D')
+                  {
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text("Reason of Death",style: kdarkHeader,),
+                                SizedBox(height: 10,),
+                                Text('${data['patient_death']['reason']}',style: kdarkValue,)
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text("Deceased On",style: kdarkHeader,),
+                                SizedBox(height: 10,),
+                                Text('${data['patient_death']['expired_on']}',style: kdarkValue,)
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
                   else if(data['patient_status']=='A'){
                       return Column(
                         children: [
@@ -166,6 +192,21 @@ class InfoDischarged extends StatelessWidget {
                         ],
                       );
                   }
+                  else if(data['patient_status']=='H')
+                    {
+                      if(desgination=='DOCTOR')
+                      { return Row(  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          RoundButton(color: Colors.lightBlue[900],text: "Change Status", textColor: Colors.white,
+                            onpress: (){Navigator.pushReplacement(context, MaterialPageRoute(
+                                builder: (context){return ChangeStatus(id:data['patient_id']);}));} ,height: 50,width: 120,),
+                         ],
+                      );}
+                      else{
+                        return SizedBox(height: 1,);
+                      }
+                    }
+
                   else{
                     return SizedBox(height: 20,);
                   }
@@ -192,11 +233,11 @@ class InfoDischarged extends StatelessWidget {
       }
     else if(data['patient_status']=='D')
       {
-        return "Death";
+        return "Deceased";
       }
     else if(data['patient_status']=='A')
       {
-        return "Active";
+        return "Hospitalised";
       }
     else if(data['patient_status']=='H')
       {

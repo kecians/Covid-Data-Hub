@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 class LastFiveCard extends StatelessWidget {
   final String cond,temp,createdOn;
-  final int sis,dia,spo2,pulse;
-  LastFiveCard({this.cond,this.temp,this.pulse,this.spo2,this.dia,this.sis,this.createdOn});
+  final int sis,dia,spo2,pulse,resRate;
+  LastFiveCard({this.cond,this.temp,this.pulse,this.spo2,this.dia,this.sis,this.createdOn,this.resRate});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,7 +15,7 @@ class LastFiveCard extends StatelessWidget {
             children: [
 
               Container(
-                width: 100,
+                width: 80,
                 child: Column(
                   children: [
                     Text(
@@ -30,24 +30,41 @@ class LastFiveCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),Container(
-                width: 100,
+              ),
+              Container(
+                width: 55,
                 child: Column(
                   children: [
                     Text(
-                      "SPO2 Level",
+                      "B P",
                       style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),
                     ),
                     SizedBox(height: 10,),
                     Text(
-                      "$spo2 %",
+                      "$sis / $dia",
                       overflow: TextOverflow.fade,
                       style: TextStyle(fontWeight: FontWeight.w600,fontSize: 12),
                     ),
                   ],
                 ),
               ),
-
+              Container(
+                width: 55,
+                child: Column(
+                  children: [
+                    Text(
+                      "R R",
+                      style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),
+                    ),
+                    SizedBox(height: 10,),
+                    Text(
+                      "$resRate",
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(fontWeight: FontWeight.w600,fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 width: 80,
                 child: Column(
@@ -90,16 +107,16 @@ class LastFiveCard extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 80,
+                width: 100,
                 child: Column(
                   children: [
                     Text(
-                      "B P",
+                      "SPO2 Level",
                       style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),
                     ),
                     SizedBox(height: 10,),
                     Text(
-                      "$sis / $dia",
+                      "$spo2 %",
                       overflow: TextOverflow.fade,
                       style: TextStyle(fontWeight: FontWeight.w600,fontSize: 12),
                     ),

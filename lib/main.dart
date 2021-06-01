@@ -6,10 +6,7 @@ import 'package:patient_status_app/Screens/Status.dart';
 
 import 'Screens/Patient/PatientForm.dart';
 
-void main() async{
-  runApp(Main());
-}
-
+void main() async{runApp(Main());}
 class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

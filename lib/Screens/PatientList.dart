@@ -19,7 +19,7 @@ class PatientList extends StatefulWidget {
 class _PatientListState extends State<PatientList> {
   String user,designation;
   String _token;
-  var res=[];
+  List res=[];
   void data(data){
     user = data[2];
     designation = data[1];
@@ -35,9 +35,14 @@ class _PatientListState extends State<PatientList> {
   }
   response(_token)async {
     var resp = await Networking().getPatientList(_token);
-    setState(() {
+    if (resp.isEmpty==true){
+      setState(() {
+
+      });
+    }
+    else{setState(() {
       res = resp;
-    });
+    });}
   }
 
   @override
@@ -74,7 +79,7 @@ class _PatientListState extends State<PatientList> {
                     itemBuilder:(context , index){
                       return Padding(
                         padding: const EdgeInsets.only(left: 5 , right: 5),
-                        child: PatientListCard(patientName: res[index]['name'] ,isBed:res[index]['patient_bed'],admittedOn: res[index]["created_on"],onPress: (){Navigator.push(context
+                        child: PatientListCard(patientName: res[index]['name'] ,isBed:res[index]['patient_bed'],admittedOn: res[index]["admitted_on"],onPress: (){Navigator.push(context
                             , MaterialPageRoute(builder:(context){return PatientDetails(response: res[index],token: _token,designation:widget.data[1],);}));}),
                       );
                     }),

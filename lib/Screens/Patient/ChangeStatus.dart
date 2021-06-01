@@ -15,8 +15,8 @@ class ChangeStatus extends StatefulWidget {
 }
 
 class _ChangeStatusState extends State<ChangeStatus> {
-  String dropdownValue = "Select Status";
-  String migratedTo,migReason,deathReason;
+  String dropdownValue = "Select Status",dropdownValue2 = "Bed Type",floor="Select Floor",wardValue="Select Ward";
+  String migratedTo,migReason,deathReason,bedNo;
   DateTime deathDate = DateTime.now();
   Networking instance = Networking();
   @override
@@ -53,7 +53,27 @@ class _ChangeStatusState extends State<ChangeStatus> {
                       DropDown(),
                       SizedBox(height: 30),
                       ((){
-                        if(dropdownValue == "Referred")
+                        if(dropdownValue == "Hospitalise"){
+                          return Column(children: [
+                            DropDown2(),
+                            SizedBox(height: 30,),
+                            MyTextField(text: 'Bed Number',
+                                width: 260,
+                                inputType: TextInputType.number,
+                                onPress: (value) {bedNo=value;}),
+                            SizedBox(height: 30,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                DropDown9(),
+                                SizedBox(width: 20,),
+                                DropDown11()
+                              ],
+                            ),
+                            SizedBox(height: 30,)
+                          ],);
+                        }
+                        else if(dropdownValue == "Referred")
                         {return Column(
                           children: [
                             MyTextField(
@@ -67,17 +87,13 @@ class _ChangeStatusState extends State<ChangeStatus> {
                         );}
                         else if(dropdownValue == 'Death')
                           {
-                            return Column(
-                              children: [
-                                MyTextField(
+                            return Column(children: [
+                              MyTextField(
                                   text: "Cause of Death..", width: 260, onPress: (
                                     value) {deathReason=value;},),
                                 SizedBox(height: 30,),
                                 Date(),
-                                SizedBox(height: 30,)
-                              ],
-                            );
-                          }
+                                SizedBox(height: 30,)],);}
                         else {
                           return SizedBox(height: 80,);
                         }
@@ -90,7 +106,8 @@ class _ChangeStatusState extends State<ChangeStatus> {
                         onpress: ()async {
                           final progress = ProgressHUD.of(context);
                           progress.show();
-                          instance.changePatientStatus(widget.id , migratedTo, migReason, deathReason, dropdownValue,deathDate);
+                          instance.changePatientStatus(widget.id , migratedTo, migReason, deathReason, dropdownValue
+                              ,deathDate,dropdownValue2,bedNo,wardValue,floor);
 
                           if(dropdownValue == "Select Status")
                             {
@@ -129,7 +146,7 @@ Container DropDown() {
             dropdownValue = newValue;
           });
         },
-        items: <String>['Select Status','Referred', 'Recovered','Death','Home Isolation']
+        items: <String>['Select Status','Hospitalise','Referred', 'Recovered','Death','Home Isolation']
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -160,5 +177,95 @@ Container DropDown() {
 
     );
 
+  }
+  Container DropDown2() {
+    return Container(width: 260,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: dropdownValue2,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              dropdownValue2 = newValue;
+            });
+          },
+          items: <String>['Bed Type','General Bed','Oxygen Bed','ICU Bed','Ventilators']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown9() {
+    return Container(width: 120,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: wardValue,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              wardValue = newValue;
+            });
+          },
+          items: <String>['Select Ward','A','B','Obs & Gynae','Paediatric']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
+  }
+  Container DropDown11() {
+    return Container(width: 120,padding: EdgeInsets.only(left: 10),
+      child: Center(
+        child: DropdownButton<String>(
+          underline: Container(height: 0,),
+          value: floor,
+          icon: const Icon(Icons.arrow_drop_down_sharp),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.blueGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              floor = newValue;
+            });
+          },
+          items: <String>['Select Floor','1','2','3','4']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+          color: Colors.white70,
+          border: Border.all(color: Colors.blue[900])
+      ),
+
+    );
   }
 }

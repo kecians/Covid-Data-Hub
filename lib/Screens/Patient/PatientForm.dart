@@ -22,7 +22,7 @@ class PatientForm extends StatefulWidget {
 class _PatientFormState extends State<PatientForm> {
   Networking instance = Networking();
   String temp;
-  String spo2,sys,dia,pulse;
+  String spo2,sys,dia,pulse,resRate;
   String dropdownValue = 'Select';
   @override
   Widget build(BuildContext context) {
@@ -73,6 +73,8 @@ class _PatientFormState extends State<PatientForm> {
                     SizedBox(height: 20,),
                     MyTextField(text: 'Pulse Rate',width: 260,inputType: TextInputType.number,onPress: (value){pulse = value;}),
                     SizedBox(height: 20,),
+                    MyTextField(text: 'Respiration Rate',width: 260,inputType: TextInputType.number,onPress: (value){resRate = value;}),
+                    SizedBox(height: 20,),
                     DropDown(),
                     SizedBox(height: 20,),
                     MyTextField(text: 'Temperature in Fahrenheit',width: 260,inputType: TextInputType.number,onPress: (value){temp = value;}),
@@ -81,7 +83,7 @@ class _PatientFormState extends State<PatientForm> {
                       onpress: ()async{
                         final progress = ProgressHUD.of(context);
                         progress.show();
-                        var res = await instance.HealthUpdate(widget.token,widget.patient_id, sys, dia, pulse, temp, spo2, dropdownValue);
+                        var res = await instance.HealthUpdate(widget.token,widget.patient_id, sys, dia, pulse, temp, spo2, dropdownValue,resRate);
                         if(res == 201)
                         { showToast(context, "Health Status Updated Successfully!");
                         Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=>Loading_Screen()), (route) => false);
@@ -96,6 +98,7 @@ class _PatientFormState extends State<PatientForm> {
                         }
                         progress.dismiss();
                       } ,height: 50,width: 260,),
+                    SizedBox(height: 30,)
                   ],
                 ),
               ],

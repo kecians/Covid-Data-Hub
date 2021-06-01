@@ -79,10 +79,10 @@ class _MainHomeState extends State<MainHome> {
                               padding: const EdgeInsets.only(top: 5,bottom: 5),
                               child: Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  MyCard(height: 200,width: 160,headText: 'Active Patients',headerSize: 17,valueColor: Colors.blueGrey[600],
+                                  MyCard(height: 200,width: 160,headText: 'Total Patients',headerSize: 17,valueColor: Colors.blueGrey[600],
                                     color: Colors.white,valueSize: 50,
                                     /// Realtime Value
-                                    valueText: "$alloted",
+                                    valueText: "${alloted+home}",
                                     headerColor: Colors.blueGrey,
                                   ),
                                   MyCard(height: 200,width: 160,headText: 'Total Beds',headerSize: 17,valueColor: Colors.blueGrey[600],
@@ -107,7 +107,7 @@ class _MainHomeState extends State<MainHome> {
                           animationDuration:Duration(seconds: 1),
                         )
                     ),
-                    TodayStatus(recov:recov,death: death,mig: migrated,home: home,),
+                    TodayStatus(recov:recov,death: death,mig: migrated,home: home,active : active),
                     Column(
                       children: [
 

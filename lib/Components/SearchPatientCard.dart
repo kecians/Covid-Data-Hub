@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 class SearchPatientCard extends StatelessWidget {
   const SearchPatientCard({
-    this.patientName,this.onPress,this.admittedOn,this.status
+    this.patientName,this.onPress,this.bedno,this.status
   });
-  final String patientName,admittedOn;
+  final String patientName,bedno;
   final String status;
   final Function onPress;
 
@@ -11,7 +11,7 @@ class SearchPatientCard extends StatelessWidget {
   {
     if( status == "A")
     {
-      return  "Active";
+      return  "Hospitalised";
     }
     else if(status == 'R')
     {
@@ -19,7 +19,7 @@ class SearchPatientCard extends StatelessWidget {
     }
     else if(status == 'D')
     {
-      return 'Death';
+      return 'Deceased';
     }
     else if(status == 'M'){
       return 'Referred';
@@ -58,7 +58,7 @@ class SearchPatientCard extends StatelessWidget {
             Container(
               width: 80,
               child: Text(
-                admittedOn.substring(0,10),
+                bedno,
                 style: TextStyle(fontWeight: FontWeight.w800,fontSize: 12),
               ),
             )
