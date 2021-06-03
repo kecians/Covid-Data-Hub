@@ -19,7 +19,7 @@ class PatientDetails extends StatefulWidget {
 }
 
 class _PatientDetailsState extends State<PatientDetails> {
-   String patient,status,gender,patientId,address,condition;
+   String patient,status,gender,patientId,address,condition,admiton;
    int age;
    String spo2, bpUp,bpDown,temp,contact;
    var stat={};
@@ -32,6 +32,7 @@ class _PatientDetailsState extends State<PatientDetails> {
     patientId = widget.response['patient_id'];
     address = widget.response['address'];
     condition = widget.response['health_condition'];
+    admiton = widget.response['admitted_on'];
   }
    @override
   void initState() {
@@ -151,22 +152,11 @@ class _PatientDetailsState extends State<PatientDetails> {
   }
 
   String condtions(){
-    if(condition == '1')
-      {
-        return "Asymptomatic";
-      }
-    else if(condition =='2')
-      {
-        return "Mild";
-      }
-    else if(condition == '3')
-      {
-        return "Moderate";
-      }
-    else if(condition == '4')
-      {
-        return "Severe";
-      }
+    if(condition == null) {return 'N/A';}
+    else{if(condition == '1') {return "Asymptomatic";}
+      else if(condition =='2') {return "Mild";}
+      else if(condition == '3') {return "Moderate";}
+      else if(condition == '4') {return "Severe";}}
   }
   String TestStatus(){
     if(widget.response["patient_covid_test"]==null || widget.response["patient_covid_test"]["is_tested"]==null )

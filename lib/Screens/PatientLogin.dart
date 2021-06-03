@@ -108,6 +108,7 @@ class _PatientLoginState extends State<PatientLogin> {
                                     });
                                   }
                                   else{
+
                                     Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context){
                                       return PatientInfo(data: response);
                                     }), (route) => false);

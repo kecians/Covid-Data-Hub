@@ -99,16 +99,17 @@ class Networking{
     else if(ward == 'B'){wardSelected = 'B';}
     else if(ward == 'Obs & Gynae'){wardSelected = 'OG';}
     else if(ward == 'Paediatric'){wardSelected = 'P';}
+    else if(ward == "Select Ward"){wardSelected = 'A';}
 
     String admission;
     if(admissionType == 'Home Isolation'){admission = 'H';}
     else if(admissionType == 'Hospitalization'){admission = 'A';}
-
     String cond;
     if(condition == 'Asymptomatic') { cond = "1";}
     else if(condition == 'Mild') {cond = "2";}
     else if(condition == 'Moderate') {cond = "3";}
     else if(condition == 'Severe') {cond = "4";}
+    else if(condition=="Condition"){cond = '1';}
     String bedCat;
     if(bed_cat == 'General Bed') {bedCat = "1";}
     else if(bed_cat == 'Oxygen Bed') {bedCat = "2";}
@@ -179,16 +180,15 @@ class Networking{
     result = '3';}
     else if(testResult == 'Rejected'){covidSta = 'R';
     result = '4';}
-
+    else if(testResult =="Test Result"){covidSta ='P'; result ='1';}
     String testTyp;
     if( testType == 'Rapid AntiGen'){testTyp = '1';}
     else if( testType == 'RT-PCR'){testTyp = '2';}
     else if( testType =='TrueNat'){testTyp = '3';}
-
+    else if(testType =="Test Type"){testTyp = '1';}
     bool isTest;
     if( isTested == 'Yes'){isTest = true; }
     else if(isTested =='No'){isTest = false; testTyp='3'; result='4';}
-
 
     bool isVac;
     if( isVaccinated == 'Yes'){isVac = true;}

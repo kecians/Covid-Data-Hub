@@ -47,8 +47,7 @@ class _BottomAppScreenState extends State<BottomAppScreen> {
                 itemBuilder:(context , index){
                   return Padding(
                     padding: const EdgeInsets.only(left: 5 , right: 5),
-                    child: widget.lst.length == 0 ? Text("No Data Found") :
-                    SearchPatientCard(patientName: widget.lst[index]['name'] ,status:widget.lst[index]['patient_status'],
+                    child: SearchPatientCard(patientName: widget.lst[index]['name'] ,status:widget.lst[index]['patient_status'],
                         bedno: widget.lst[index]['patient_status']=="A" ?
                         widget.lst[index]["patient_bed"]['bed_id']:"NO BED",
                         onPress: (){

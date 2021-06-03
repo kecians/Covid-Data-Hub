@@ -44,7 +44,7 @@ class _PatientInfoState extends State<PatientInfo> {
                       children: [
                         Text("Status",style: kdarkHeader,),
                         SizedBox(height: 10,),
-                        Text('${widget.data['patient_status']}',style: kdarkValue,)
+                        Text(Status(),style: kdarkValue,)
                       ],
                     ),
                     Column(
@@ -167,21 +167,33 @@ class _PatientInfoState extends State<PatientInfo> {
     ));
   }
   String condtions(){
-    if(widget.data['health_condition'] == '1')
-    {
-      return "Asymptomatic";
+    if(widget.data['health_condition']==null){
+      return 'N/A';
     }
-    else if(widget.data['health_condition'] =='2')
-    {
-      return "Mild";
+    else{
+      if(widget.data['health_condition'] == '1')
+      {
+        return "Asymptomatic";
+      }
+      else if(widget.data['health_condition'] =='2')
+      {
+        return "Mild";
+      }
+      else if(widget.data['health_condition'] == '3')
+      {
+        return "Moderate";
+      }
+      else if(widget.data['health_condition'] == '4')
+      {
+        return "Severe";
+      }
     }
-    else if(widget.data['health_condition'] == '3')
-    {
-      return "Moderate";
-    }
-    else if(widget.data['health_condition'] == '4')
-    {
-      return "Severe";
-    }
+  }
+  String Status(){
+    if(widget.data['patient_status']=='A'){return 'Hospitalised';}
+    else if(widget.data['patient_status']=='H'){return 'Home Isolated';}
+    else if(widget.data['patient_status']=='R'){return 'Recovered';}
+    else if(widget.data['patient_status']=='D'){return 'Deceased';}
+    else if(widget.data['patient_status']=='M'){return 'Referred';}
   }
 }

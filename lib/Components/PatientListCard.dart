@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 class PatientListCard extends StatelessWidget {
   const PatientListCard({
-    this.patientName,this.onPress,this.admittedOn,this.isBed
+    this.patientName,this.onPress,this.patCondition,this.isBed
   });
-  final String patientName,admittedOn;
+  final String patientName,patCondition;
   final isBed;
   final Function onPress;
 
@@ -32,6 +32,13 @@ class PatientListCard extends StatelessWidget {
       return 'VEN';
     }
  }
+  String condtions(){
+    if(patCondition == null) {return 'N/A';}
+    else{if(patCondition == '1') {return "Asymptomatic";}
+    else if(patCondition =='2') {return "Mild";}
+    else if(patCondition == '3') {return "Moderate";}
+    else if(patCondition == '4') {return "Severe";}}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +69,9 @@ class PatientListCard extends StatelessWidget {
             Container(
               width: 80,
               child: Text(
-                admittedOn,
+                condtions(),
                 style: TextStyle(fontWeight: FontWeight.w800,fontSize: 12),
+                textAlign: TextAlign.center,
               ),
             )
           ],

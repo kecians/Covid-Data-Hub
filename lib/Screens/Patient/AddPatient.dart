@@ -167,24 +167,34 @@ class _AddPatientState extends State<AddPatient> {
                       textColor: Colors.white,
                       onpress: ()async {
                         final progress = ProgressHUD.of(context);
-                        progress.show();
-                        var res = await instance.AddPatient(widget.token, name, age,dropdownValue1,
-                            dropdownValue2, bedNo, number,dropdownValue3, address, wardValue, floor,
-                            dropdownValue4,dropdownValue5,dropdownValue6, dropdownValue7, vaccineName,
-                            dropdownValue8, selectedDate1, selectedDate2,remark,admissionType);
-                        if(res == 201)
-                        { showToast(context, "Patient added Successfully");
-                          Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=>Loading_Screen()), (route) => false);
-                        }
-                        else
-                        {
+                        if(name=="" || age =="" || bedNo=="" || number.length<=8
+                          || address == ""|| admissionType== "Select Admission Category" ) {
                           CoolAlert.show(
                             context: context,
                             type: CoolAlertType.error,
-                            text: "Some field is empty or Bed already alloted!",
+                            text: "Some Field is Empty!",
                           );
                         }
-                        progress.dismiss();
+                        else{
+                          progress.show();
+                          var res = await instance.AddPatient(widget.token, name, age,dropdownValue1,
+                              dropdownValue2, bedNo, number,dropdownValue3, address, wardValue, floor,
+                              dropdownValue4,dropdownValue5,dropdownValue6, dropdownValue7, vaccineName,
+                              dropdownValue8, selectedDate1, selectedDate2,remark,admissionType);
+                          if(res == 201)
+                          { showToast(context, "Patient added Successfully");
+                          Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=>Loading_Screen()), (route) => false);
+                          }
+                          else
+                          {
+                            CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.error,
+                              text: "Bed already alloted!",
+                            );
+                          }
+                          progress.dismiss();
+                        }
                       },
                       height: 50,
                       width: 260,),
