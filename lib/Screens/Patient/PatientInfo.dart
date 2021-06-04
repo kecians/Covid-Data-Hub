@@ -127,7 +127,7 @@ class _PatientInfoState extends State<PatientInfo> {
                         Text("Condition",style: kdarkHeader,),
                         SizedBox(height: 10,),
                         Text(condtions(),style: kdarkValue,)
-                      ],
+                      ],//202106040683   09997076749
                     ),
                     Column(
                       children: [

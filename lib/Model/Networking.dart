@@ -18,7 +18,6 @@ class Networking{
         return list;
       }
     var list =[dec['status'],dec['data']['staff_category'],dec['data']['username'],dec['data']['token']];
-    print(list);
     return list;
   }
 
@@ -63,7 +62,6 @@ class Networking{
     String url = "https://api.ukcovid19.in/api/health/details/$id/";
     var res = await http.get(Uri.parse(url));
     var stat = jsonDecode(res.body);
-     print(stat['data']);
     return stat['data'].last;
   }
 
@@ -71,7 +69,6 @@ class Networking{
     String url = "https://api.ukcovid19.in/api/health/details/$id/";
     var res = await http.get(Uri.parse(url));
     var stat = jsonDecode(res.body);
-    print(stat['data']);
     return stat['data'];
   }
   Future<dynamic> HealthUpdate(_token,pat_id,sys,dia,pulse,temp,spo2,condition,resRate) async
@@ -86,7 +83,6 @@ class Networking{
       body: jsonEncode({"username":pat_id ,"patient_condition": cond,"oxy_level":spo2,"pulse_rate":pulse
         ,"blood_pres_systolic":sys , "blood_pres_diastolic" : dia ,"temperature" : temp,'respiration_rate':resRate}),);
     var res = jsonDecode(response.body);
-    print(res);
     return res['status'];
   }
 
@@ -221,7 +217,6 @@ class Networking{
     headers:{'content-type':'application/json','Authorization' : "Token $_token"},
     body: jsonEncode(eData));
     var res = jsonDecode(response.body);
-    print("this is the ${res}");
     return res['status'];
   }
 
@@ -266,7 +261,7 @@ class Networking{
             body: jsonEncode({'patient_id': id,'reason' : deathReason, 'expired_on' : deathDated,'patient_bed': {}}));
 
         var res = jsonDecode(response1.body);
-           print("Wait here ${response3.body}");
+
         return res['status']; }
     else if(status =='Recovered'){
       var response1 = await http.patch(Uri.parse(url1),headers: {

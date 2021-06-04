@@ -2,6 +2,7 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:patient_status_app/Components/LastFiveCard.dart';
 import 'package:patient_status_app/Model/Networking.dart';
+import 'package:patient_status_app/Model/Toast.dart';
 import 'package:patient_status_app/Screens/PatientList.dart';
 class LastFive extends StatefulWidget {
   final String id;
@@ -20,15 +21,14 @@ class _LastFiveState extends State<LastFive> {
     var resp = await Networking().lastFiveStat(id);
     if(resp == "Patient Health history doesn't exits ")
       {
-        CoolAlert.show(
-          context: context,
-          type: CoolAlertType.error,
-          text: "Patient Health history doesn't exits ",
-        );
+        showToast(context, "Patient Health history doesn't exits");
+        Navigator.pop(context);
       }
-    setState(() {
-      res = resp;
-    });
+    else{
+      setState(() {
+        res = resp;
+      });
+    }
   }
   @override
   Widget build(BuildContext context) {

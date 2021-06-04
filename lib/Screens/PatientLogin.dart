@@ -44,7 +44,7 @@ class _PatientLoginState extends State<PatientLogin> {
                     child: ListView(
 
                       children:[
-                        TitleHead(height: 200),
+                        TitleHead(height: 120),
                         SizedBox(height: 40,),
                         Center(
                           child: Text('Patient Login',style: TextStyle(color: Colors.lightBlue[900],fontSize: 26,
@@ -73,7 +73,7 @@ class _PatientLoginState extends State<PatientLogin> {
                                 decoration: kInputDecorantion.copyWith(hintText: 'Enter your password',),
                               ),
                             ),
-                            SizedBox(height: 140),
+                            SizedBox(height: 60),
                             RoundButton(color: Color(0XFFE901579B),text: "Login as Patient", textColor: Colors.white,
                               onpress: ()async{
                                 final progress = ProgressHUD.of(context);
